@@ -1,0 +1,7 @@
+﻿#es-419
+#This is the configuration file for Latin American Spanish
+
+#==============
+#= Entities = 
+#==============
+entity.sheepTFC.name=Oveja

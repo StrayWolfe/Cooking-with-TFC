@@ -1,0 +1,9 @@
+﻿#tr_TR
+#This is the Turkish language configuration file.Being translated by melihceku (CekuGaming)
+#Eğer çeviriye devam etmek isterseniz serbestsiniz.
+
+
+#==============
+#= Entities = 
+#==============
+entity.sheepTFC.name=Koyun

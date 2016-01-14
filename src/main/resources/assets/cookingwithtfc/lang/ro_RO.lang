@@ -1,0 +1,8 @@
+﻿#ro_RO
+#This is the Romanian language configuration file, translated by damnedsky and branzide
+
+
+#==============
+#= Entities = 
+#==============
+entity.sheepTFC.name=Oaie

@@ -1,0 +1,7 @@
+minecraft_version=1.7.10
+forge_version=10.13.4.1558-1.7.10
+tfc_version=0.79.26
+mod_version=0.01.00
+mod_id=CookingWithTFC
+group_name=com.JAWolfe.cookingwithtfc
+release_type = alpha

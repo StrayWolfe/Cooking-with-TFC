@@ -1,0 +1,9 @@
+﻿#it_IT
+#Questa è la pagina di configurazione del linguaggio, tradotto in italiano da livid, Dimebord e Apani
+#This is the italian configurazation file, done by livid, Dimeborg and Apani
+
+
+#==============
+#= Entities = 
+#==============
+entity.sheepTFC.name=Ovino

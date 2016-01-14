@@ -1,0 +1,99 @@
+#en_US
+#This is the Main language configuration file
+#
+#If you want to color code the text then I recommend you visit http://www.minecraftwiki.net/wiki/Formatting_codes#Color_codes
+#To create the � symbol which is used for assigning a color to the following text press Alt + 21 on Windows. For other OSes, view the above link.
+#This file needs to be UTF-8 encoded to work with MC 1.7+
+
+#==========
+#= Blocks =
+#==========
+tile.GrainsBlock.name=Grain
+tile.MixingBowl.Clay.name=Clay Mixing Bowl
+tile.MixingBowl.Ceramic.name=Ceramic Mixing Bowl
+
+tile.PrepTableBlock.name=Food Table
+tile.PrepTableBlock2.name=Food Table
+
+#=========
+#= Items =
+#=========
+item.Rutabaga.name=Rutabaga
+
+item.VeggySalad.name=Vegetable Salad
+item.PotatoSalad.name=Potato Salad
+item.FruitSalad.name=Fruit Salad
+
+item.HamSandwich.name=Ham Sandwich
+item.ChickenSandwich.name=Chicken Sandwich
+item.RoastBeefSandwich.name=Roast Beef Sandwich
+item.SalmonSandwich.name=Salmon Sandwich
+item.FriedEggSandwich.name=Fried Egg Sandwich
+item.MuttonSandwich.name=Mutton Sandwich
+item.VenisonSteakSandwich.name=Venison Steak Sandwich
+
+#=======
+#= GUI =
+#=======
+gui.progress=Progress
+
+gui.showIngreds=§8Foods: (Hold §fShift§8)
+
+gui.PrepTable.Recipes=Recipe
+
+#==============
+#= Entities = 
+#==============
+entity.sheepCWTFC.name=Sheep
+entity.terrafirmacraft.bearCWTFC.name=Bear
+entity.terrafirmacraft.chickenCWTFC.name=Chicken
+entity.terrafirmacraft.cowCWTFC.name=Cow
+entity.terrafirmacraft.deerCWTFC.name=Deer
+entity.terrafirmacraft.horseCWTFC.name=Horse
+entity.terrafirmacraft.pigCWTFC.name=Pig
+entity.terrafirmacraft.pheasantCWTFC.name=Pheasant
+entity.terrafirmacraft.wolfCWTFC.name=Wolf
+
+#===========
+#= Strings =
+#===========
+word.Barley=Barley
+word.Corn=Corn
+word.Oat=Oat
+word.Rice=Rice
+word.Rye=Rye
+word.Wheat=Wheat
+
+wood.Oak=Oak
+wood.Aspen=Aspen
+wood.Birch=Birch
+wood.Chestnut=Chestnut
+wood.Douglas Fir=Douglas Fir
+wood.Hickory=Hickory
+wood.Maple=Maple
+wood.Ash=Ash
+wood.Pine=Pine
+wood.Sequoia=Sequoia
+wood.Spruce=Spruce
+wood.Sycamore=Sycamore
+wood.White Cedar=White Cedar
+wood.White Elm=White Elm
+wood.Willow=Willow
+wood.Kapok=Kapok
+wood.Acacia=Acacia
+
+#========
+#= Misc =
+#========
+
+#== Creative Tabs ==
+
+
+#=========
+#= WAILA =
+#=========
+
+#== Tooltips ==
+
+
+#== Options ==

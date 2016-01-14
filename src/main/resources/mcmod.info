@@ -1,0 +1,21 @@
+{
+    "modListVersion": 2,
+    "modList": [{
+        "modid": "cookingwithtfc",
+        "name": "Cooking with TFC",
+        "description": "§bExtends the diversity of cooking with TerraFirmaCraft §a${tfc_version}.§r",
+        "version": "${mod_version}",
+        "mcversion": "${minecraft_version}",
+        "url": "",
+        "updateUrl": "",
+        "authorList": ["§JAWolfe§r"],
+        "credits": "",
+        "logoFile": "",
+        "screenshots": [],
+        "parent": "",
+        "requiredMods": [],
+        "dependencies": ["terrafirmacraft"],
+        "dependants": [  ],
+        "useDependencyInformation": "true"
+    }]
+}
