@@ -4,8 +4,11 @@ import com.JAWolfe.cookingwithtfc.crafting.FoodManager;
 import com.JAWolfe.cookingwithtfc.crafting.FoodRecipe;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCMeatTransform;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.TFCItems;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -119,5 +122,14 @@ public class CWTFCFoodRecipes
 					new Item[]{breads[i], CWTFCItems.venisonRawCWTFC, CWTFCItems.cabbageCWTFC, CWTFCItems.tomatoCWTFC, CWTFCItems.onionCWTFC},
 					new float[]{0.5F, 0.2F, 0.15F, 0.1F, 0.05F}, new ItemStack(CWTFCItems.VenisonSteakSandwich, 1, i)));
 		}
+		
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.beefRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.beefRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.chickenRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.chickenRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.horseMeatRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.horseMeatRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.fishRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.fishRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.calamariRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.calamariRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.porkchopRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.porkchopRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.muttonRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.muttonRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
+		GameRegistry.addShapelessRecipe(ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.venisonRawCWTFC, 1)), ItemTFCMeatTransform.createTag(new ItemStack(CWTFCItems.venisonRawCWTFC, 1)), new ItemStack(TFCItems.powder, 1, 9));
 	}
 }
