@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
-import com.JAWolfe.cookingwithtfc.util.LogHelper;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_MobData;
 import com.bioxx.tfc.Core.TFC_Time;

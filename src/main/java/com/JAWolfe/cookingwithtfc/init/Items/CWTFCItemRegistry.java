@@ -47,6 +47,10 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(gooseberryCWTFC, gooseberryCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(cloudberryCWTFC, cloudberryCWTFC.getUnlocalizedName());
 		
+		//Dairy
+		GameRegistry.registerItem(cheeseCWTFC, cheeseCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(woodenBucketMilkCWTFC, woodenBucketMilkCWTFC.getUnlocalizedName());
+		
 		//Proteins
 		GameRegistry.registerItem(porkchopRawCWTFC, porkchopRawCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(fishRawCWTFC, fishRawCWTFC.getUnlocalizedName());

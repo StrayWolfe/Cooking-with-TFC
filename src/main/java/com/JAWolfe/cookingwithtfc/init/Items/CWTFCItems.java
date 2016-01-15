@@ -57,6 +57,10 @@ public class CWTFCItems
 	public static Item venisonRawCWTFC;
 	public static Item horseMeatRawCWTFC;
 	
+	//Dairy
+	public static Item cheeseCWTFC;
+	public static Item woodenBucketMilkCWTFC;
+	
 	//Grains
 	public static Item barleyWholeCWTFC;
 	public static Item oatWholeCWTFC;
@@ -158,6 +162,10 @@ public class CWTFCItems
 		TFCItems.muttonRaw.setCreativeTab(null);
 		TFCItems.venisonRaw.setCreativeTab(null);
 		TFCItems.horseMeatRaw.setCreativeTab(null);
+		
+		//Dairy
+		TFCItems.cheese.setCreativeTab(null);
+		TFCItems.woodenBucketMilk.setCreativeTab(null);
 		
 		//Grains
 		TFCItems.barleyWhole.setCreativeTab(null);

@@ -10,18 +10,25 @@ import com.JAWolfe.cookingwithtfc.entities.EntityTransformPheasant;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformPigTFC;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformSheepTFC;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformWolfTFC;
+import com.JAWolfe.cookingwithtfc.init.CWTFCFluids;
+import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.JAWolfe.cookingwithtfc.tileentities.TEGrains;
 import com.JAWolfe.cookingwithtfc.tileentities.TEMixBowl;
 import com.JAWolfe.cookingwithtfc.tileentities.TENestBoxCWTFC;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 
 import com.bioxx.tfc.TerraFirmaCraft;
+import com.bioxx.tfc.api.TFCItems;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 public abstract class CommonProxyCWTFC implements IProxyCWTFC
 {
@@ -52,6 +59,18 @@ public abstract class CommonProxyCWTFC implements IProxyCWTFC
 	public void registerRenderInformation()
 	{
 		//Not on Server
+	}
+	
+	public void registerFluids()
+	{
+		FluidRegistry.registerFluid(CWTFCFluids.MILKCURDLEDCWTFC);
+		FluidRegistry.registerFluid(CWTFCFluids.MILKCWTFC);
+		FluidRegistry.registerFluid(CWTFCFluids.MILKVINEGARCWTFC);
+	}
+	
+	public void setupFluids()
+	{
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.MILKCWTFC, 1000), new ItemStack(CWTFCItems.woodenBucketMilkCWTFC), new ItemStack(TFCItems.woodenBucketEmpty));
 	}
 	
 	public void registerWAILA()

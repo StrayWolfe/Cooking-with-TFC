@@ -3,12 +3,8 @@ package com.JAWolfe.cookingwithtfc.proxy;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.render.RenderMixingBowl;
 import com.JAWolfe.cookingwithtfc.render.RenderPrepTable;
-import com.JAWolfe.cookingwithtfc.thirdparty.nei.PrepTableRecipeHandler;
-
-import codechicken.nei.api.API;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

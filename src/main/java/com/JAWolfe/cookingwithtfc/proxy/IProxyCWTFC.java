@@ -11,6 +11,10 @@ public interface IProxyCWTFC
 	
 	public abstract void registerTileEntities(Boolean b);
 	
+	public abstract void registerFluids();
+	
+	public abstract void setupFluids();
+	
 	public abstract void registerRenderInformation();
 	
 	public abstract void registerWAILA();

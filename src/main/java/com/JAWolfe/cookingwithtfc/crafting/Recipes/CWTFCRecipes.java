@@ -1,8 +1,9 @@
 package com.JAWolfe.cookingwithtfc.crafting.Recipes;
 
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
+import com.JAWolfe.cookingwithtfc.init.CWTFCFluids;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
-import com.JAWolfe.cookingwithtfc.util.LogHelper;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
 import com.bioxx.tfc.Core.Recipes;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.TFCBlocks;
@@ -10,7 +11,10 @@ import com.bioxx.tfc.api.TFCFluids;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Crafting.BarrelAlcoholRecipe;
+import com.bioxx.tfc.api.Crafting.BarrelLiquidToLiquidRecipe;
 import com.bioxx.tfc.api.Crafting.BarrelManager;
+import com.bioxx.tfc.api.Crafting.BarrelMultiItemRecipe;
+import com.bioxx.tfc.api.Crafting.BarrelRecipe;
 import com.bioxx.tfc.api.Crafting.CraftingManagerTFC;
 import com.bioxx.tfc.api.Crafting.KilnCraftingManager;
 import com.bioxx.tfc.api.Crafting.KilnRecipe;
@@ -61,6 +65,11 @@ public class CWTFCRecipes
 		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemFoodTFC.createTag(new ItemStack(CWTFCItems.ryeGroundCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.RYEWHISKEY, 10000)));
 		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemFoodTFC.createTag(new ItemStack(CWTFCItems.wheatGroundCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.WHISKEY, 10000)));
 		//barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemFoodTFC.createTag(new ItemStack(CWTFCItems.sugar), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.RUM, 10000)));
+		
+		barrelmanager.addRecipe(new BarrelMultiItemRecipe(new ItemStack(TFCItems.powder, 1, 9),new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000), ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.cheeseCWTFC, 1), 16), new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000)).setSealedRecipe(true).setMinTechLevel(0).setRemovesLiquid(true));
+		barrelmanager.addRecipe(new BarrelRecipe(null, new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000), null, new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 10000)).setMinTechLevel(0).setRemovesLiquid(false));
+		barrelmanager.addRecipe(new BarrelLiquidToLiquidRecipe(new FluidStack(CWTFCFluids.MILKCWTFC, 9000), new FluidStack(TFCFluids.VINEGAR, 1000), new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000)).setSealedRecipe(false).setMinTechLevel(0).setRemovesLiquid(false));
+		barrelmanager.addRecipe(new BarrelLiquidToLiquidRecipe(new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 9000), new FluidStack(CWTFCFluids.MILKCWTFC, 1000), new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000)).setSealedRecipe(false).setMinTechLevel(0).setRemovesLiquid(false));
 	}
 	
 	public static void registerQuernRecipes() 

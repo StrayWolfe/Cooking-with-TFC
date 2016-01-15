@@ -9,6 +9,7 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Core.Player.SkillStats.SkillRank;
 import com.bioxx.tfc.Food.ItemEgg;
+import com.bioxx.tfc.Items.Tools.ItemCustomBucketMilk;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.TFCOptions;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
@@ -25,6 +26,10 @@ public class CWTFCItemSetup extends CWTFCItems
 		float mealSize = ConstantsCWTFC.MEAL_SIZE;
 		
 		eggCWTFC = new ItemEgg().setSize(EnumSize.SMALL).setUnlocalizedName("egg").setTextureName("egg").setCreativeTab(TFCTabs.TFC_FOODS);
+		
+		//Dairy
+		cheeseCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Dairy, 0, 10, 20, 0, 35, snackSize, 160, 0.5f).setCanSmoke().setSmokeAbsorbMultiplier(1F).setUnlocalizedName(TFCItems.cheese.getUnlocalizedName().substring(5));
+		woodenBucketMilkCWTFC = new ItemCustomBucketMilk().setUnlocalizedName("Wooden Bucket Milk").setContainerItem(TFCItems.woodenBucketEmpty).setCreativeTab(TFCTabs.TFC_FOODS);
 		
 		//Proteins
 		porkchopRawCWTFC = new ItemTFCMeatTransform(EnumFoodGroup.Protein, 0, 0, 0, 0, 40, false, false, mealSize, 160).setDecayRate(2.5f).setCanSmoke().setHasCookedIcon().setSmokeAbsorbMultiplier(1F).setUnlocalizedName(TFCItems.porkchopRaw.getUnlocalizedName().substring(5));

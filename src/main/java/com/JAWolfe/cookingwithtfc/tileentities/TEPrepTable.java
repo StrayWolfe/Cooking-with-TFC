@@ -9,7 +9,6 @@ import com.JAWolfe.cookingwithtfc.crafting.FoodRecipe;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.items.ItemMixingBowl;
 import com.JAWolfe.cookingwithtfc.items.ItemTFCMealTransform;
-import com.JAWolfe.cookingwithtfc.util.LogHelper;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemKnife;

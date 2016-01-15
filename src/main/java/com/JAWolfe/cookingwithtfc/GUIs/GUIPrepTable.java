@@ -6,7 +6,6 @@ import com.JAWolfe.cookingwithtfc.GUIs.Containers.ContainerPrepTable;
 import com.JAWolfe.cookingwithtfc.handlers.CreateRecipePacket;
 import com.JAWolfe.cookingwithtfc.references.Textures;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
-import com.JAWolfe.cookingwithtfc.util.LogHelper;
 import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.Player.PlayerInventory;

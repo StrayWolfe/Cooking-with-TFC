@@ -8,13 +8,11 @@ public class TEMixBowl extends NetworkTileEntity
 {	
 	@Override
 	public void handleInitPacket(NBTTagCompound nbt) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void createInitNBT(NBTTagCompound nbt) {
-		// TODO Auto-generated method stub
 		
 	}
 

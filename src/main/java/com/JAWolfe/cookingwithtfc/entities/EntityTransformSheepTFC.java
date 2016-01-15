@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.bioxx.tfc.Core.TFC_Core;
-import com.bioxx.tfc.Core.TFC_MobData;
 import com.bioxx.tfc.Core.TFC_Time;
 import com.bioxx.tfc.Entities.Mobs.EntitySheepTFC;
 import com.bioxx.tfc.api.Entities.IAnimal;

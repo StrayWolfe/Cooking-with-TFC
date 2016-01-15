@@ -10,6 +10,7 @@ import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.ItemTerra;
+import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
 import com.bioxx.tfc.api.Interfaces.IFood;
 
@@ -146,5 +147,29 @@ public class ItemTFCFoodTransform extends ItemFoodTFC implements IFood
 	public float getMaxFoodWt()
 	{
 		return maxFoodWt;
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack is)
+	{
+		String s = "";
+		if(Food.isPickled(is))
+			s += TFC_Core.translate("word.pickled") + " ";
+		else if(Food.isBrined(is) && !Food.isDried(is))
+			s += TFC_Core.translate("word.brined") + " ";
+
+		if(Food.isSalted(is))
+			s += TFC_Core.translate("word.salted") + " ";
+		if(Food.isCooked(is))
+			s += TFC_Core.translate("word.cooked") + " ";
+		else if(Food.isSmoked(is))
+			s += TFC_Core.translate("word.smoked") + " ";
+
+		if(Food.isDried(is) && !Food.isCooked(is))
+			s += TFC_Core.translate("word.dried") + " ";
+		
+		s += TFC_Core.translate(this.getUnlocalizedNameInefficiently(is) + ".name");
+		s += getCookedLevelString(is);
+		return s.trim();
 	}
 }

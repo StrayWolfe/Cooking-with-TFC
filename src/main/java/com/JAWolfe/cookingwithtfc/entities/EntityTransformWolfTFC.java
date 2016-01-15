@@ -2,13 +2,11 @@ package com.JAWolfe.cookingwithtfc.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformChickenTFC;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformPheasant;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformPigTFC;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
-import com.JAWolfe.cookingwithtfc.util.LogHelper;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformCowTFC;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformDeer;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformHorseTFC;

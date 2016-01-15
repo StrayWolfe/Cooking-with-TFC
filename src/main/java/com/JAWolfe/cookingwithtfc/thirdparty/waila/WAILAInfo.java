@@ -11,11 +11,7 @@ import com.JAWolfe.cookingwithtfc.tileentities.TEGrains;
 import com.JAWolfe.cookingwithtfc.tileentities.TEMixBowl;
 import com.JAWolfe.cookingwithtfc.tileentities.TENestBoxCWTFC;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
-import com.JAWolfe.cookingwithtfc.util.LogHelper;
 import com.bioxx.tfc.Core.TFC_Core;
-import com.bioxx.tfc.TileEntities.TENestBox;
-import com.bioxx.tfc.WAILA.WAILAData;
-import com.bioxx.tfc.api.TFCItems;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;

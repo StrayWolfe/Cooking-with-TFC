@@ -3,7 +3,6 @@ package com.JAWolfe.cookingwithtfc.init;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.bioxx.tfc.api.HeatIndex;
 import com.bioxx.tfc.api.HeatRegistry;
-import com.bioxx.tfc.api.TFCItems;
 
 import net.minecraft.item.ItemStack;
 

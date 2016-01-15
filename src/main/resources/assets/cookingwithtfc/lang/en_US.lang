@@ -82,6 +82,13 @@ wood.Willow=Willow
 wood.Kapok=Kapok
 wood.Acacia=Acacia
 
+#==========
+#= Fluids =
+#==========
+fluid.milkCWTFC=Milk
+fluid.milkvinegarCWTFC=Milk + Vinegar Mix
+fluid.milkcurdledCWTFC=Curdled Milk
+
 #========
 #= Misc =
 #========

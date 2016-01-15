@@ -6,6 +6,7 @@ import com.JAWolfe.cookingwithtfc.thirdparty.nei.NEIGUIHandler;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Food.ItemSalad;
 import com.bioxx.tfc.Food.ItemSandwich;
+import com.bioxx.tfc.Items.Tools.ItemCustomBucketMilk;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Constant.Global;
@@ -73,6 +74,9 @@ public class NEIcookingwithtfcConfig implements IConfigureNEI
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.redBellPepper, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.squash, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.seaWeed, 1), Global.FOOD_MAX_WEIGHT));
+		
+		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.cheese, 1), Global.FOOD_MAX_WEIGHT));
+		API.hideItem(ItemCustomBucketMilk.createTag(new ItemStack(TFCItems.woodenBucketMilk, 1), 20));
 		
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.porkchopRaw, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.fishRaw, 1), Global.FOOD_MAX_WEIGHT));

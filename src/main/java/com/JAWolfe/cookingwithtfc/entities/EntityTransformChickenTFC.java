@@ -4,9 +4,7 @@ package com.JAWolfe.cookingwithtfc.entities;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_Time;
-import com.bioxx.tfc.Entities.AI.EntityAIFindNest;
 import com.bioxx.tfc.Entities.Mobs.EntityChickenTFC;
-import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Entities.IAnimal;
 
 import net.minecraft.entity.EntityAgeable;

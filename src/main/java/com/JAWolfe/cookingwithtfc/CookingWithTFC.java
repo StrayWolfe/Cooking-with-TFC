@@ -42,6 +42,9 @@ public class CookingWithTFC
 		ConfigHandler.init(event.getSuggestedConfigurationFile());
 		FMLCommonHandler.instance().bus().register(new ConfigHandler());
 		
+		//Initialize Fluids
+		proxy.registerFluids();
+		
 		//Initialize Items
 		CWTFCItems.initialise();
 		
@@ -58,6 +61,9 @@ public class CookingWithTFC
 		//Register packets
 		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(MessageFoodRecord.class);
 		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(CreateRecipePacket.class);
+		
+		//Setup Fluids
+		proxy.setupFluids();
 		
 		// Register the GUI Handler
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GUIHandler());
