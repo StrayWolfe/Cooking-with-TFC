@@ -39,6 +39,7 @@ public class NEIcookingwithtfcConfig implements IConfigureNEI
         API.registerUsageHandler(preptableRecipeHandler);
 		
 		API.hideItem(new ItemStack(CWTFCBlocks.GrainsBlock, 1));
+		API.hideItem(new ItemStack(CWTFCBlocks.hopperCWTFC, 1));
 		API.hideItem(new ItemStack(TFCBlocks.nestBox, 1));
 				
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.redApple, 1), Global.FOOD_MAX_WEIGHT));
@@ -46,6 +47,7 @@ public class NEIcookingwithtfcConfig implements IConfigureNEI
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.orange, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.greenApple, 1), Global.FOOD_MAX_WEIGHT));	
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.lemon, 1), Global.FOOD_MAX_WEIGHT));
+		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.olive, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.cherry, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.peach, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.plum, 1), Global.FOOD_MAX_WEIGHT));
@@ -77,6 +79,9 @@ public class NEIcookingwithtfcConfig implements IConfigureNEI
 		
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.cheese, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemCustomBucketMilk.createTag(new ItemStack(TFCItems.woodenBucketMilk, 1), 20));
+		
+		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.sugar, 1), Global.FOOD_MAX_WEIGHT));
+		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.sugarcane, 1), Global.FOOD_MAX_WEIGHT));
 		
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.porkchopRaw, 1), Global.FOOD_MAX_WEIGHT));
 		API.hideItem(ItemFoodTFC.createTag(new ItemStack(TFCItems.fishRaw, 1), Global.FOOD_MAX_WEIGHT));

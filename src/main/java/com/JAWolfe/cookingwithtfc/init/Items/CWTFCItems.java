@@ -1,6 +1,5 @@
 package com.JAWolfe.cookingwithtfc.init.Items;
 
-import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.TFCItems;
 
 import cpw.mods.fml.common.registry.ExistingSubstitutionException;
@@ -14,6 +13,7 @@ public class CWTFCItems
 	public static Item orangeCWTFC;
 	public static Item greenAppleCWTFC;
 	public static Item lemonCWTFC;
+	public static Item oliveCWTFC;
 	public static Item cherryCWTFC;
 	public static Item peachCWTFC;
 	public static Item plumCWTFC;
@@ -96,6 +96,9 @@ public class CWTFCItems
 	public static Item ryeBreadCWTFC;
 	public static Item wheatBreadCWTFC;	
 	
+	public static Item sugarcaneCWTFC;
+	public static Item sugarCWTFC;
+	
 	public static Item VeggySalad;
 	public static Item PotatoSalad;
 	public static Item FruitSalad;
@@ -120,6 +123,7 @@ public class CWTFCItems
 		TFCItems.orange.setCreativeTab(null);
 		TFCItems.greenApple.setCreativeTab(null);
 		TFCItems.lemon.setCreativeTab(null);
+		TFCItems.olive.setCreativeTab(null);
 		TFCItems.cherry.setCreativeTab(null);
 		TFCItems.peach.setCreativeTab(null);
 		TFCItems.plum.setCreativeTab(null);
@@ -202,10 +206,8 @@ public class CWTFCItems
 		TFCItems.ryeBread.setCreativeTab(null);
 		TFCItems.wheatBread.setCreativeTab(null);
 		
-		//Foods not intended to be eaten
-		((ItemFoodTFC)TFCItems.olive).edible = false;
-		((ItemFoodTFC)TFCItems.sugarcane).edible = false;
-		((ItemFoodTFC)TFCItems.sugar).edible = false;
+		TFCItems.sugarcane.setCreativeTab(null);
+		TFCItems.sugar.setCreativeTab(null);
 		
 		//Setup Items
 		CWTFCItemSetup.ItemSetup();

@@ -13,6 +13,7 @@ import com.JAWolfe.cookingwithtfc.entities.EntityTransformWolfTFC;
 import com.JAWolfe.cookingwithtfc.init.CWTFCFluids;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.JAWolfe.cookingwithtfc.tileentities.TEGrains;
+import com.JAWolfe.cookingwithtfc.tileentities.TEHopperCWTFC;
 import com.JAWolfe.cookingwithtfc.tileentities.TEMixBowl;
 import com.JAWolfe.cookingwithtfc.tileentities.TENestBoxCWTFC;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
@@ -43,6 +44,7 @@ public abstract class CommonProxyCWTFC implements IProxyCWTFC
 		GameRegistry.registerTileEntity(TEGrains.class, "TEGrains");
 		GameRegistry.registerTileEntity(TEMixBowl.class, "TEMixingBowl");
 		GameRegistry.registerTileEntity(TEPrepTable.class, "TEPrepTable");
+		GameRegistry.registerTileEntity(TEHopperCWTFC.class, "TEHopperCWTFC");
 		
 		EntityRegistry.registerGlobalEntityID(EntityTransformSheepTFC.class, "sheepCWTFC", EntityRegistry.findGlobalUniqueEntityId());
 		EntityRegistry.registerGlobalEntityID(EntityTransformHorseTFC.class, "horseCWTFC", EntityRegistry.findGlobalUniqueEntityId());

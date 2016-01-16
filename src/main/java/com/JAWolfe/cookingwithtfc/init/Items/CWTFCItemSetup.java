@@ -82,6 +82,7 @@ public class CWTFCItemSetup extends CWTFCItems
 		orangeCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 50, 30, 0, 10, 0, snackSize, 160, 2.0f).setUnlocalizedName(TFCItems.orange.getUnlocalizedName().substring(5));
 		greenAppleCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 30, 15, 0, 10, 0, snackSize, 160, 2.0f).setUnlocalizedName(TFCItems.greenApple.getUnlocalizedName().substring(5));
 		lemonCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 30, 50, 0, 10, 0, snackSize, 160, 2.0f).setUnlocalizedName(TFCItems.lemon.getUnlocalizedName().substring(5));
+		oliveCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 10, 0, 3, 10, 0, snackSize, 160, 2.0f).setUnlocalizedName(TFCItems.olive.getUnlocalizedName().substring(5));
 		cherryCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 30, 5, 0, 0, 0, snackSize, 160, 2.0f).setUnlocalizedName(TFCItems.cherry.getUnlocalizedName().substring(5));
 		peachCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 25, 10, 0, 0, 0, snackSize, 160, 2.0f).setUnlocalizedName(TFCItems.peach.getUnlocalizedName().substring(5));
 		plumCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 20, 15, 0, 0, 0, snackSize, 160, 2.0f).setUnlocalizedName(TFCItems.plum.getUnlocalizedName().substring(5));
@@ -132,7 +133,10 @@ public class CWTFCItemSetup extends CWTFCItems
 		ryeBreadCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Grain, 10, 15, 0, 0, 20, mealSize, 160).setUnlocalizedName("Rye Bread");
 		riceBreadCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Grain, 10, 0, 0, 0, 20, mealSize, 160).setUnlocalizedName("Rice Bread");
 		cornBreadCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Grain, 25, 0, 0, 0, 20, mealSize, 160).setUnlocalizedName("Corn Bread");
-		 
+		
+		sugarcaneCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.None, 30, 0, 0, 0, 0, snackSize, 160, 0.75F, false, false).setFolder("plants/").setUnlocalizedName("Sugarcane");
+		sugarCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.None, 30, 0, 0, 0, 0, snackSize, 160, 0.01F).setUnlocalizedName("Sugar");
+		
 		VeggySalad = new ItemTFCMealTransform(17, 5, 0, 0, 34, mealSize, 20, SkillRank.Novice, "VeggySalad").setIconPath("Salad0");
 		PotatoSalad = new ItemTFCMealTransform(2, 5, 7, 11, 21, mealSize, 20, SkillRank.Novice, "PotatoSalad").setIconPath("Salad2");
 		FruitSalad = new ItemTFCMealTransform(31, 11, 0, 5, 0, mealSize, 20, SkillRank.Novice, "FruitSalad").setIconPath("Salad3");

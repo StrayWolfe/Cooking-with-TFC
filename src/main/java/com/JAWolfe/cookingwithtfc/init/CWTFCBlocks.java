@@ -1,6 +1,7 @@
 package com.JAWolfe.cookingwithtfc.init;
 
 import com.JAWolfe.cookingwithtfc.blocks.blockGrains;
+import com.JAWolfe.cookingwithtfc.blocks.blockHopper;
 import com.JAWolfe.cookingwithtfc.blocks.blockMixBowl;
 import com.JAWolfe.cookingwithtfc.blocks.blockNestBoxCWTFC;
 import com.JAWolfe.cookingwithtfc.blocks.blockPrepTable;
@@ -21,6 +22,7 @@ public class CWTFCBlocks
 	public static Block mixingBowl;
 	public static Block prepTable;
 	public static Block prepTable2;
+	public static Block hopperCWTFC;
 	
 	public static int mixingBowlRenderID;
 	public static int prepTableRenderID;
@@ -36,11 +38,12 @@ public class CWTFCBlocks
 	{
 		TFCBlocks.nestBox.setCreativeTab(null);
 		
-		nestBoxCWTFC = new blockNestBoxCWTFC().setBlockName("NestBox").setHardness(1);
+		nestBoxCWTFC = new blockNestBoxCWTFC();
 		GrainsBlock = new blockGrains();
 		mixingBowl = new blockMixBowl();
 		prepTable = new blockPrepTable();
 		prepTable2 = new blockPrepTable2();
+		hopperCWTFC = new blockHopper();
 	}
 	
 	public static void registerBlocks()
@@ -50,5 +53,6 @@ public class CWTFCBlocks
 		GameRegistry.registerBlock(mixingBowl, ItemMixingBowl.class, "MixingBowl");
 		GameRegistry.registerBlock(prepTable, ItemPrepTable.class, "PrepTable");
 		GameRegistry.registerBlock(prepTable2, ItemPrepTable2.class, "PrepTable2");
+		GameRegistry.registerBlock(hopperCWTFC, "Hopper");
 	}
 }

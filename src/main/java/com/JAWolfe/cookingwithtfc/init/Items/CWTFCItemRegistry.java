@@ -31,6 +31,7 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(orangeCWTFC, orangeCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(greenAppleCWTFC, greenAppleCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(lemonCWTFC, lemonCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(oliveCWTFC, oliveCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(cherryCWTFC, cherryCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(peachCWTFC, peachCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(plumCWTFC, plumCWTFC.getUnlocalizedName());
@@ -98,6 +99,9 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(riceBreadCWTFC, riceBreadCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(ryeBreadCWTFC, ryeBreadCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(wheatBreadCWTFC, wheatBreadCWTFC.getUnlocalizedName());
+		
+		GameRegistry.registerItem(sugarcaneCWTFC, sugarcaneCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(sugarCWTFC, sugarCWTFC.getUnlocalizedName());
 		
 		GameRegistry.registerItem(VeggySalad, VeggySalad.getUnlocalizedName());
 		GameRegistry.registerItem(PotatoSalad, PotatoSalad.getUnlocalizedName());

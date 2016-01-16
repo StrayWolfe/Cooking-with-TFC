@@ -2,7 +2,9 @@ package com.JAWolfe.cookingwithtfc.handlers;
 
 import com.JAWolfe.cookingwithtfc.core.CWTFC_Core;
 import com.JAWolfe.cookingwithtfc.core.FoodRecord;
+import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
+import com.JAWolfe.cookingwithtfc.util.LogHelper;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemKnife;
@@ -46,6 +48,8 @@ public class PlayerHandler
 				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.greenAppleCWTFC);
 			else if(droppedItem == TFCItems.lemon)
 				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.lemonCWTFC);
+			else if(droppedItem == TFCItems.olive)
+				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.oliveCWTFC);
 			else if(droppedItem == TFCItems.cherry)
 				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.cherryCWTFC);
 			else if(droppedItem == TFCItems.peach)
@@ -130,6 +134,8 @@ public class PlayerHandler
 				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.wheatWholeCWTFC);
 			else if(droppedItem == TFCItems.maizeEar)
 				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.maizeEarCWTFC);
+			else if(droppedItem == TFCItems.sugarcane)
+				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.sugarcaneCWTFC);
 		}
 	}
 	
@@ -144,9 +150,8 @@ public class PlayerHandler
 		if(itemInHand == null)
 			return;
 
-		boolean validAction = event.action == Action.RIGHT_CLICK_BLOCK;
-
-		if(validAction && event.getResult() != Result.DENY && itemInHand.getItem() instanceof ItemKnife)
+		if(event.action == Action.RIGHT_CLICK_BLOCK && event.getResult() != Result.DENY 
+				&& itemInHand.getItem() instanceof ItemKnife)
 		{
 			Block id = event.world.getBlock(event.x, event.y, event.z);
 			if(!event.world.isRemote && id != TFCBlocks.toolRack)
@@ -158,6 +163,24 @@ public class PlayerHandler
 					event.setCanceled(true);
 				}
 			}
+		}
+		
+		if(event.action == Action.RIGHT_CLICK_BLOCK && event.getResult() != Result.DENY &&
+				event.entityPlayer.getCurrentEquippedItem().getUnlocalizedName().equals(TFCBlocks.hopper.getUnlocalizedName()))
+		{
+			event.setCanceled(true);
+			switch(event.face)
+			{
+				case 0: event.world.setBlock(event.x, event.y - 1, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+				case 1: event.world.setBlock(event.x, event.y + 1, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+				case 2: event.world.setBlock(event.x, event.y, event.z - 1, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+				case 3: event.world.setBlock(event.x, event.y, event.z + 1, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+				case 4: event.world.setBlock(event.x - 1, event.y, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+				case 5: event.world.setBlock(event.x + 1, event.y, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+				default: break;
+			}			
+			
+			event.entityPlayer.setCurrentItemOrArmor(0, null);
 		}
 	}
 	

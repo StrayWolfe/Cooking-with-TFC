@@ -5,7 +5,6 @@ import com.JAWolfe.cookingwithtfc.crafting.FoodRecipe;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.JAWolfe.cookingwithtfc.items.ItemTFCMeatTransform;
-import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.TFCItems;
 
 import cpw.mods.fml.common.registry.GameRegistry;
