@@ -60,17 +60,13 @@ public class TEHopperCWTFC extends TEHopper
 			}
 
 			if (!this.isCoolingDown())
-			{
 				this.setCooldown(0);
-				//this.feed();
-			}
+
 			Block blockAbove = worldObj.getBlock(xCoord, yCoord+1, zCoord);
 			if(blockAbove != null && this.hasPressableItem() > 0)
 			{
 				if (pressBlock != null && !(blockAbove instanceof BlockCobble || blockAbove instanceof BlockGravel || blockAbove instanceof BlockSand || blockAbove instanceof BlockDirt))
-				{
 					TFC_Core.setBlockToAirWithDrops(worldObj, xCoord, yCoord+1, zCoord);
-				}
 				else if (blockAbove instanceof BlockSmooth)
 				{
 					pressBlock = new ItemStack(blockAbove, 1, worldObj.getBlockMetadata(xCoord, yCoord+1, zCoord));
@@ -105,9 +101,7 @@ public class TEHopperCWTFC extends TEHopper
 				Food.setWeight(item, Food.getWeight(item) - 0.64f);//0.64 per cycle leads to 250mB per stack of olives
 
 			if(barrel != null && barrel.canAcceptLiquids() && !barrel.getSealed())
-			{
 				barrel.addLiquid(new FluidStack(PressManager.getInstance().getMatchingRecipe(item.getItem()).getOutput(), 1));
-			}
 		}
 	}
 
@@ -118,9 +112,7 @@ public class TEHopperCWTFC extends TEHopper
 		for(int i = 0; i < getSizeInventory(); i++)
 		{
 			if(getStackInSlot(i) != null && PressManager.getInstance().getMatchingRecipe(getStackInSlot(i).getItem()) != null)
-			{
 				amount += Math.floor(Food.getWeight(getStackInSlot(i)));
-			}
 		}
 		return amount;
 	}
@@ -131,9 +123,7 @@ public class TEHopperCWTFC extends TEHopper
 		for(int i = 0; i < getSizeInventory(); i++)
 		{
 			if(getStackInSlot(i) != null && PressManager.getInstance().getMatchingRecipe(getStackInSlot(i).getItem()) != null)
-			{
 				return getStackInSlot(i);
-			}
 		}
 		return null;
 	}
@@ -158,9 +148,7 @@ public class TEHopperCWTFC extends TEHopper
 		//this.storage = new ItemStack[this.getSizeInventory()];
 
 		if (nbt.hasKey("CustomName", 8))
-		{
 			setCustomName(nbt.getString("CustomName"));
-		}
 
 		this.cooldown = nbt.getInteger("TransferCooldown");
 
@@ -170,9 +158,7 @@ public class TEHopperCWTFC extends TEHopper
 			byte b0 = nbttagcompound1.getByte("Slot");
 
 			if (b0 >= 0 && b0 < getSizeInventory())
-			{
 				setInventorySlotContents(b0, ItemStack.loadItemStackFromNBT(nbttagcompound1));
-			}
 		}
 
 		this.pressCooldown = nbt.getInteger("pressCooldown");
@@ -200,9 +186,7 @@ public class TEHopperCWTFC extends TEHopper
 		nbt.setInteger("TransferCooldown", this.cooldown);
 
 		if (this.hasCustomInventoryName())
-		{
 			nbt.setString("CustomName", getInventoryName());
-		}
 
 		nbt.setInteger("pressCooldown", this.pressCooldown);
 

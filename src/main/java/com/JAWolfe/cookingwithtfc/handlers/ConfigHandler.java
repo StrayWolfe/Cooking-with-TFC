@@ -26,9 +26,7 @@ public class ConfigHandler
 	public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
 	{
 		if(event.modID.equalsIgnoreCase(DetailsCWTFC.ModID))
-		{
 			loadConfig();
-		}
 	}
 	
 	private static void loadConfig()
@@ -37,8 +35,6 @@ public class ConfigHandler
 				"Set the level of how picky players can be with foods: (Picky = 1, Pickier = 2, Pickiest = 3)");
 
 		if(config.hasChanged())
-		{
 			config.save();
-		}
 	}
 }

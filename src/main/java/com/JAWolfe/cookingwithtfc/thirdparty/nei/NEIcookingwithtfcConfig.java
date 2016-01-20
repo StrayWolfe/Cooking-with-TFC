@@ -19,12 +19,14 @@ import net.minecraftforge.oredict.OreDictionary;
 public class NEIcookingwithtfcConfig implements IConfigureNEI
 {
 	@Override
-	public String getName() {
+	public String getName() 
+	{
 		return DetailsCWTFC.ModName;
 	}
 
 	@Override
-	public String getVersion() {
+	public String getVersion() 
+	{
 		return DetailsCWTFC.ModVersion;
 	}
 

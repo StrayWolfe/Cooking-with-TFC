@@ -38,7 +38,7 @@ public abstract class CommonProxyCWTFC implements IProxyCWTFC
 		return ctx.getServerHandler().playerEntity;
 	}
 	
-	public void registerTileEntities(boolean b)
+	public void registerTileEntities()
 	{		
 		GameRegistry.registerTileEntity(TENestBoxCWTFC.class, "NestBoxCWTFC");
 		GameRegistry.registerTileEntity(TEGrains.class, "TEGrains");

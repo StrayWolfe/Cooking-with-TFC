@@ -75,24 +75,21 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 				{
 					ItemStack foodStack = this.getStackInSlot(j);
 					
-					if(foodStack != null)
+					if(foodStack != null && foodStack.getItem() == ingreds[i].getItem())
 					{
-						if(foodStack.getItem() == ingreds[i].getItem())
+						float ingredWt = Food.getWeight(foodStack) - Math.max(Food.getDecay(foodStack), 0);
+						float remainingWt = ingredWt - (foodWt * recipeList.get(recipeListRef).getPctIngred(i));
+						if(remainingWt <= 0)
 						{
-							float ingredWt = Food.getWeight(foodStack) - Math.max(Food.getDecay(foodStack), 0);
-							float remainingWt = ingredWt - (foodWt * recipeList.get(recipeListRef).getPctIngred(i));
-							if(remainingWt <= 0)
-							{
-								this.setInventorySlotContents(j, null);
-								break;
-							}
-							else
-							{
-								Food.setWeight(foodStack, remainingWt);
-								Food.setDecay(foodStack, 0);
-								this.setInventorySlotContents(j, foodStack);
-								break;
-							}
+							this.setInventorySlotContents(j, null);
+							break;
+						}
+						else
+						{
+							Food.setWeight(foodStack, remainingWt);
+							Food.setDecay(foodStack, 0);
+							this.setInventorySlotContents(j, foodStack);
+							break;
 						}
 					}
 				}
@@ -124,8 +121,6 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 									setInventorySlotContents(j, null);
 									worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 								}
-								
-								
 								break;
 							}
 							else if(cookwareStack.getItem() == TFCItems.potteryJug)
@@ -169,17 +164,14 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 			{
 				for(int j = FOOD_INPUT_START; j < COOKWARE_INPUT_START; j++)
 				{
-					if(this.getStackInSlot(j) != null)
+					if(this.getStackInSlot(j) != null && this.getStackInSlot(j).getItem() == ingreds[i].getItem())
 					{
-						if(this.getStackInSlot(j).getItem() == ingreds[i].getItem())
-						{
-							slotIngreds[i] = this.getStackInSlot(j);
-							float weight = Food.getWeight(this.getStackInSlot(j));
-							float decay = Math.max(Food.getDecay(this.getStackInSlot(j)), 0);
-							float IngredWt =  weight - decay;
-							if(IngredWt < recipeWeight * outputRecipe.getPctIngred(i))
-								recipeWeight = IngredWt	* (1/outputRecipe.getPctIngred(i));
-						}
+						slotIngreds[i] = this.getStackInSlot(j);
+						float weight = Food.getWeight(this.getStackInSlot(j));
+						float decay = Math.max(Food.getDecay(this.getStackInSlot(j)), 0);
+						float IngredWt =  weight - decay;
+						if(IngredWt < recipeWeight * outputRecipe.getPctIngred(i))
+							recipeWeight = IngredWt	* (1/outputRecipe.getPctIngred(i));
 					}
 						
 				}
@@ -198,14 +190,10 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 		ItemStack[] cookware = new ItemStack[8];
 		
 		for(int i = 0; i < ingredients.length; i++)
-		{
 			ingredients[i] = this.getStackInSlot(i + FOOD_INPUT_START);
-		}
 		
 		for(int i = 0; i < cookware.length; i++)
-		{
 			cookware[i] = this.getStackInSlot(i + COOKWARE_INPUT_START);
-		}
 		
 		recipeList.clear();
 		recipeList = FoodManager.getInstance().findMatchingRecipes(cookware, ingredients, player);
@@ -265,9 +253,7 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
 			byte itemslot = nbttagcompound1.getByte("Slot");
 			if(itemslot >= 0 && itemslot < prepTableItemStacks.length)
-			{
 				prepTableItemStacks[itemslot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-			}
 		}
 		this.direction = ForgeDirection.getOrientation(nbt.getInteger("Direction"));
 		this.tableType = nbt.getInteger("TableType");
@@ -296,7 +282,8 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	}
 	
 	@Override
-	public void handleInitPacket(NBTTagCompound nbt) {
+	public void handleInitPacket(NBTTagCompound nbt) 
+	{
 		this.direction = ForgeDirection.getOrientation(nbt.getInteger("Direction"));
 		this.tableType = nbt.getInteger("TableType");
 	}
@@ -309,29 +296,34 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	}
 	
 	@Override
-	public void createDataNBT(NBTTagCompound nbt) {
+	public void createDataNBT(NBTTagCompound nbt) 
+	{
 		nbt.setInteger("Direction", this.direction.ordinal());
 		nbt.setInteger("TableType", this.tableType);
 	}
 	
 	@Override
-	public void createInitNBT(NBTTagCompound nbt) {
+	public void createInitNBT(NBTTagCompound nbt) 
+	{
 		nbt.setInteger("Direction", this.direction.ordinal());
 		nbt.setInteger("TableType", this.tableType);
 	}
 
 	@Override
-	public int getSizeInventory() {
+	public int getSizeInventory() 
+	{
 		return this.prepTableItemStacks.length;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public ItemStack getStackInSlot(int slot) 
+	{
 		return this.prepTableItemStacks[slot];
 	}
 
 	@Override
-	public ItemStack decrStackSize(int slot, int size) {
+	public ItemStack decrStackSize(int slot, int size) 
+	{
 		if(this.prepTableItemStacks[slot] != null)
 		{
 			ItemStack is;
@@ -356,7 +348,8 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
+	public ItemStack getStackInSlotOnClosing(int slot) 
+	{
 		if(this.prepTableItemStacks[slot] != null)
 		{
 			ItemStack is = this.prepTableItemStacks[slot];
@@ -376,17 +369,20 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	}
 
 	@Override
-	public String getInventoryName() {
+	public String getInventoryName() 
+	{
 		return "FoodPrepTable";
 	}
 
 	@Override
-	public boolean hasCustomInventoryName() {
+	public boolean hasCustomInventoryName() 
+	{
 		return false;
 	}
 
 	@Override
-	public int getInventoryStackLimit() {
+	public int getInventoryStackLimit() 
+	{
 		return 64;
 	}
 
@@ -413,7 +409,8 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) 
+	{
 		return false;
 	}
 	
@@ -447,24 +444,13 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	public boolean isCookware(ItemStack is)
 	{
 		if(is.getItem() == TFCItems.potterySmallVessel && is.getItemDamage() == 1 && is.stackTagCompound == null)
-		{
 			return true;
-		}
-		else if(is.getItem() == TFCItems.potteryBowl || is.getItem() == TFCItems.potteryJug)
-		{
-			if(is.getItemDamage() != 0)
-			{
-				return true;
-			}
-		}
+		else if((is.getItem() == TFCItems.potteryBowl || is.getItem() == TFCItems.potteryJug) && is.getItemDamage() != 0)
+			return true;
 		else if(is.getItem() instanceof ItemMixingBowl  && is.getItemDamage() == 1)
-		{
 			return true;
-		}
 		else if(is.getItem() instanceof ItemKnife)
-		{
 			return true;
-		}
 		
 		return  false;
 	}
@@ -473,9 +459,7 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	{
 		TEPrepTable oppTable = getOppositeTE();
 		for(int i = 0; i < this.getSizeInventory(); i++)
-		{
 			oppTable.setInventorySlotContents(i, this.getStackInSlot(i));
-		}
 	}
 	
 	public TEPrepTable getOppositeTE()
@@ -495,14 +479,10 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
         else
         	tableBlock = CWTFCBlocks.prepTable;
         
-        if (world.getBlock(x, this.yCoord, z).equals(tableBlock)) 
-        {
+        if (world.getBlock(x, this.yCoord, z).equals(tableBlock))
             return (TEPrepTable) world.getTileEntity(x, this.yCoord, z);
-        } 
-        else 
-        {
+        else
             return null;
-        }
 	}
 	
 	public boolean isOpen()

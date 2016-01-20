@@ -78,24 +78,22 @@ public class ItemTFCFoodTransform extends ItemFoodTFC implements IFood
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
 	{
 		
-		if(itemstack.getItem() == CWTFCItems.wheatWholeCWTFC || itemstack.getItem() == CWTFCItems.oatWholeCWTFC || itemstack.getItem() == CWTFCItems.riceWholeCWTFC ||
-				itemstack.getItem() == CWTFCItems.barleyWholeCWTFC || itemstack.getItem() == CWTFCItems.ryeWholeCWTFC)
+		if(!world.isRemote && (itemstack.getItem() == CWTFCItems.wheatWholeCWTFC || itemstack.getItem() == CWTFCItems.oatWholeCWTFC 
+				|| itemstack.getItem() == CWTFCItems.riceWholeCWTFC || itemstack.getItem() == CWTFCItems.barleyWholeCWTFC 
+				|| itemstack.getItem() == CWTFCItems.ryeWholeCWTFC))
 		{
-			if(!world.isRemote)
+			Block id = world.getBlock(x, y, z);
+			Material mat = id.getMaterial();
+
+			if(side == 1 && id.isSideSolid(world, x, y, z, ForgeDirection.UP) &&!TFC_Core.isSoil(id) && !TFC_Core.isWater(id) 
+				&& world.isAirBlock(x, y + 1, z) && (mat == Material.wood || mat == Material.rock || mat == Material.iron))
 			{
-				Block id = world.getBlock(x, y, z);
-				Material mat = id.getMaterial();
-	
-				if(side == 1 && id.isSideSolid(world, x, y, z, ForgeDirection.UP) &&!TFC_Core.isSoil(id) && !TFC_Core.isWater(id) && world.isAirBlock(x, y + 1, z) &&
-						(mat == Material.wood || mat == Material.rock || mat == Material.iron))
-				{
-					world.setBlock(x, y + 1, z, CWTFCBlocks.GrainsBlock);
-					TEGrains te = (TEGrains) world.getTileEntity(x, y + 1, z);
-					if(te != null)
-						te.setplacedGrains(itemstack);
-					entityplayer.setCurrentItemOrArmor(0, null);
-					return true;
-				}
+				world.setBlock(x, y + 1, z, CWTFCBlocks.GrainsBlock);
+				TEGrains te = (TEGrains) world.getTileEntity(x, y + 1, z);
+				if(te != null)
+					te.setplacedGrains(itemstack);
+				entityplayer.setCurrentItemOrArmor(0, null);
+				return true;
 			}
 		}
 		return false;

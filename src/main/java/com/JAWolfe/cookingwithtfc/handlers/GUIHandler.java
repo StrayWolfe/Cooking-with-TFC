@@ -21,13 +21,9 @@ public class GUIHandler implements IGuiHandler
 		TileEntity entity = world.getTileEntity(x, y, z);
 		
 		if(ID == GUIs.PREPTABLE.ordinal() && entity != null && entity instanceof TEPrepTable)
-		{
 			return new ContainerPrepTable(player.inventory, (TEPrepTable)entity);
-		}
 		if(ID == GUIs.CLAYCOOKINGPOT.ordinal())
-		{
 			return new ContainerClayCookingPot(player.inventory, world, x, y, z);
-		}
 
 		return null;
 	}
@@ -38,13 +34,9 @@ public class GUIHandler implements IGuiHandler
 		TileEntity entity = world.getTileEntity(x, y, z);
 		
 		if(ID == GUIs.PREPTABLE.ordinal() && entity != null && entity instanceof TEPrepTable)
-		{
 			return new GUIPrepTable(player.inventory, (TEPrepTable)entity, world, x, y, z);
-		}
 		if(ID == GUIs.CLAYCOOKINGPOT.ordinal())
-		{
 			return new GUIClayCookingPot(player.inventory, world, x, y, z);
-		}
 
 		return null;
 	}

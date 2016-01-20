@@ -11,14 +11,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ClientProxyCWTFC extends CommonProxyCWTFC
 {
 	@Override
-	public ClientProxyCWTFC getClientProxy() {
+	public ClientProxyCWTFC getClientProxy() 
+	{
 		return this;
 	}
 
 	@Override
-	public void registerTileEntities(Boolean b) 
+	public void registerTileEntities() 
 	{
-		super.registerTileEntities(false);
+		super.registerTileEntities();
 		
 	}
 	

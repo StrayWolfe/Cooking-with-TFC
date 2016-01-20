@@ -77,11 +77,7 @@ public class blockPrepTable extends BlockTerraContainer
 	{
 		if (!world.isRemote)
 		{
-			if (player.isSneaking())
-			{
-				return false;
-			}
-			else
+			if (!player.isSneaking())
 			{
 				if (world.getTileEntity(x, y, z) instanceof TEPrepTable)
 				{					
@@ -95,18 +91,14 @@ public class blockPrepTable extends BlockTerraContainer
 	@Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-		if (!world.isRemote) 
+		if (!world.isRemote && world.getTileEntity(x, y, z) instanceof TEPrepTable) 
 		{
-			if (world.getTileEntity(x, y, z) instanceof TEPrepTable)
-			{
-				TEPrepTable te = (TEPrepTable)world.getTileEntity(x, y, z);
-			
-	            if (te != null) 
-	            {
-	                if (te.getOppositeTE() == null)
-	                	world.setBlockToAir(x, y, z);
-            	}
-            }
+			TEPrepTable te = (TEPrepTable)world.getTileEntity(x, y, z);
+            if (te != null) 
+            {
+                if (te.getOppositeTE() == null)
+                	world.setBlockToAir(x, y, z);
+        	}
         }
 
         super.onNeighborBlockChange(world, x, y, z, block);

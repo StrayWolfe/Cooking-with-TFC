@@ -20,7 +20,8 @@ import net.minecraft.world.World;
 public class EntityTransformPigTFC extends EntityPigTFC
 {
 
-	public EntityTransformPigTFC(World par1World) {
+	public EntityTransformPigTFC(World par1World) 
+	{
 		super(par1World);
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.wheatGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.ryeGrainCWTFC, false));
@@ -100,21 +101,18 @@ public class EntityTransformPigTFC extends EntityPigTFC
 			setGrowingAge(-1);
 		}
 
-		if (!this.worldObj.isRemote && isPregnant())
+		if (!this.worldObj.isRemote && isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
 		{
-			if(TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
+			for(int i = 0; i < 8 + rand.nextInt(5);i++)
 			{
-				for(int i = 0; i < 8 + rand.nextInt(5);i++)
-				{
-					EntityTransformPigTFC baby = (EntityTransformPigTFC) createChildTFC(this);
-					baby.setLocationAndAngles (posX, posY, posZ, 0.0F, 0.0F);
-					baby.rotationYawHead = baby.rotationYaw;
-					baby.renderYawOffset = baby.rotationYaw;
-					worldObj.spawnEntityInWorld(baby);
-					baby.setAge(TFC_Time.getTotalDays());
-				}
-				setPregnant(false);
+				EntityTransformPigTFC baby = (EntityTransformPigTFC) createChildTFC(this);
+				baby.setLocationAndAngles (posX, posY, posZ, 0.0F, 0.0F);
+				baby.rotationYawHead = baby.rotationYaw;
+				baby.renderYawOffset = baby.rotationYaw;
+				worldObj.spawnEntityInWorld(baby);
+				baby.setAge(TFC_Time.getTotalDays());
 			}
+			setPregnant(false);
 		}
 
 		/**
@@ -124,11 +122,9 @@ public class EntityTransformPigTFC extends EntityPigTFC
 		super.onLivingUpdate();
 		TFC_Core.preventEntityDataUpdate = false;
 
-		if (getHunger() > 144000 && rand.nextInt (100) == 0 && getHealth() < TFC_Core.getEntityMaxHealth(this) && !isDead){
+		if (getHunger() > 144000 && rand.nextInt (100) == 0 && getHealth() < TFC_Core.getEntityMaxHealth(this) && !isDead)
 			this.heal(1);
-		}
-		else if(getHunger() < 144000 && super.isInLove()){
+		else if(getHunger() < 144000 && super.isInLove())
 			this.setInLove(false);
-		}
 	}
 }

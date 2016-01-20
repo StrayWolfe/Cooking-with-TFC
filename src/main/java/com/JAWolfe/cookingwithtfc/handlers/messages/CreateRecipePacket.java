@@ -54,21 +54,9 @@ public class CreateRecipePacket extends AbstractPacket
 		
 		switch(this.button)
 		{
-			case 0:
-			{
-				te.subRecipeListRef();
-				break;
-			}
-			case 1:
-			{
-				te.addRecipeListRef();
-				break;
-			}
-			case 2:
-			{
-				te.popRecipes(player);
-				break;
-			}
+			case 0:	te.subRecipeListRef(); break;
+			case 1: te.addRecipeListRef(); break;
+			case 2: te.popRecipes(player); break;
 			default: break;
 		}
 	}

@@ -43,7 +43,8 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 	private double mateJumpStrengthCWTFC = this.calcJumpStrength();
 	private double mateMoveSpeedCWTFC = this.calcMoveSpeed();
 	
-	public EntityTransformHorseTFC(World par1World) {
+	public EntityTransformHorseTFC(World par1World) 
+	{
 		super(par1World);		
 		this.tasks.addTask(3, new EntityAIAvoidEntityTFC(this, EntityTransformWolfTFC.class, 8f, 1.0F, 1.2F));
 		this.tasks.addTask(3, new EntityAIAvoidEntityTFC(this, EntityTransformBear.class, 16f, 1.0F, 1.2F));
@@ -90,13 +91,9 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 	public boolean canMateWith(EntityAnimal animal)
 	{
 		if (animal == this)
-		{
 			return false;
-		}
 		else if (animal.getClass() != this.getClass())
-		{
 			return false;
-		}
 		else
 		{
 			EntityTransformHorseTFC entityhorse = (EntityTransformHorseTFC) animal;
@@ -108,9 +105,7 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 				return i == j || i == 0 && j == 1 || i == 1 && j == 0;
 			}
 			else
-			{
 				return false;
-			}
 		}
 	}
 	
@@ -152,45 +147,29 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 		int babyVariant = 0;
 
 		if (momType == dadType)
-		{
 			babyType = momType;
-		}
 		else if (momType == 0 && dadType == 1 || momType == 1 && dadType == 0)
-		{
 			babyType = 2; // Create Mule
-		}
 
 		if (babyType == 0)
 		{
 			int l = this.rand.nextInt(9);
 
 			if (l < 4)
-			{
 				babyVariant = this.getHorseVariant() & 255;
-			}
 			else if (l < 8)
-			{
 				babyVariant = mateVariantCWTFC & 255;
-			}
 			else
-			{
 				babyVariant = this.rand.nextInt(7);
-			}
 
 			int j1 = this.rand.nextInt(5);
 
 			if (j1 < 4)
-			{
 				babyVariant |= this.getHorseVariant() & 65280;
-			}
 			else if (j1 < 8)
-			{
 				babyVariant |= mateVariantCWTFC & 65280;
-			}
 			else
-			{
 				babyVariant |= this.rand.nextInt(5) << 8 & 65280;
-			}
 		}
 
 		EntityTransformHorseTFC baby = new EntityTransformHorseTFC(worldObj, this, data, babyType, babyVariant);
@@ -235,7 +214,8 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 	}
 	
 	@Override
-	public boolean isFood(ItemStack item) {
+	public boolean isFood(ItemStack item) 
+	{
 		return item != null && (item.getItem() == CWTFCItems.wheatGrainCWTFC ||item.getItem() == CWTFCItems.oatGrainCWTFC||item.getItem() == CWTFCItems.riceGrainCWTFC||
 				item.getItem() == CWTFCItems.barleyGrainCWTFC||item.getItem() == CWTFCItems.ryeGrainCWTFC||item.getItem() == CWTFCItems.maizeEarCWTFC);
 	}
@@ -276,9 +256,7 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 			setHunger(getHunger() - 1);
 
 		if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && rand.nextInt(600) == 0 && !getFamiliarizedToday() && canFamiliarize())
-		{
 			this.familiarize(((EntityPlayer)this.riddenByEntity));
-		}
 
 		syncData();
 		if(isAdult())
@@ -287,18 +265,15 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 			setGrowingAge(-1);
 
 		this.handleFamiliarityUpdate();
-		if (!this.worldObj.isRemote && isPregnant())
+		if (!this.worldObj.isRemote && isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
 		{
-			if (TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
-			{
-				EntityTransformHorseTFC baby = (EntityTransformHorseTFC) createChildTFC(this);
-				baby.setLocationAndAngles (posX, posY, posZ, 0.0F, 0.0F);
-				baby.rotationYawHead = baby.rotationYaw;
-				baby.renderYawOffset = baby.rotationYaw;
-				worldObj.spawnEntityInWorld(baby);
-				baby.setAge(TFC_Time.getTotalDays());
-				setPregnant(false);
-			}
+			EntityTransformHorseTFC baby = (EntityTransformHorseTFC) createChildTFC(this);
+			baby.setLocationAndAngles (posX, posY, posZ, 0.0F, 0.0F);
+			baby.rotationYawHead = baby.rotationYaw;
+			baby.renderYawOffset = baby.rotationYaw;
+			worldObj.spawnEntityInWorld(baby);
+			baby.setAge(TFC_Time.getTotalDays());
+			setPregnant(false);
 		}
 
 		/**
@@ -308,13 +283,10 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 		super.onLivingUpdate();
 		TFC_Core.preventEntityDataUpdate = false;
 
-		if (getHunger() > 144000 && rand.nextInt (100) == 0 && getHealth() < TFC_Core.getEntityMaxHealth(this) && !isDead){
-
+		if (getHunger() > 144000 && rand.nextInt (100) == 0 && getHealth() < TFC_Core.getEntityMaxHealth(this) && !isDead)
 			this.heal(1);
-		}
-		else if(getHunger() < 144000 && super.isInLove()){
+		else if(getHunger() < 144000 && super.isInLove())
 			this.setInLove(false);
-		}
 	}
 	
 	@Override

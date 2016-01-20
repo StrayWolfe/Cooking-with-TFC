@@ -60,29 +60,16 @@ public class ContainerPrepTable extends ContainerTFC
             int TableSlotCount = tePrepTable.getSizeInventory();
 
             //From Table to Inventory
-            if (slotIndex < TableSlotCount)
-            {
-            	if (!this.mergeItemStack(slotStack, TableSlotCount, this.inventorySlots.size(), false))
-                {
-                    return null;
-                }
-            }
+            if (slotIndex < TableSlotCount && !this.mergeItemStack(slotStack, TableSlotCount, this.inventorySlots.size(), false))
+            	return null;
             //From Inventory to Food
-            else if(slotStack.getItem() instanceof ItemFoodTFC)
-            {            	
-            	if (!this.mergeItemStack(slotStack, TEPrepTable.FOOD_INPUT_START, TEPrepTable.COOKWARE_INPUT_START, false))
-                {
-                    return null;
-                }
-            }
+            else if(slotStack.getItem() instanceof ItemFoodTFC && 
+            		!this.mergeItemStack(slotStack, TEPrepTable.FOOD_INPUT_START, TEPrepTable.COOKWARE_INPUT_START, false))
+                return null;
             //From Inventory to Cookware
-            else if(tePrepTable.isCookware(slotStack))
-            {	
-            	if (!this.mergeItemStack(slotStack, TEPrepTable.COOKWARE_INPUT_START, TableSlotCount, false))
-                {
-                    return null;
-                }
-            }
+            else if(tePrepTable.isCookware(slotStack) && 
+            		!this.mergeItemStack(slotStack, TEPrepTable.COOKWARE_INPUT_START, TableSlotCount, false))
+                return null;
             
             if(slotStack.stackSize <= 0)
 				slot.putStack(null);

@@ -103,18 +103,15 @@ public class EntityTransformBear extends EntityBear
 				worldObj.setEntityState(this, (byte) 8);
 			}
 
-			if (isPregnant())
+			if (isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
 			{
-				if (TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
+				int i = rand.nextInt(3) + 1;
+				for (int x = 0; x < i; x++)
 				{
-					int i = rand.nextInt(3) + 1;
-					for (int x = 0; x < i; x++)
-					{
-						EntityTransformBear baby = (EntityTransformBear) createChildTFC(this);
-						worldObj.spawnEntityInWorld(baby);
-					}
-					setPregnant(false);
+					EntityTransformBear baby = (EntityTransformBear) createChildTFC(this);
+					worldObj.spawnEntityInWorld(baby);
 				}
+				setPregnant(false);
 			}
 		}
 

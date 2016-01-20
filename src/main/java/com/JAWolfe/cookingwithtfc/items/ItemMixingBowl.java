@@ -52,9 +52,8 @@ public class ItemMixingBowl extends ItemTerraBlock
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List metadata)
 	{
-		for(int i = 0; i < metaNames.length; i++) {
+		for(int i = 0; i < metaNames.length; i++)
 			metadata.add(new ItemStack(this, 1, i));
-		}
 	}
 	
 	@Override
@@ -63,16 +62,12 @@ public class ItemMixingBowl extends ItemTerraBlock
 		if(metadata > 0)
 		{
 			if (!world.setBlock(x, y, z, field_150939_a, metadata&15, 3))
-			{
 				return false;
-			}
 
 			if (world.getBlock(x, y, z) == field_150939_a)
 			{
 				field_150939_a.onBlockPlacedBy(world, x, y, z, player, stack);
 				field_150939_a.onPostBlockPlaced(world, x, y, z, 0);
-
-				//TEMixBowl te = (TEMixBowl) world.getTileEntity(x, y, z);
 				return true;
 			}
 		}
@@ -81,7 +76,6 @@ public class ItemMixingBowl extends ItemTerraBlock
 			Block base = world.getBlock(x, y-1, z);
 			if(base != TFCBlocks.pottery && world.isAirBlock(x, y, z))
 			{
-				//We only want the pottery to be placeable if the block is solid on top.
 				if(!world.isSideSolid(x, y-1, z, ForgeDirection.UP))
 					return false;
 				world.setBlock(x, y, z, TFCBlocks.pottery);

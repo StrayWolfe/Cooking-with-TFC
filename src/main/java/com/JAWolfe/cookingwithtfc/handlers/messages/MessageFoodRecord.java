@@ -34,9 +34,7 @@ public class MessageFoodRecord extends AbstractPacket
 		for(int i = 0; i < this.RecordSize; ++i)
 		{
 			if(this.foodrecord.FoodsEaten[i] != null)
-			{
 				ByteBufUtils.writeUTF8String(buffer, this.foodrecord.FoodsEaten[i]);
-			}
 		}		
 	}
 

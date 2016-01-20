@@ -21,7 +21,8 @@ public class EntityTransformSheepTFC extends EntitySheepTFC
 {
 	private float mateSizeModCWTFC;
 
-	public EntityTransformSheepTFC(World par1World) {
+	public EntityTransformSheepTFC(World par1World) 
+	{
 		super(par1World);
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.wheatGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.ryeGrainCWTFC, false));
@@ -113,23 +114,22 @@ public class EntityTransformSheepTFC extends EntitySheepTFC
 			setGrowingAge(-1);
 		}
 
-		if (!this.worldObj.isRemote && isPregnant())
-			if (TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
+		if (!this.worldObj.isRemote && isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
+		{
+			int i = rand.nextInt(3) + 1;
+			for (int x = 0; x < i; x++)
 			{
-				int i = rand.nextInt(3) + 1;
-				for (int x = 0; x < i; x++)
-				{
-					ArrayList<Float> data = new ArrayList<Float>();
-					data.add(mateSizeModCWTFC);
-					EntityTransformSheepTFC baby = new EntityTransformSheepTFC(worldObj, this, data);
-					baby.setLocationAndAngles(posX, posY, posZ, 0.0F, 0.0F);
-					baby.rotationYawHead = baby.rotationYaw;
-					baby.renderYawOffset = baby.rotationYaw;
-					worldObj.spawnEntityInWorld(baby);
-					baby.setAge(TFC_Time.getTotalDays());
-				}
-				setPregnant(false);
+				ArrayList<Float> data = new ArrayList<Float>();
+				data.add(mateSizeModCWTFC);
+				EntityTransformSheepTFC baby = new EntityTransformSheepTFC(worldObj, this, data);
+				baby.setLocationAndAngles(posX, posY, posZ, 0.0F, 0.0F);
+				baby.rotationYawHead = baby.rotationYaw;
+				baby.renderYawOffset = baby.rotationYaw;
+				worldObj.spawnEntityInWorld(baby);
+				baby.setAge(TFC_Time.getTotalDays());
 			}
+			setPregnant(false);
+		}
 
 		/**
 		 * This Cancels out the changes made to growingAge by EntityAgeable
@@ -139,13 +139,9 @@ public class EntityTransformSheepTFC extends EntitySheepTFC
 		TFC_Core.preventEntityDataUpdate = false;
 
 		if (getHunger() > 144000 && rand.nextInt(100) == 0 && getHealth() < TFC_Core.getEntityMaxHealth(this) && !isDead)
-		{
 			this.heal(1);
-		}
 		else if (getHunger() < 144000 && super.isInLove())
-		{
 			this.setInLove(false);
-		}
 	}
 	
 	@Override

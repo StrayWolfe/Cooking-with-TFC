@@ -14,7 +14,7 @@ public class SlotCookwareOnly extends Slot
 	{
 		super(inventory, slotIndex, xDisplayPosition, yDisplayPosition);
 		if(inventory instanceof TEPrepTable)
-		teTable = (TEPrepTable) inventory;
+			teTable = (TEPrepTable) inventory;
 	}
 
 	@Override

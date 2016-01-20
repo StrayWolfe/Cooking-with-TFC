@@ -114,18 +114,15 @@ public class EntityTransformCowTFC extends EntityCowTFC
 			setGrowingAge(-1);
 		}
 		
-		if (!this.worldObj.isRemote && isPregnant())
+		if (!this.worldObj.isRemote && isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
 		{
-			if (TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
-			{
-				EntityTransformCowTFC baby = (EntityTransformCowTFC) createChildTFC(this);
-				baby.setLocationAndAngles(posX, posY, posZ, 0.0F, 0.0F);
-				baby.rotationYawHead = baby.rotationYaw;
-				baby.renderYawOffset = baby.rotationYaw;
-				worldObj.spawnEntityInWorld(baby);
-				baby.setAge(TFC_Time.getTotalDays());
-				setPregnant(false);
-			}
+			EntityTransformCowTFC baby = (EntityTransformCowTFC) createChildTFC(this);
+			baby.setLocationAndAngles(posX, posY, posZ, 0.0F, 0.0F);
+			baby.rotationYawHead = baby.rotationYaw;
+			baby.renderYawOffset = baby.rotationYaw;
+			worldObj.spawnEntityInWorld(baby);
+			baby.setAge(TFC_Time.getTotalDays());
+			setPregnant(false);
 		}
 
 		/**
@@ -197,15 +194,14 @@ public class EntityTransformCowTFC extends EntityCowTFC
 			this.func_146082_f(player);
 			return true;
 		}
-		else if(itemstack != null && itemstack.getItem() instanceof ItemCustomNameTag && itemstack.hasTagCompound() && itemstack.stackTagCompound.hasKey("ItemName")){
-			if(this.trySetName(itemstack.stackTagCompound.getString("ItemName"), player)){
+		else if(itemstack != null && itemstack.getItem() instanceof ItemCustomNameTag && itemstack.hasTagCompound() && itemstack.stackTagCompound.hasKey("ItemName"))
+		{
+			if(this.trySetName(itemstack.stackTagCompound.getString("ItemName"), player))
 				itemstack.stackSize--;
-			}
+
 			return true;
 		}
 		else
-		{
 			return super.interact(player);
-		}
 	}
 }

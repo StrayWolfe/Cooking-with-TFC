@@ -158,9 +158,7 @@ public class PlayerHandler
 				Material mat = id.getMaterial();
 				if(event.face == 1 && id.isSideSolid(event.world, event.x, event.y, event.z, ForgeDirection.UP) &&!TFC_Core.isSoil(id) && !TFC_Core.isWater(id) && event.world.isAirBlock(event.x, event.y + 1, event.z) &&
 						(mat == Material.wood || mat == Material.rock || mat == Material.iron))
-				{
 					event.setCanceled(true);
-				}
 			}
 		}
 		

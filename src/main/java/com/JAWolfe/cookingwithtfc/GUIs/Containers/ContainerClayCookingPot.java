@@ -135,16 +135,10 @@ public class ContainerClayCookingPot extends ContainerTFC
 		{			
 			if((cookingPot).getInputMode(player.getCurrentEquippedItem()))
 			{
-				if(FluidContainerRegistry.isFilledContainer(is))
-				{
-					if(cookingPot.addLiquid(FluidContainerRegistry.getFluidForFilledItem(is)))
-						((Slot)this.inventorySlots.get(0)).putStack(FluidContainerRegistry.drainFluidContainer(is));
-				}
-				else if(is.getItem() instanceof IFluidContainerItem)
-				{
-					if(cookingPot.addLiquid(((IFluidContainerItem) is.getItem()).getFluid(is)))
-						((Slot)this.inventorySlots.get(0)).putStack(FluidContainerRegistry.drainFluidContainer(is));
-				}
+				if(FluidContainerRegistry.isFilledContainer(is) && cookingPot.addLiquid(FluidContainerRegistry.getFluidForFilledItem(is)))
+					((Slot)this.inventorySlots.get(0)).putStack(FluidContainerRegistry.drainFluidContainer(is));
+				else if(is.getItem() instanceof IFluidContainerItem && cookingPot.addLiquid(((IFluidContainerItem) is.getItem()).getFluid(is)))
+					((Slot)this.inventorySlots.get(0)).putStack(FluidContainerRegistry.drainFluidContainer(is));
 			}
 			else
 			{
@@ -164,9 +158,8 @@ public class ContainerClayCookingPot extends ContainerTFC
 					{
 						ItemStack fullContainer = cookingPot.removeLiquid(is);
 						if (fullContainer.getItem() == CWTFCItems.woodenBucketMilkCWTFC)
-						{
 							ItemCustomBucketMilk.createTag(fullContainer, 20F);
-						}
+
 						((Slot)this.inventorySlots.get(0)).putStack(fullContainer);
 					}
 				}
@@ -192,15 +185,10 @@ public class ContainerClayCookingPot extends ContainerTFC
 			ItemStack slotStack = slot.getStack();
 			origStack = slotStack.copy();
 
-			if (slotNum < 5) {
-				if (!this.mergeItemStack(slotStack, 5, inventorySlots.size(), true))
-					return null;
-			}
-			else 
-			{
-				if (!this.mergeItemStack(slotStack, 0, 5, false))
-					return null;
-			}
+			if (slotNum < 5 && !this.mergeItemStack(slotStack, 5, inventorySlots.size(), true))
+				return null;
+			else if (!this.mergeItemStack(slotStack, 0, 5, false))
+				return null;
 
 			if (slotStack.stackSize <= 0)
 				slot.putStack(null);

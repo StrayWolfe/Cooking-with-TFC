@@ -3,12 +3,14 @@ package com.JAWolfe.cookingwithtfc.proxy;
 public class ServerProxyCWTFC extends CommonProxyCWTFC
 {	
 	@Override
-	public ClientProxyCWTFC getClientProxy() {
+	public ClientProxyCWTFC getClientProxy() 
+	{
 		return null;
 	}
 
 	@Override
-	public void registerTileEntities(Boolean b) {
-		super.registerTileEntities(false);		
+	public void registerTileEntities() 
+	{
+		super.registerTileEntities();		
 	}
 }

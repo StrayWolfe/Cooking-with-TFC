@@ -172,24 +172,21 @@ public class EntityTransformWolfTFC extends EntityWolfTFC
 
 		syncData();
 
-		if (!this.worldObj.isRemote && isPregnant())
+		if (!this.worldObj.isRemote && isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
 		{
-			if (TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
+			int i = rand.nextInt(2) + 1;
+			for (int x = 0; x < i; x++)
 			{
-				int i = rand.nextInt(2) + 1;
-				for (int x = 0; x < i; x++)
-				{
-					ArrayList<Float> data = new ArrayList<Float>();
-					data.add(mateSizeModCWTFC);
-					EntityTransformWolfTFC baby = (EntityTransformWolfTFC) this.createChildTFC(this);
-					baby.setLocationAndAngles(posX , posY, posZ, 0.0F, 0.0F);
-					baby.rotationYawHead = baby.rotationYaw;
-					baby.renderYawOffset = baby.rotationYaw;
-					baby.setAge(TFC_Time.getTotalDays());
-					worldObj.spawnEntityInWorld(baby);
-				}
-				setPregnant(false);
+				ArrayList<Float> data = new ArrayList<Float>();
+				data.add(mateSizeModCWTFC);
+				EntityTransformWolfTFC baby = (EntityTransformWolfTFC) this.createChildTFC(this);
+				baby.setLocationAndAngles(posX , posY, posZ, 0.0F, 0.0F);
+				baby.rotationYawHead = baby.rotationYaw;
+				baby.renderYawOffset = baby.rotationYaw;
+				baby.setAge(TFC_Time.getTotalDays());
+				worldObj.spawnEntityInWorld(baby);
 			}
+			setPregnant(false);
 		}
 
 		/**
@@ -200,13 +197,9 @@ public class EntityTransformWolfTFC extends EntityWolfTFC
 		TFC_Core.preventEntityDataUpdate = false;
 
 		if (getHunger() > 144000 && rand.nextInt(100) == 0 && getHealth() < TFC_Core.getEntityMaxHealth(this) && !isDead)
-		{
 			this.heal(1);
-		}
 		else if (getHunger() < 144000 && super.isInLove())
-		{
 			this.setInLove(false);
-		}
 
 		// Owners can leash a dog to themselves to calm it down
 		if (this.getLeashed() && this.isAngry() && getLeashedToEntity() == this.getOwner())

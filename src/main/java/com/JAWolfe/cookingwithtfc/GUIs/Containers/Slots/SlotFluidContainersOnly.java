@@ -18,13 +18,8 @@ public class SlotFluidContainersOnly extends Slot
 	@Override
 	public boolean isItemValid(ItemStack is)
 	{
-		if(is.getItem() == TFCItems.potteryJug || is.getItem() == TFCItems.potteryBowl)
-		{
-			if(is.getItemDamage() != 0)
-			{
-				return true;
-			}
-		}
+		if((is.getItem() == TFCItems.potteryJug || is.getItem() == TFCItems.potteryBowl) && is.getItemDamage() != 0)
+			return true;
 		else if(is.getItem() == TFCItems.woodenBucketEmpty || is.getItem() == TFCItems.woodenBucketWater ||
 				is.getItem() == TFCItems.woodenBucketSaltWater || is.getItem() == CWTFCItems.woodenBucketMilkCWTFC ||
 				is.getItem() == TFCItems.redSteelBucketEmpty || is.getItem() == TFCItems.redSteelBucketWater ||

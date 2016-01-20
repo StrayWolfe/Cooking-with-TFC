@@ -109,16 +109,13 @@ public class blockGrains extends BlockTerraContainer
 	@Override
 	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer entityplayer)
 	{
-		if(!world.isRemote)
+		if(!world.isRemote && world.getTileEntity(x, y, z) instanceof TEGrains)
 		{
-			if (world.getTileEntity(x, y, z) instanceof TEGrains)
+			TEGrains te = (TEGrains)world.getTileEntity(x, y, z);
+			if(te.processGrains())
 			{
-				TEGrains te = (TEGrains)world.getTileEntity(x, y, z);
-				if(te.processGrains())
-				{
-					eject(world, x, y, z);
-					world.setBlockToAir(x, y, z);
-				}
+				eject(world, x, y, z);
+				world.setBlockToAir(x, y, z);
 			}
 		}
 	}

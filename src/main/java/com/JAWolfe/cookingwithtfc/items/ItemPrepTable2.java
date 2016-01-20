@@ -12,7 +12,8 @@ import net.minecraft.world.World;
 public class ItemPrepTable2 extends ItemPrepTable
 {
 
-	public ItemPrepTable2(Block b) {
+	public ItemPrepTable2(Block b) 
+	{
 		super(b);
 		metaNames = new String[Global.WOOD_ALL.length - 16];
 		System.arraycopy(Global.WOOD_ALL, 16, metaNames, 0, Global.WOOD_ALL.length - 16);
@@ -23,7 +24,6 @@ public class ItemPrepTable2 extends ItemPrepTable
 	{
         if (world.setBlock(x, y, z, field_150939_a, metadata&15, 3)) 
         {
-
         	field_150939_a.onBlockPlacedBy(world, x, y, z, player, stack);
         	field_150939_a.onPostBlockPlaced(world, x, y, z, 0);
         	
@@ -32,11 +32,9 @@ public class ItemPrepTable2 extends ItemPrepTable
 
             return true;
 
-        } else {
-
+        } 
+        else
             return false;
-
-        }
     }
 
 	@Override
@@ -50,9 +48,8 @@ public class ItemPrepTable2 extends ItemPrepTable
 	{
 		String s = "";
 		if(is.getItemDamage() == 0)
-		{
 			s += TFC_Core.translate("wood.Acacia") + " ";
-		}		
+		
 		s += TFC_Core.translate(this.getUnlocalizedNameInefficiently(is) + ".name");
 		return s.trim();
 	}

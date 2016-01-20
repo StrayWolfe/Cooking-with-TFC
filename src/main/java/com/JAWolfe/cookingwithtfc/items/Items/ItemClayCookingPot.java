@@ -66,13 +66,10 @@ public class ItemClayCookingPot extends ItemPotteryBase implements IBag, ICookab
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer)
 	{
-		if(!entityplayer.isSneaking())
+		if(!entityplayer.isSneaking() && itemstack.getItemDamage() != 0)
 		{
-			if(itemstack.getItemDamage() != 0)
-			{
-				entityplayer.openGui(CookingWithTFC.instance, GUIs.CLAYCOOKINGPOT.ordinal(), 
-						entityplayer.worldObj, (int)entityplayer.posX, (int)entityplayer.posY, (int)entityplayer.posZ);
-			}
+			entityplayer.openGui(CookingWithTFC.instance, GUIs.CLAYCOOKINGPOT.ordinal(), 
+					entityplayer.worldObj, (int)entityplayer.posX, (int)entityplayer.posY, (int)entityplayer.posZ);
 		}
 		
 		return itemstack;
@@ -95,7 +92,6 @@ public class ItemClayCookingPot extends ItemPotteryBase implements IBag, ICookab
 
 	@Override
 	public ItemStack[] loadBagInventory(ItemStack is) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

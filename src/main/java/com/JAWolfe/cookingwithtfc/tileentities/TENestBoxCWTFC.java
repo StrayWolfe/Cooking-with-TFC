@@ -45,24 +45,21 @@ public class TENestBoxCWTFC extends TENestBox
 			//Care for the eggs in the hatchery
 			for(int i = 0;i < this.getSizeInventory();i++)
 			{
-				if(inventory[i] != null)
+				if(inventory[i] != null && inventory[i].getTagCompound() != null && inventory[i].getTagCompound().hasKey("Fertilized"))
 				{
-					if(inventory[i].getTagCompound() != null && inventory[i].getTagCompound().hasKey("Fertilized"))
+					long time = inventory[i].getTagCompound().getLong("Fertilized");
+					if(time <= TFC_Time.getTotalTicks())
 					{
-						long time = inventory[i].getTagCompound().getLong("Fertilized");
-						if(time <= TFC_Time.getTotalTicks())
-						{
-							EntityTransformChickenTFC chick = new EntityTransformChickenTFC(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 
-									(NBTTagCompound) inventory[i].getTagCompound().getTag("Genes"));
-							if(worldObj.isAirBlock(xCoord, yCoord + 1, zCoord))
-								chick.setLocationAndAngles (xCoord, yCoord + 1, zCoord, 0.0F, 0.0F);
-							else
-								chick.setLocationAndAngles (xCoord, yCoord, zCoord, 0.0F, 0.0F);
-							chick.rotationYawHead = chick.rotationYaw;
-							chick.renderYawOffset = chick.rotationYaw;
-							worldObj.spawnEntityInWorld(chick);
-							inventory[i] = null;
-						}
+						EntityTransformChickenTFC chick = new EntityTransformChickenTFC(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 
+								(NBTTagCompound) inventory[i].getTagCompound().getTag("Genes"));
+						if(worldObj.isAirBlock(xCoord, yCoord + 1, zCoord))
+							chick.setLocationAndAngles (xCoord, yCoord + 1, zCoord, 0.0F, 0.0F);
+						else
+							chick.setLocationAndAngles (xCoord, yCoord, zCoord, 0.0F, 0.0F);
+						chick.rotationYawHead = chick.rotationYaw;
+						chick.renderYawOffset = chick.rotationYaw;
+						worldObj.spawnEntityInWorld(chick);
+						inventory[i] = null;
 					}
 				}
 			}

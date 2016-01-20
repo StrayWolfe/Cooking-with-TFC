@@ -138,14 +138,11 @@ public class blockMixBowl extends BlockTerraContainer
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
 	{
-		if(!world.isRemote)
+		if(!world.isRemote && !world.isSideSolid(x, y - 1, z, ForgeDirection.UP))
 		{
-			if(!world.isSideSolid(x, y - 1, z, ForgeDirection.UP))
-			{
-				eject(world, x, y, z);
-				world.setBlockToAir(x, y, z);
-				return;
-			}
+			eject(world, x, y, z);
+			world.setBlockToAir(x, y, z);
+			return;
 		}
 	}
 	

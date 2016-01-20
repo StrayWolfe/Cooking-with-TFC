@@ -52,8 +52,7 @@ public class AIFindNest extends EntityAIFindNest
 			return ((EntityTransformChickenTFC) chicken).isAdult() &&((EntityTransformChickenTFC) chicken).getFamiliarity() >= 15 &&
 					chicken.worldObj.getBlock((int)chicken.posX, (int)chicken.posY,(int)chicken.posZ) != CWTFCBlocks.nestBoxCWTFC &&
 					chicken.worldObj.getBlock((int)chicken.posX, (int)chicken.posY - 1,(int)chicken.posZ) != CWTFCBlocks.nestBoxCWTFC &&
-					this.getNearbySitableBlockDistance() &&
-					((EntityTransformChickenTFC) chicken).getGender() == GenderEnum.FEMALE;
+					this.getNearbySitableBlockDistance() && ((EntityTransformChickenTFC) chicken).getGender() == GenderEnum.FEMALE;
 		}
 		return false;
 	}

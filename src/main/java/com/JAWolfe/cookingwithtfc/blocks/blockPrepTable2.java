@@ -58,21 +58,11 @@ public class blockPrepTable2 extends blockPrepTable
 	@Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
     {
-		if (!world.isRemote) 
+		if (!world.isRemote && world.getTileEntity(x, y, z) instanceof TEPrepTable) 
 		{
-			if (world.getTileEntity(x, y, z) instanceof TEPrepTable)
-			{
-				TEPrepTable te = (TEPrepTable)world.getTileEntity(x, y, z);
-			
-	            if (te != null) 
-	            {
-	                if (te.getOppositeTE() == null)
-	                {
-	                	LogHelper.info("Destroy block");
-	                	world.setBlockToAir(x, y, z);
-	                }
-            	}
-            }
+			TEPrepTable te = (TEPrepTable)world.getTileEntity(x, y, z);			
+            if (te != null && te.getOppositeTE() == null) 
+                world.setBlockToAir(x, y, z);
         }
 
         super.onNeighborBlockChange(world, x, y, z, block);

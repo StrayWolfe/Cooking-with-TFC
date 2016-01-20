@@ -18,7 +18,8 @@ import net.minecraft.world.World;
 public class EntityTransformDeer extends EntityDeer
 {
 
-	public EntityTransformDeer(World par1World) {
+	public EntityTransformDeer(World par1World) 
+	{
 		super(par1World);
 
 		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformWolfTFC.class, 8f, 0.7F, 1.0F));
@@ -76,18 +77,15 @@ public class EntityTransformDeer extends EntityDeer
 		
 		this.handleFamiliarityUpdate();
 
-		if (!this.worldObj.isRemote && isPregnant())
+		if (!this.worldObj.isRemote && isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
 		{
-			if(TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
-			{
-				EntityTransformDeer baby = (EntityTransformDeer) createChildTFC(this);
-				baby.setLocationAndAngles(posX + (rand.nextFloat() - 0.5F) * 2F, posY, posZ + (rand.nextFloat() - 0.5F) * 2F, 0.0F, 0.0F);
-				baby.rotationYawHead = baby.rotationYaw;
-				baby.renderYawOffset = baby.rotationYaw;
-				worldObj.spawnEntityInWorld(baby);
-				baby.setAge(TFC_Time.getTotalDays());
-				setPregnant(false);
-			}
+			EntityTransformDeer baby = (EntityTransformDeer) createChildTFC(this);
+			baby.setLocationAndAngles(posX + (rand.nextFloat() - 0.5F) * 2F, posY, posZ + (rand.nextFloat() - 0.5F) * 2F, 0.0F, 0.0F);
+			baby.rotationYawHead = baby.rotationYaw;
+			baby.renderYawOffset = baby.rotationYaw;
+			worldObj.spawnEntityInWorld(baby);
+			baby.setAge(TFC_Time.getTotalDays());
+			setPregnant(false);
 		}
 
 		if(getAttackedVec() != null)

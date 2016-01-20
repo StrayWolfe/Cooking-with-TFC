@@ -49,9 +49,7 @@ public class EntityTransformPheasant extends EntityPheasantTFC
 		super.onLivingUpdate();
 		
 		if (isAdult())
-		{
 			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
-		}
 		else
 		{
 			float maxBaseHealth = 50 * this.getSizeMod() * this.getStrengthMod();

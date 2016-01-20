@@ -9,7 +9,7 @@ public interface IProxyCWTFC
 	
 	public abstract EntityPlayer getPlayerEntity(MessageContext ctx);
 	
-	public abstract void registerTileEntities(Boolean b);
+	public abstract void registerTileEntities();
 	
 	public abstract void registerFluids();
 	

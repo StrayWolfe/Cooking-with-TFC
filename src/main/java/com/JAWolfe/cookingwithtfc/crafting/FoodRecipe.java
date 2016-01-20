@@ -41,11 +41,9 @@ public class FoodRecipe
 	
 	public boolean matches(ItemStack[] cookware, ItemStack[] ingredients)
 	{
-		if(areItemListsEqual(this.cookware, cookware) &&
-				areItemListsEqual(this.ingredients, ingredients))
-			{
-				return true;
-			}		
+		if(areItemListsEqual(this.cookware, cookware) && areItemListsEqual(this.ingredients, ingredients))
+			return true;
+		else
 			return false;
 	}
 	
@@ -53,7 +51,6 @@ public class FoodRecipe
 	{
 		if(il1 != null && il2 != null)
 		{
-
 			for(int x = 0; x < il1.length; x++)
 			{
 				if(!ListHasItem(il1[x], il2))

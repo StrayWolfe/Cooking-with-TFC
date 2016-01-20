@@ -23,11 +23,11 @@ public class SlotFoodsOnly extends Slot
 		{
 			if(is.getItem() instanceof ItemTFCMeatTransform && !Food.isCooked(is))
 				return false;
-			
-			return true;
+			else
+				return true;
 		}
-		
-		return false;
+		else
+			return false;
 	}
 
 	@Override

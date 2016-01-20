@@ -47,7 +47,7 @@ public class CookingWithTFC
 		CWTFCBlocks.initialise();
 		
 		//Register Tile Entities
-		proxy.registerTileEntities(true);
+		proxy.registerTileEntities();
 	}
 
 	@EventHandler

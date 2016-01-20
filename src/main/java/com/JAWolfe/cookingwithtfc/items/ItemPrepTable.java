@@ -86,9 +86,8 @@ public class ItemPrepTable extends ItemTerraBlock
 	@Override
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list)
 	{
-		for(int i = 0; i < metaNames.length; i++) {
+		for(int i = 0; i < metaNames.length; i++)
 			list.add(new ItemStack(this,1,i));
-		}
 	}
 	
 	@Override
@@ -132,7 +131,6 @@ public class ItemPrepTable extends ItemTerraBlock
 	{
         if (world.setBlock(x, y, z, field_150939_a, metadata&15, 3)) 
         {
-
         	field_150939_a.onBlockPlacedBy(world, x, y, z, player, stack);
         	field_150939_a.onPostBlockPlaced(world, x, y, z, 0);
         	
@@ -141,10 +139,8 @@ public class ItemPrepTable extends ItemTerraBlock
 
             return true;
 
-        } else {
-
+        } 
+        else
             return false;
-
-        }
     }
 }

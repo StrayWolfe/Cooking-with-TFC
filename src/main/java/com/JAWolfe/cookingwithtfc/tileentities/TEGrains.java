@@ -37,14 +37,11 @@ public class TEGrains extends NetworkTileEntity
 	@Override
 	public void updateEntity()
 	{		
-		if(!worldObj.isRemote)
+		if(!worldObj.isRemote && placedGrain != null)
 		{
-			if(placedGrain != null)
-			{
-				placedGrain = TFC_Core.tickDecay(placedGrain, worldObj,  xCoord, yCoord, zCoord, 1f, 1f);
-				if(placedGrain == null)
-					worldObj.setBlockToAir(xCoord, yCoord, zCoord);
-			}
+			placedGrain = TFC_Core.tickDecay(placedGrain, worldObj,  xCoord, yCoord, zCoord, 1f, 1f);
+			if(placedGrain == null)
+				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
 		}
 	}
 	
@@ -157,7 +154,8 @@ public class TEGrains extends NetworkTileEntity
 	}
 	
 	@Override
-	public void handleInitPacket(NBTTagCompound nbt) {
+	public void handleInitPacket(NBTTagCompound nbt) 
+	{
 		this.stage = nbt.getInteger("stage");
 		this.workcounter = nbt.getInteger("WorkCounter");
 		this.strawCount = nbt.getInteger("StrawCount");
@@ -176,7 +174,8 @@ public class TEGrains extends NetworkTileEntity
 	}
 
 	@Override
-	public void createDataNBT(NBTTagCompound nbt) {
+	public void createDataNBT(NBTTagCompound nbt) 
+	{
 		nbt.setInteger("stage", this.stage);
 		nbt.setInteger("StrawCount", this.strawCount);
         nbt.setInteger("WorkCounter", this.workcounter);
@@ -186,7 +185,8 @@ public class TEGrains extends NetworkTileEntity
 	}
 
 	@Override
-	public void createInitNBT(NBTTagCompound nbt) {
+	public void createInitNBT(NBTTagCompound nbt) 
+	{
 		nbt.setInteger("stage", this.stage);
 		nbt.setInteger("StrawCount", this.strawCount);
         nbt.setInteger("WorkCounter", this.workcounter);

@@ -43,9 +43,7 @@ public class WAILAMobs implements IWailaEntityProvider
 	public List<String> getWailaTail(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor,	IWailaConfigHandler config) 
 	{		
 		if (entity instanceof IAnimal)
-		{
 			currenttip.set(0, EnumChatFormatting.BLUE + "Terrafirmacraft");
-		}
 		
 		return currenttip;
 	}

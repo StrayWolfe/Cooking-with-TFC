@@ -98,16 +98,10 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
 		for (FoodRecipe recipe : recipeList)
 		{
 			for(int i = 0; i < recipe.getReqIngred().length; i++)
-			{
-				if(areItemStacksEqual(ingredient, recipe.getReqIngred()[i])) 
-					arecipes.add(new CachedPrepTableRecipe(recipe));
-			}
+				if(areItemStacksEqual(ingredient, recipe.getReqIngred()[i])) arecipes.add(new CachedPrepTableRecipe(recipe));
 			
 			for(int i = 0; i < recipe.getReqCookware().length; i++)
-			{
-				if (areItemStacksEqual(ingredient, recipe.getReqCookware()[i])) 
-					arecipes.add(new CachedPrepTableRecipe(recipe));
-			}
+				if (areItemStacksEqual(ingredient, recipe.getReqCookware()[i])) arecipes.add(new CachedPrepTableRecipe(recipe));
 		}
     }
 	
@@ -115,6 +109,7 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
     public TemplateRecipeHandler newInstance()
     {
         if (recipeList == null) recipeList = FoodManager.getInstance().getRecipeList();
+        
         return super.newInstance();
     }
 	
@@ -192,14 +187,16 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
         public List<PositionedStack> getIngredients()
         {
         	for (PositionedStack positionedStack : Ingredients) positionedStack.setPermutationToRender(cycleticks / 24 % positionedStack.items.length);
-            return Ingredients;
+            
+        	return Ingredients;
         }
 
         @Override
         public List<PositionedStack> getOtherStacks()
         {
         	for (PositionedStack positionedStack : Cookware) positionedStack.setPermutationToRender(cycleticks / 24 % positionedStack.items.length);
-            return Cookware;
+            
+        	return Cookware;
         }
 		
     }
