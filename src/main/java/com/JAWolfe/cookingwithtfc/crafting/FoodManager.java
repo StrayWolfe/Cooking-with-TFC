@@ -3,7 +3,7 @@ package com.JAWolfe.cookingwithtfc.crafting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.JAWolfe.cookingwithtfc.items.ItemTFCMealTransform;
+import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCMealTransform;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.Player.SkillStats.SkillRank;
 import com.bioxx.tfc.api.Constant.Global;

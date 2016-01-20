@@ -2,12 +2,11 @@ package com.JAWolfe.cookingwithtfc.init.Items;
 
 import com.JAWolfe.cookingwithtfc.util.LogHelper;
 
-import cpw.mods.fml.common.registry.ExistingSubstitutionException;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CWTFCItemRegistry extends CWTFCItems
 {
-	public static void registerItems() throws ExistingSubstitutionException
+	public static void registerItems()
 	{		
 		LogHelper.info("Registering Items");
 		
@@ -100,13 +99,16 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(ryeBreadCWTFC, ryeBreadCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(wheatBreadCWTFC, wheatBreadCWTFC.getUnlocalizedName());
 		
+		//Sugar
 		GameRegistry.registerItem(sugarcaneCWTFC, sugarcaneCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(sugarCWTFC, sugarCWTFC.getUnlocalizedName());
 		
+		//Salads
 		GameRegistry.registerItem(VeggySalad, VeggySalad.getUnlocalizedName());
 		GameRegistry.registerItem(PotatoSalad, PotatoSalad.getUnlocalizedName());
 		GameRegistry.registerItem(FruitSalad, FruitSalad.getUnlocalizedName());
 		
+		//Sandwiches
 		GameRegistry.registerItem(HamSandwich, HamSandwich.getUnlocalizedName());		
 		GameRegistry.registerItem(ChickenSandwich, ChickenSandwich.getUnlocalizedName());
 		GameRegistry.registerItem(RoastBeefSandwich, RoastBeefSandwich.getUnlocalizedName());
@@ -114,6 +116,9 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(FriedEggSandwich, FriedEggSandwich.getUnlocalizedName());
 		GameRegistry.registerItem(MuttonSandwich, MuttonSandwich.getUnlocalizedName());
 		GameRegistry.registerItem(VenisonSteakSandwich, VenisonSteakSandwich.getUnlocalizedName());
+		
+		//Cookware
+		GameRegistry.registerItem(ClayCookingPot, ClayCookingPot.getUnlocalizedName());
 		
 		LogHelper.info("Done Registering Items");
 	}

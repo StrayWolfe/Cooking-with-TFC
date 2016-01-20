@@ -1,4 +1,4 @@
-package com.JAWolfe.cookingwithtfc.items;
+package com.JAWolfe.cookingwithtfc.items.Items;
 
 import java.util.List;
 

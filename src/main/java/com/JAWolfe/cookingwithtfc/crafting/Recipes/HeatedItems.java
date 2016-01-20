@@ -1,4 +1,4 @@
-package com.JAWolfe.cookingwithtfc.init;
+package com.JAWolfe.cookingwithtfc.crafting.Recipes;
 
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.bioxx.tfc.api.HeatIndex;
@@ -7,7 +7,7 @@ import com.bioxx.tfc.api.HeatRegistry;
 import net.minecraft.item.ItemStack;
 
 public class HeatedItems 
-{
+{	
 	public static void setupItemHeat()
 	{
 		HeatRegistry heatmanager = HeatRegistry.getInstance();
@@ -38,5 +38,7 @@ public class HeatedItems
 		heatmanager.addIndex(new HeatIndex(new ItemStack(CWTFCItems.horseMeatRawCWTFC, 1), 1, 1200, null));
 		
 		heatmanager.addIndex(new HeatIndex(new ItemStack(CWTFCItems.eggCWTFC, 1), 1, 600, new ItemStack(CWTFCItems.eggCookedCWTFC, 1)).setKeepNBT(true));
+		
+		heatmanager.addIndex(new HeatIndex(new ItemStack(CWTFCItems.ClayCookingPot, 1, 1), 1, 1500, null));
 	}
 }

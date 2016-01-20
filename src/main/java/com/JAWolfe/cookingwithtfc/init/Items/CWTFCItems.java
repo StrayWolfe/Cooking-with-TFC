@@ -2,7 +2,6 @@ package com.JAWolfe.cookingwithtfc.init.Items;
 
 import com.bioxx.tfc.api.TFCItems;
 
-import cpw.mods.fml.common.registry.ExistingSubstitutionException;
 import net.minecraft.item.Item;
 
 public class CWTFCItems 
@@ -111,7 +110,9 @@ public class CWTFCItems
 	public static Item MuttonSandwich;
 	public static Item VenisonSteakSandwich;
 	
-	public static void initialise() throws ExistingSubstitutionException
+	public static Item ClayCookingPot;
+	
+	public static void initialise()
 	{
 		/*///////////////////////////////////////////////
 		 * Remove Items being replaced from Creative Tabs

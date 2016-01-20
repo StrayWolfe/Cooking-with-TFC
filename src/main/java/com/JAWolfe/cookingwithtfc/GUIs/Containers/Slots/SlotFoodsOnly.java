@@ -1,18 +1,17 @@
 package com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots;
 
-import com.JAWolfe.cookingwithtfc.items.ItemTFCMeatTransform;
+import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCMeatTransform;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.Food;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotFoodPrep extends Slot
+public class SlotFoodsOnly extends Slot
 {
 
-	public SlotFoodPrep(EntityPlayer entityplayer, IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) 
+	public SlotFoodsOnly(IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) 
 	{
 		super(inventory, slotIndex, xDisplayPosition, yDisplayPosition);
 	}

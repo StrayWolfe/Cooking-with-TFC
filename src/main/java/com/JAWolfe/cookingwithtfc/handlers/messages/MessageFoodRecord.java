@@ -1,4 +1,4 @@
-package com.JAWolfe.cookingwithtfc.handlers;
+package com.JAWolfe.cookingwithtfc.handlers.messages;
 
 import com.JAWolfe.cookingwithtfc.core.CWTFC_Core;
 import com.JAWolfe.cookingwithtfc.core.FoodRecord;

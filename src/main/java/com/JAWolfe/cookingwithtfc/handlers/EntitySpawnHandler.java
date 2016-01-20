@@ -11,6 +11,7 @@ import com.JAWolfe.cookingwithtfc.entities.EntityTransformPheasant;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformPigTFC;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformSheepTFC;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformWolfTFC;
+import com.JAWolfe.cookingwithtfc.handlers.messages.MessageFoodRecord;
 import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Entities.Mobs.EntityBear;
 import com.bioxx.tfc.Entities.Mobs.EntityChickenTFC;

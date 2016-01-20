@@ -32,6 +32,8 @@ item.FriedEggSandwich.name=Fried Egg Sandwich
 item.MuttonSandwich.name=Mutton Sandwich
 item.VenisonSteakSandwich.name=Venison Steak Sandwich
 
+item.clayCookingPot.Clay.name=Clay Cooking Pot
+item.clayCookingPot.Ceramic.name=Ceramic Cooking Pot
 #=======
 #= GUI =
 #=======

@@ -3,8 +3,8 @@ package com.JAWolfe.cookingwithtfc.core;
 import java.util.List;
 import java.util.Random;
 
-import com.JAWolfe.cookingwithtfc.handlers.MessageFoodRecord;
-import com.JAWolfe.cookingwithtfc.items.ItemTFCMealTransform;
+import com.JAWolfe.cookingwithtfc.handlers.messages.MessageFoodRecord;
+import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCMealTransform;
 import com.JAWolfe.cookingwithtfc.references.ConstantsCWTFC;
 import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFC_Core;

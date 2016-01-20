@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.JAWolfe.cookingwithtfc.crafting.FoodManager;
 import com.JAWolfe.cookingwithtfc.crafting.FoodRecipe;
-import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
+import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCFoodTransform;
 import com.JAWolfe.cookingwithtfc.references.Textures;
 
 import static codechicken.lib.gui.GuiDraw.changeTexture;

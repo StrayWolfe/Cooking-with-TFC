@@ -3,7 +3,7 @@ package com.JAWolfe.cookingwithtfc.GUIs;
 import org.lwjgl.opengl.GL11;
 
 import com.JAWolfe.cookingwithtfc.GUIs.Containers.ContainerPrepTable;
-import com.JAWolfe.cookingwithtfc.handlers.CreateRecipePacket;
+import com.JAWolfe.cookingwithtfc.handlers.messages.CreateRecipePacket;
 import com.JAWolfe.cookingwithtfc.references.Textures;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 import com.bioxx.tfc.TerraFirmaCraft;
@@ -112,9 +112,6 @@ public class GUIPrepTable extends GuiContainerTFC
 			case 16: bindTexture(Textures.Gui.PREPTABLE16); break;
 			default: bindTexture(Textures.Gui.PREPTABLE); break;
 		}
-		
-		guiLeft = (width - xSize) / 2;
-		guiTop = (height - ySize) / 2;
 		
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, this.getShiftedYSize());
 		PlayerInventory.drawInventory(this, width, height, this.getShiftedYSize() - 2);

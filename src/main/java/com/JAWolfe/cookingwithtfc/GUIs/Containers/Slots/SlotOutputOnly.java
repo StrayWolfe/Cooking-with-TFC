@@ -5,10 +5,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotPrepTableOutput extends Slot
+public class SlotOutputOnly extends Slot
 {
 
-	public SlotPrepTableOutput(EntityPlayer entityplayer, IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) 
+	public SlotOutputOnly(EntityPlayer entityplayer, IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) 
 	{
 		super(inventory, slotIndex, xDisplayPosition, yDisplayPosition);
 	}

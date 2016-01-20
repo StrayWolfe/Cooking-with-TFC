@@ -1,4 +1,4 @@
-package com.JAWolfe.cookingwithtfc.handlers;
+package com.JAWolfe.cookingwithtfc.handlers.messages;
 
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 import com.bioxx.tfc.Handlers.Network.AbstractPacket;

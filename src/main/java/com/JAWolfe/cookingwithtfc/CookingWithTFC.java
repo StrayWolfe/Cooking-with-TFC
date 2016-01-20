@@ -3,14 +3,10 @@ package com.JAWolfe.cookingwithtfc;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.JAWolfe.cookingwithtfc.crafting.Recipes.CWTFCRecipes;
-import com.JAWolfe.cookingwithtfc.handlers.ConfigHandler;
-import com.JAWolfe.cookingwithtfc.handlers.CreateRecipePacket;
-import com.JAWolfe.cookingwithtfc.handlers.EntitySpawnHandler;
-import com.JAWolfe.cookingwithtfc.handlers.GUIHandler;
-import com.JAWolfe.cookingwithtfc.handlers.MessageFoodRecord;
-import com.JAWolfe.cookingwithtfc.handlers.PlayerHandler;
+import com.JAWolfe.cookingwithtfc.crafting.Recipes.HeatedItems;
+import com.JAWolfe.cookingwithtfc.handlers.*;
+import com.JAWolfe.cookingwithtfc.handlers.messages.*;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
-import com.JAWolfe.cookingwithtfc.init.HeatedItems;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.JAWolfe.cookingwithtfc.proxy.IProxyCWTFC;
 import com.JAWolfe.cookingwithtfc.references.DetailsCWTFC;
@@ -24,7 +20,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.ExistingSubstitutionException;
 
 @Mod(modid = DetailsCWTFC.ModID, name = DetailsCWTFC.ModName, version = DetailsCWTFC.ModVersion, dependencies = DetailsCWTFC.ModDependencies)
 public class CookingWithTFC
@@ -36,7 +31,7 @@ public class CookingWithTFC
 	public static IProxyCWTFC proxy;
 	
 	@EventHandler
-	public void preInitialize(FMLPreInitializationEvent event) throws ExistingSubstitutionException
+	public void preInitialize(FMLPreInitializationEvent event)
 	{				
 		//Handle Configs
 		ConfigHandler.init(event.getSuggestedConfigurationFile());
@@ -61,6 +56,7 @@ public class CookingWithTFC
 		//Register packets
 		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(MessageFoodRecord.class);
 		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(CreateRecipePacket.class);
+		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(ItemCookingPotPacket.class);
 		
 		//Setup Fluids
 		proxy.setupFluids();

@@ -30,5 +30,8 @@ public final class Textures
 		public static final ResourceLocation PREPTABLE14 = ResourceLocationHelper.getResourceLocation(GUI_TEXTURE_LOCATION + "gui_prepTable_willow.png");
 		public static final ResourceLocation PREPTABLE15 = ResourceLocationHelper.getResourceLocation(GUI_TEXTURE_LOCATION + "gui_prepTable_kapok.png");
 		public static final ResourceLocation PREPTABLE16 = ResourceLocationHelper.getResourceLocation(GUI_TEXTURE_LOCATION + "gui_prepTable_acacia.png");
+		
+		public static final ResourceLocation CLAYCOOKINGPOTINIT = ResourceLocationHelper.getResourceLocation(GUI_TEXTURE_LOCATION + "gui_claycookingpotinit.png");
+		public static final ResourceLocation CLAYCOOKINGPOTFINAL = ResourceLocationHelper.getResourceLocation(GUI_TEXTURE_LOCATION + "gui_claycookingpotfinal.png");
 	}
 }

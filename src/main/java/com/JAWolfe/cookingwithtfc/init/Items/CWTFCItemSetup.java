@@ -1,9 +1,6 @@
 package com.JAWolfe.cookingwithtfc.init.Items;
 
-import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
-import com.JAWolfe.cookingwithtfc.items.ItemTFCMealTransform;
-import com.JAWolfe.cookingwithtfc.items.ItemTFCMeatTransform;
-import com.JAWolfe.cookingwithtfc.items.ItemTFCSandwichTransform;
+import com.JAWolfe.cookingwithtfc.items.Items.*;
 import com.JAWolfe.cookingwithtfc.references.ConstantsCWTFC;
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Core.TFCTabs;
@@ -21,6 +18,13 @@ import net.minecraft.util.IIcon;
 public class CWTFCItemSetup extends CWTFCItems
 {
 	public static void ItemSetup()
+	{
+		FoodItemSetup();
+		
+		RegularItemSetup();
+	}
+	
+	public static void FoodItemSetup()
 	{
 		float snackSize = ConstantsCWTFC.SNACK_SIZE;
 		float mealSize = ConstantsCWTFC.MEAL_SIZE;
@@ -148,5 +152,10 @@ public class CWTFCItemSetup extends CWTFCItems
 		FriedEggSandwich = new ItemTFCSandwichTransform(11, 3, 0, 0, 26, mealSize, 10, SkillRank.Novice, "FriedEggSandwich");
 		MuttonSandwich = new ItemTFCSandwichTransform(11, 3, 0, 0, 29, mealSize, 10, SkillRank.Novice, "MuttonSandwich");
 		VenisonSteakSandwich = new ItemTFCSandwichTransform(11, 3, 0, 0, 31, mealSize, 10, SkillRank.Novice, "VenisonSteakSandwich");
+	}
+	
+	public static void RegularItemSetup()
+	{
+		ClayCookingPot = new ItemClayCookingPot();
 	}
 }

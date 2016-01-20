@@ -1,8 +1,8 @@
 package com.JAWolfe.cookingwithtfc.GUIs.Containers;
 
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotCookwareInput;
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotFoodPrep;
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotPrepTableOutput;
+import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotCookwareOnly;
+import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotFoodsOnly;
+import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotOutputOnly;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 import com.bioxx.tfc.Containers.ContainerTFC;
 import com.bioxx.tfc.Core.Player.PlayerInventory;
@@ -23,7 +23,7 @@ public class ContainerPrepTable extends ContainerTFC
 		this.tePrepTable = PrepTable;
 		tePrepTable.openInventory();
 		
-		addSlotToContainer(new SlotPrepTableOutput(inventoryplayer.player, PrepTable, 0, 125, 45));
+		addSlotToContainer(new SlotOutputOnly(inventoryplayer.player, PrepTable, 0, 125, 45));
 		
 		int id = 1;
 		
@@ -31,7 +31,7 @@ public class ContainerPrepTable extends ContainerTFC
 		{
 			for(int col = 0; col < 4; col++)
 			{	
-				addSlotToContainer(new SlotFoodPrep(inventoryplayer.player, PrepTable, id++, 8 + (18 * col), 8 + (18 * row)));
+				addSlotToContainer(new SlotFoodsOnly(PrepTable, id++, 8 + (18 * col), 8 + (18 * row)));
 			}
 		}
 		
@@ -39,7 +39,7 @@ public class ContainerPrepTable extends ContainerTFC
 		{
 			for(int col = 0; col < 4; col++)
 			{
-				addSlotToContainer(new SlotCookwareInput(inventoryplayer.player, PrepTable, id++, 98 + (18 * col), 8 + (18 * row)));
+				addSlotToContainer(new SlotCookwareOnly(PrepTable, id++, 98 + (18 * col), 8 + (18 * row)));
 			}
 		}
 		
@@ -119,7 +119,6 @@ public class ContainerPrepTable extends ContainerTFC
 	@Override
 	public void detectAndSendChanges()
 	{
-		super.detectAndSendChanges();
 		for (int var1 = 0; var1 < this.inventorySlots.size(); ++var1)
 		{
 			ItemStack var2 = ((Slot)this.inventorySlots.get(var1)).getStack();

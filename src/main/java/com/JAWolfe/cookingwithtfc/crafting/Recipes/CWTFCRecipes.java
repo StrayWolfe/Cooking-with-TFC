@@ -5,7 +5,7 @@ import com.JAWolfe.cookingwithtfc.crafting.PressRecipe;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.init.CWTFCFluids;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
-import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
+import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCFoodTransform;
 import com.bioxx.tfc.Core.Recipes;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCFluids;
@@ -26,6 +26,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class CWTFCRecipes 
 {
@@ -33,6 +34,9 @@ public class CWTFCRecipes
 	{		
 		Recipes.removeRecipe(new ItemStack(TFCBlocks.nestBox,1));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CWTFCBlocks.nestBoxCWTFC,1), "S S","PSP","PPP", 'S', new ItemStack(TFCItems.straw,1), 'P', "woodLumber"));
+		
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(CWTFCItems.ClayCookingPot, 1, 0), new ItemStack(TFCItems.potterySmallVessel, 1, 0), "blockSand"));
+		
 		for(int i = 0; i < Global.WOOD_ALL.length; i++)
 		{
 			int l = i%16;
@@ -92,6 +96,7 @@ public class CWTFCRecipes
 		KilnCraftingManager kilnmanager = KilnCraftingManager.getInstance();
 		
 		kilnmanager.addRecipe(new KilnRecipe(new ItemStack(CWTFCBlocks.mixingBowl,1,0), 0, new ItemStack(CWTFCBlocks.mixingBowl,1,1)));
+		kilnmanager.addRecipe(new KilnRecipe(new ItemStack(CWTFCItems.ClayCookingPot,1,0), 0, new ItemStack(CWTFCItems.ClayCookingPot,1,1)));
 	}
 	
 	public static void registerKnappingRecipes()
