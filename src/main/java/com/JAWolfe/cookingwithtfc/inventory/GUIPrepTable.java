@@ -1,9 +1,9 @@
-package com.JAWolfe.cookingwithtfc.GUIs;
+package com.JAWolfe.cookingwithtfc.inventory;
 
 import org.lwjgl.opengl.GL11;
 
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.ContainerPrepTable;
 import com.JAWolfe.cookingwithtfc.handlers.messages.CreateRecipePacket;
+import com.JAWolfe.cookingwithtfc.inventory.Containers.ContainerPrepTable;
 import com.JAWolfe.cookingwithtfc.references.Textures;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 import com.bioxx.tfc.TerraFirmaCraft;

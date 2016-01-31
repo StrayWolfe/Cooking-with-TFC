@@ -117,6 +117,8 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(MuttonSandwich, MuttonSandwich.getUnlocalizedName());
 		GameRegistry.registerItem(VenisonSteakSandwich, VenisonSteakSandwich.getUnlocalizedName());
 		
+		GameRegistry.registerItem(ChickenStock, ChickenStock.getUnlocalizedName());
+		
 		//Cookware
 		GameRegistry.registerItem(ClayCookingPot, ClayCookingPot.getUnlocalizedName());
 		

@@ -68,6 +68,7 @@ public abstract class CommonProxyCWTFC implements IProxyCWTFC
 		FluidRegistry.registerFluid(CWTFCFluids.MILKCURDLEDCWTFC);
 		FluidRegistry.registerFluid(CWTFCFluids.MILKCWTFC);
 		FluidRegistry.registerFluid(CWTFCFluids.MILKVINEGARCWTFC);
+		FluidRegistry.registerFluid(CWTFCFluids.CHICKENSTOCK);
 	}
 	
 	public void setupFluids()

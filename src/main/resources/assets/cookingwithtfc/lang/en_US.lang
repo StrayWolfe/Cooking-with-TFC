@@ -32,16 +32,19 @@ item.FriedEggSandwich.name=Fried Egg Sandwich
 item.MuttonSandwich.name=Mutton Sandwich
 item.VenisonSteakSandwich.name=Venison Steak Sandwich
 
+item.ChickenStock.name=Chicken Stock
+
 item.clayCookingPot.Clay.name=Clay Cooking Pot
 item.clayCookingPot.Ceramic.name=Ceramic Cooking Pot
+
 #=======
 #= GUI =
 #=======
 gui.progress=Progress
-
 gui.showIngreds=§8Foods: (Hold §fShift§8)
-
 gui.PrepTable.Recipes=Recipe
+gui.PotContents=§8Contents: (Hold §fCtrl§8)
+gui.ShowContents=§8Contents:
 
 #==============
 #= Entities = 
@@ -90,6 +93,7 @@ wood.Acacia=Acacia
 fluid.milkCWTFC=Milk
 fluid.milkvinegarCWTFC=Milk + Vinegar Mix
 fluid.milkcurdledCWTFC=Curdled Milk
+fluid.chickenStock=Chicken Stock
 
 #========
 #= Misc =

@@ -1,4 +1,4 @@
-package com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots;
+package com.JAWolfe.cookingwithtfc.inventory.Containers.Slots;
 
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 

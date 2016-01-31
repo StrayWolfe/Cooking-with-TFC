@@ -3,7 +3,6 @@ package com.JAWolfe.cookingwithtfc.blocks;
 import java.util.List;
 
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
-import com.JAWolfe.cookingwithtfc.util.LogHelper;
 import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.Constant.Global;

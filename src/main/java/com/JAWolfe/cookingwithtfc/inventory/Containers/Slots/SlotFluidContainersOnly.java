@@ -1,4 +1,4 @@
-package com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots;
+package com.JAWolfe.cookingwithtfc.inventory.Containers.Slots;
 
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
 import com.bioxx.tfc.api.TFCItems;
@@ -10,11 +10,17 @@ import net.minecraft.item.ItemStack;
 public class SlotFluidContainersOnly extends Slot
 {
 
-	public SlotFluidContainersOnly(IInventory iinventory, int x, int y, int z) 
+	public SlotFluidContainersOnly(IInventory iinventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) 
 	{
-		super(iinventory, x, y, z);
+		super(iinventory, slotIndex, xDisplayPosition, yDisplayPosition);
 	}
 
+	@Override
+	public int getSlotStackLimit()
+	{
+		return 1;
+	}
+	
 	@Override
 	public boolean isItemValid(ItemStack is)
 	{

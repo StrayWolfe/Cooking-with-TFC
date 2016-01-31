@@ -31,8 +31,14 @@ public class CookingPotManager
 		recipes.clear();
 	}
 	
-	public CookingPotRecipe findMatchingRecipe(FluidStack inputFluid, Item[] inputIngreds, float[] ingredAmounts)
+	public CookingPotRecipe findMatchingRecipe(FluidStack inputFluid, Item[] inputIngreds)
 	{
+		for (int i = 0; i < recipes.size(); i++)
+		{
+			CookingPotRecipe irecipe = recipes.get(i);
+			if (irecipe != null && irecipe.matches(inputFluid, inputIngreds))
+				return irecipe.getRecipe();
+		}
 		return null;
 	}
 }

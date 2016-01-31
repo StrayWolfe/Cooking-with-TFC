@@ -152,6 +152,8 @@ public class CWTFCItemSetup extends CWTFCItems
 		FriedEggSandwich = new ItemTFCSandwichTransform(11, 3, 0, 0, 26, mealSize, 10, SkillRank.Novice, "FriedEggSandwich");
 		MuttonSandwich = new ItemTFCSandwichTransform(11, 3, 0, 0, 29, mealSize, 10, SkillRank.Novice, "MuttonSandwich");
 		VenisonSteakSandwich = new ItemTFCSandwichTransform(11, 3, 0, 0, 31, mealSize, 10, SkillRank.Novice, "VenisonSteakSandwich");
+		
+		ChickenStock = new ItemTFCFoodTransform(EnumFoodGroup.Protein, 0, 0, 0, 0, 40, snackSize, 20).setCustomIcon(true).setUnlocalizedName("ChickenStock");
 	}
 	
 	public static void RegularItemSetup()

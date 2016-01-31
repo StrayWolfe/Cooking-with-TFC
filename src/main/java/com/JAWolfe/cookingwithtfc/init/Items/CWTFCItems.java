@@ -110,6 +110,8 @@ public class CWTFCItems
 	public static Item MuttonSandwich;
 	public static Item VenisonSteakSandwich;
 	
+	public static Item ChickenStock;
+	
 	public static Item ClayCookingPot;
 	
 	public static void initialise()

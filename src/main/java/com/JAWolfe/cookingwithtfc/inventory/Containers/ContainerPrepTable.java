@@ -1,8 +1,8 @@
-package com.JAWolfe.cookingwithtfc.GUIs.Containers;
+package com.JAWolfe.cookingwithtfc.inventory.Containers;
 
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotCookwareOnly;
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotFoodsOnly;
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots.SlotOutputOnly;
+import com.JAWolfe.cookingwithtfc.inventory.Containers.Slots.SlotCookwareOnly;
+import com.JAWolfe.cookingwithtfc.inventory.Containers.Slots.SlotFoodsOnly;
+import com.JAWolfe.cookingwithtfc.inventory.Containers.Slots.SlotOutputOnly;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 import com.bioxx.tfc.Containers.ContainerTFC;
 import com.bioxx.tfc.Core.Player.PlayerInventory;
@@ -23,7 +23,7 @@ public class ContainerPrepTable extends ContainerTFC
 		this.tePrepTable = PrepTable;
 		tePrepTable.openInventory();
 		
-		addSlotToContainer(new SlotOutputOnly(inventoryplayer.player, PrepTable, 0, 125, 45));
+		addSlotToContainer(new SlotOutputOnly(PrepTable, 0, 125, 45));
 		
 		int id = 1;
 		
@@ -63,11 +63,11 @@ public class ContainerPrepTable extends ContainerTFC
             if (slotIndex < TableSlotCount && !this.mergeItemStack(slotStack, TableSlotCount, this.inventorySlots.size(), false))
             	return null;
             //From Inventory to Food
-            else if(slotStack.getItem() instanceof ItemFoodTFC && 
+            else if(slotIndex >= TableSlotCount && slotStack.getItem() instanceof ItemFoodTFC && 
             		!this.mergeItemStack(slotStack, TEPrepTable.FOOD_INPUT_START, TEPrepTable.COOKWARE_INPUT_START, false))
                 return null;
             //From Inventory to Cookware
-            else if(tePrepTable.isCookware(slotStack) && 
+            else if(slotIndex >= TableSlotCount && tePrepTable.isCookware(slotStack) && 
             		!this.mergeItemStack(slotStack, TEPrepTable.COOKWARE_INPUT_START, TableSlotCount, false))
                 return null;
             

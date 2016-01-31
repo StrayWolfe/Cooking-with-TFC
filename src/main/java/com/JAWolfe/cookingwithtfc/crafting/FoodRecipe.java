@@ -57,7 +57,7 @@ public class FoodRecipe
 					return false;
 			}
 		}
-		else if(il1 == null && il2 != null || il1 != null && il2 == null)
+		else if((il1 == null && il2 != null) || (il1 != null && il2 == null))
 			return false;
 		
 		return true;

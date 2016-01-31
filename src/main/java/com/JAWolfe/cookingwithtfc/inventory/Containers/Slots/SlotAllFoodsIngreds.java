@@ -1,17 +1,15 @@
-package com.JAWolfe.cookingwithtfc.GUIs.Containers.Slots;
+package com.JAWolfe.cookingwithtfc.inventory.Containers.Slots;
 
-import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCMeatTransform;
 import com.bioxx.tfc.Food.ItemFoodTFC;
-import com.bioxx.tfc.api.Food;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotFoodsOnly extends Slot
+public class SlotAllFoodsIngreds  extends Slot
 {
 
-	public SlotFoodsOnly(IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) 
+	public SlotAllFoodsIngreds(IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) 
 	{
 		super(inventory, slotIndex, xDisplayPosition, yDisplayPosition);
 	}
@@ -20,12 +18,7 @@ public class SlotFoodsOnly extends Slot
 	public boolean isItemValid(ItemStack is)
 	{
 		if(is.getItem() instanceof ItemFoodTFC)
-		{
-			if(is.getItem() instanceof ItemTFCMeatTransform && !Food.isCooked(is))
-				return false;
-			else
-				return true;
-		}
+			return true;
 		else
 			return false;
 	}

@@ -197,4 +197,19 @@ public class PlayerHandler
 			CWTFC_Core.setPlayerFoodRecord((EntityPlayer)entity, fr);
 		}
 	}
+	
+	/*@SubscribeEvent
+	public void vanillaChestHandler(PlayerInteractEvent event)
+	{
+		if (event.entityPlayer.worldObj.isRemote)
+			return;
+		
+		Block block = event.world.getBlock(event.x, event.y, event.z);
+		if(block == Blocks.chest)
+		{
+			event.setCanceled(true);
+			event.world.createExplosion(event.entity, event.x, event.y + 1, event.z, 0, false);
+			event.world.setBlock(event.x, event.y, event.z, TFCBlocks.chest, event.world.getBlockMetadata(event.x, event.y, event.z), 3);
+		}
+	}*/
 }

@@ -1,11 +1,11 @@
-package com.JAWolfe.cookingwithtfc.GUIs;
+package com.JAWolfe.cookingwithtfc.inventory;
 
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.ContainerClayCookingPot;
 import com.JAWolfe.cookingwithtfc.handlers.messages.ItemCookingPotPacket;
+import com.JAWolfe.cookingwithtfc.inventory.Containers.ContainerClayCookingPot;
 import com.JAWolfe.cookingwithtfc.items.Items.ItemClayCookingPot;
 import com.JAWolfe.cookingwithtfc.references.Textures;
 import com.bioxx.tfc.TerraFirmaCraft;
@@ -99,14 +99,15 @@ public class GUIClayCookingPot extends GuiContainerTFC
 		int scale = 0;
 		if(player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemClayCookingPot)
 		{
-			ItemClayCookingPot cookingPot = (ItemClayCookingPot)player.getCurrentEquippedItem().getItem();
+			ItemStack is = player.getCurrentEquippedItem();
+			ItemClayCookingPot cookingPot = (ItemClayCookingPot)is.getItem();
 			
-			if(cookingPot.getPotFluid() != null)
+			if(cookingPot.getPotFluid(is) != null)
 			{
-				scale = cookingPot.getLiquidScaled(50);
-				IIcon liquidIcon = cookingPot.getPotFluid().getFluid().getIcon(cookingPot.getPotFluid());
+				scale = cookingPot.getLiquidScaled(is, 50);
+				IIcon liquidIcon = cookingPot.getPotFluid(is).getFluid().getIcon(cookingPot.getPotFluid(is));
 				TFC_Core.bindTexture(TextureMap.locationBlocksTexture);
-				int color = cookingPot.getPotFluid().getFluid().getColor(cookingPot.getPotFluid());				
+				int color = cookingPot.getPotFluid(is).getFluid().getColor(cookingPot.getPotFluid(is));				
 				GL11.glColor4ub((byte) ((color >> 16) & 255), (byte) ((color >> 8) & 255), (byte) (color & 255), (byte) ((0xaa) & 255));
 				int div = (int) Math.floor(scale / 8);
 				int rem = scale - (div * 8);
@@ -117,7 +118,7 @@ public class GUIClayCookingPot extends GuiContainerTFC
 				}
 				GL11.glColor3f(0, 0, 0);
 				
-				drawCenteredString(this.fontRendererObj, cookingPot.getPotFluid().getFluid().getLocalizedName(cookingPot.getPotFluid()), guiLeft + 88, guiTop + 7, 0x555555);
+				drawCenteredString(this.fontRendererObj, cookingPot.getPotFluid(is).getFluid().getLocalizedName(cookingPot.getPotFluid(is)), guiLeft + 88, guiTop + 7, 0x555555);
 			}
 		}
 		
@@ -131,7 +132,7 @@ public class GUIClayCookingPot extends GuiContainerTFC
 		{
 			ArrayList<String> list = new ArrayList<String>();
 			ItemClayCookingPot cookingPot = (ItemClayCookingPot)player.getCurrentEquippedItem().getItem();
-			list.add(cookingPot.getFluidLevel() + "mB");
+			list.add(cookingPot.getFluidLevel(player.getCurrentEquippedItem()) + "mB");
 			this.drawHoveringText(list, mouseX - guiLeft, mouseY - guiTop + 8, this.fontRendererObj);
 		}
 	}

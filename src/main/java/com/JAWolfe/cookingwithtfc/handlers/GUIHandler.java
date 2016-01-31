@@ -1,9 +1,9 @@
 package com.JAWolfe.cookingwithtfc.handlers;
 
-import com.JAWolfe.cookingwithtfc.GUIs.GUIClayCookingPot;
-import com.JAWolfe.cookingwithtfc.GUIs.GUIPrepTable;
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.ContainerClayCookingPot;
-import com.JAWolfe.cookingwithtfc.GUIs.Containers.ContainerPrepTable;
+import com.JAWolfe.cookingwithtfc.inventory.GUIClayCookingPot;
+import com.JAWolfe.cookingwithtfc.inventory.GUIPrepTable;
+import com.JAWolfe.cookingwithtfc.inventory.Containers.ContainerClayCookingPot;
+import com.JAWolfe.cookingwithtfc.inventory.Containers.ContainerPrepTable;
 import com.JAWolfe.cookingwithtfc.references.GUIs;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 
