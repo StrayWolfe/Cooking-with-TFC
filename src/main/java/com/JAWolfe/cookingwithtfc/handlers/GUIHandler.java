@@ -5,6 +5,7 @@ import com.JAWolfe.cookingwithtfc.inventory.GUIPrepTable;
 import com.JAWolfe.cookingwithtfc.inventory.Containers.ContainerClayCookingPot;
 import com.JAWolfe.cookingwithtfc.inventory.Containers.ContainerPrepTable;
 import com.JAWolfe.cookingwithtfc.references.GUIs;
+import com.JAWolfe.cookingwithtfc.tileentities.TECookingPot;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -22,8 +23,8 @@ public class GUIHandler implements IGuiHandler
 		
 		if(ID == GUIs.PREPTABLE.ordinal() && entity != null && entity instanceof TEPrepTable)
 			return new ContainerPrepTable(player.inventory, (TEPrepTable)entity);
-		if(ID == GUIs.CLAYCOOKINGPOT.ordinal())
-			return new ContainerClayCookingPot(player.inventory, world, x, y, z);
+		if(ID == GUIs.CLAYCOOKINGPOT.ordinal() && entity != null && entity instanceof TECookingPot)
+			return new ContainerClayCookingPot(player.inventory, (TECookingPot)entity, world, x, y, z);
 
 		return null;
 	}
@@ -35,8 +36,8 @@ public class GUIHandler implements IGuiHandler
 		
 		if(ID == GUIs.PREPTABLE.ordinal() && entity != null && entity instanceof TEPrepTable)
 			return new GUIPrepTable(player.inventory, (TEPrepTable)entity, world, x, y, z);
-		if(ID == GUIs.CLAYCOOKINGPOT.ordinal())
-			return new GUIClayCookingPot(player.inventory, world, x, y, z);
+		if(ID == GUIs.CLAYCOOKINGPOT.ordinal() && entity != null && entity instanceof TECookingPot)
+			return new GUIClayCookingPot(player.inventory, (TECookingPot)entity, world, x, y, z);
 
 		return null;
 	}

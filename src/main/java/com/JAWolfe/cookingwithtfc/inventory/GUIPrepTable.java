@@ -91,29 +91,27 @@ public class GUIPrepTable extends GuiContainerTFC
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
-		switch(teTable.tableType)
-		{
-			case 0: bindTexture(Textures.Gui.PREPTABLE0); break;
-			case 1: bindTexture(Textures.Gui.PREPTABLE1); break;
-			case 2: bindTexture(Textures.Gui.PREPTABLE2); break;
-			case 3: bindTexture(Textures.Gui.PREPTABLE3); break;
-			case 4: bindTexture(Textures.Gui.PREPTABLE4); break;
-			case 5: bindTexture(Textures.Gui.PREPTABLE5); break;
-			case 6: bindTexture(Textures.Gui.PREPTABLE6); break;
-			case 7: bindTexture(Textures.Gui.PREPTABLE7); break;
-			case 8: bindTexture(Textures.Gui.PREPTABLE8); break;
-			case 9: bindTexture(Textures.Gui.PREPTABLE9); break;
-			case 10: bindTexture(Textures.Gui.PREPTABLE10); break;
-			case 11: bindTexture(Textures.Gui.PREPTABLE11); break;
-			case 12: bindTexture(Textures.Gui.PREPTABLE12); break;
-			case 13: bindTexture(Textures.Gui.PREPTABLE13); break;
-			case 14: bindTexture(Textures.Gui.PREPTABLE14); break;
-			case 15: bindTexture(Textures.Gui.PREPTABLE15); break;
-			case 16: bindTexture(Textures.Gui.PREPTABLE16); break;
-			default: bindTexture(Textures.Gui.PREPTABLE); break;
+		int type = teTable.tableType;
+		
+		switch(type)
+		{		
+			default: case 0: bindTexture(Textures.Gui.PREPTABLE1); break;
+			case 1: case 2: bindTexture(Textures.Gui.PREPTABLE2); break;
+			case 3: case 4: bindTexture(Textures.Gui.PREPTABLE3); break;
+			case 5: case 6: bindTexture(Textures.Gui.PREPTABLE4); break;
+			case 7: case 8: bindTexture(Textures.Gui.PREPTABLE5); break;
+			case 9: case 10: bindTexture(Textures.Gui.PREPTABLE6); break;
+			case 11: case 12: bindTexture(Textures.Gui.PREPTABLE7); break;
+			case 13: case 14: bindTexture(Textures.Gui.PREPTABLE8); break;
+			case 15: case 16:bindTexture(Textures.Gui.PREPTABLE9); break;
 		}
 		
-		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, this.getShiftedYSize());
+		if(type == 0 || type == 2 || type == 4 || type == 6 || type == 8 
+				|| type == 10 || type == 12 || type == 14 || type == 16)
+			drawTexturedModalRect(guiLeft, guiTop, 0, 87, xSize, this.getShiftedYSize());
+		else
+			drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, this.getShiftedYSize());
+		
 		PlayerInventory.drawInventory(this, width, height, this.getShiftedYSize() - 2);
 	}
 }

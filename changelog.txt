@@ -1,2 +1,34 @@
 Changelog
----------
+=================================================
+-------------------------------------------------
+Cooking With TFC 0.02.05
+-------------------------------------------------
+New Features
++Added Cooking Pot
++Added Cooking Pot NEI recipes
++Added Cooking Pot WAILA support
++Added raw meats and cooked meats
++Added Sea and Rock Salt
++Added Boiled Chicken, Beef, Venison, Fish and Pork
++Added Broth
++Added Vegetable soup, Tomato soup, Chicken soup, Beef stew, Venison stew and Fish chowder
++Added changelog
++Added config for hiding TFC Foods from the creative menu and NEI, hidden by default
+
+
+Tweaks
++Meats are now cooked like breads
++Raw meats are no longer used in sandwich recipes
++Meats are salted in the food prep table with sea or rock salt
++Added appropriate TFC hot key compatibility with foods
++All sandwiches can be split or merged in a crafting grid
++Tweaked animals now show "Cooking with TFC" as the mod in WAILA
++Tweaked cheese is made in a barrel with either sea or rock salt with curdled milk
++Tweaked rock salt to produce 8 oz of rock salt rather than salt
++Tweaked all TFC foods to be replaced by Cooking with TFC foods when the item is picked up off the ground
++Tweaked TFC prep surface are broken when they are accessed dropping their items
++Compressed Prep table GUI files
+
+Bug Fixes
++Fixed NEI Prep Table preview and Prep Table not giving the correct sandwich for each bread type
++Fixed TFC Animals not being removed after their CWTFC equivalent is spawned causing another duplicated to be spawn with each reload

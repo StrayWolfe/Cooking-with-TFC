@@ -8,8 +8,8 @@ buildscript
             name = "Minecraft Forge"
             url = "http://files.minecraftforge.net/maven"
         }
-         maven 
-		 {
+        maven 
+		{
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
@@ -39,7 +39,7 @@ allprojects
 	
     group = config.group_name
     version = config.mod_version
-    archivesBaseName = "[${config.minecraft_version}]${config.mod_id}"
+    archivesBaseName = config.mod_id + "-" + config.minecraft_version
 
     minecraft 
 	{
@@ -75,7 +75,6 @@ repositories
  
 dependencies 
 {
-	// Forcing version numbers for everything and using NO-NEI WAILA since the "transitive dependency resolution (gradle magic)" is currently borked.
 	compile "codechicken:CodeChickenCore:1.7.10-1.0.4.35:dev"
 	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.127:dev"
 	compile "codechicken:NotEnoughItems:1.7.10-1.0.4.95:dev"
@@ -95,11 +94,6 @@ task sourceJar(type: Jar){
 }
 
 tasks.build.dependsOn('sourceJar', 'deobfJar')
-
-dependencies 
-{
-    // Copy "[1.7.10]TerraFirmaCraft-deobf-*.**.**.jar" file into the ./libs directory
-}
 
 processResources 
 {

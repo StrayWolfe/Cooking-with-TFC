@@ -15,14 +15,27 @@ import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class EntityTransformPigTFC extends EntityPigTFC
 {
+	private boolean flagHealth;
 
 	public EntityTransformPigTFC(World par1World) 
 	{
 		super(par1World);
+		setupAI();
+	}
+
+	public EntityTransformPigTFC(World par1World, IAnimal mother, List<Float> data)
+	{
+		super(par1World, mother, data);
+		setupAI();
+	}
+	
+	private void setupAI()
+	{
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.wheatGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.ryeGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.riceGrainCWTFC, false));
@@ -32,17 +45,11 @@ public class EntityTransformPigTFC extends EntityPigTFC
 		this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityTransformPigTFC.class, 6.0F));
 		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformWolfTFC.class, 8f, 1.0F, 1.2F));
 		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformBear.class, 16f, 1.0F, 1.2F));
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
 	}
-
-	public EntityTransformPigTFC(World par1World, IAnimal mother, List<Float> data)
+	
+	public void setHealthFlag(boolean flag)
 	{
-		super(par1World, mother, data);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+		this.flagHealth = flag;
 	}
 	
 	@Override
@@ -91,7 +98,12 @@ public class EntityTransformPigTFC extends EntityPigTFC
 		if (isAdult())
 		{
 			setGrowingAge(0);
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
 		}
 		else
 		{
@@ -126,5 +138,19 @@ public class EntityTransformPigTFC extends EntityPigTFC
 			this.heal(1);
 		else if(getHunger() < 144000 && super.isInLove())
 			this.setInLove(false);
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
+		flagHealth = nbt.getBoolean("flagHealth");
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

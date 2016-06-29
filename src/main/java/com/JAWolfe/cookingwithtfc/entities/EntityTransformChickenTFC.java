@@ -27,12 +27,24 @@ import net.minecraft.world.World;
 
 public class EntityTransformChickenTFC extends EntityChickenTFC
 {	
+	private boolean flagHealth;
 	private static final int EGG_TIME = TFC_Time.DAY_LENGTH;
 	
 	public EntityTransformChickenTFC(World par1World) 
 	{
 		super(par1World);
-		
+		setupAI();
+	}
+	
+	// Chickens hatching from a nestbox
+	public EntityTransformChickenTFC(World world, double posX, double posY, double posZ, NBTTagCompound genes)
+	{
+		super(world, posX, posY, posZ, genes);
+		setupAI();
+	}
+
+	private void setupAI()
+	{
 		this.tasks.taskEntries.clear();
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 1.4D));
@@ -42,24 +54,7 @@ public class EntityTransformChickenTFC extends EntityChickenTFC
 		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformWolfTFC.class, 8.0F, 1.0D, 1.2D));
 		this.tasks.addTask(7, new EntityAILookIdle(this));
 		this.tasks.addTask(6, new EntityAIEatGrass(this));
-		addAI();
 		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
-	}
-	
-	// Chickens hatching from a nestbox
-	public EntityTransformChickenTFC(World world, double posX, double posY, double posZ, NBTTagCompound genes)
-	{
-		super(world, posX, posY, posZ, genes);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
-	}
-
-	@Override
-	public void addAI()
-	{
 		if(getSex()==0)
 		{
 			this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
@@ -71,6 +66,11 @@ public class EntityTransformChickenTFC extends EntityChickenTFC
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.oatGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.maizeEarCWTFC, false));
 		this.tasks.addTask(3, new AIFindNest(this, 1.2F));
+	}
+	
+	public void setHealthFlag(boolean flag)
+	{
+		this.flagHealth = flag;
 	}
 	
 	@Override
@@ -119,13 +119,35 @@ public class EntityTransformChickenTFC extends EntityChickenTFC
 		
 		if (isAdult())
 		{
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
+			setGrowingAge(0);
+			
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
 		}
 		else
 		{
 			float maxBaseHealth = 50 * this.getSizeMod() * this.getStrengthMod();
 			float growthMod = ((TFC_Core.getPercentGrown(this) * 0.5F) + 0.5F) * maxBaseHealth;
 			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(growthMod);
+			setGrowingAge(-1);
 		}
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
+		flagHealth = nbt.getBoolean("flagHealth");
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

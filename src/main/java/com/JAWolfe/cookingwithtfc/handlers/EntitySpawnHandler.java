@@ -24,7 +24,7 @@ import com.bioxx.tfc.Entities.Mobs.EntitySheepTFC;
 import com.bioxx.tfc.Entities.Mobs.EntityWolfTFC;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -43,9 +43,9 @@ public class EntitySpawnHandler
 			if(event.entity instanceof EntityPlayerMP)
 				TerraFirmaCraft.PACKET_PIPELINE.sendTo(new MessageFoodRecord(player, fr), (EntityPlayerMP) event.entity);
 		}
-		else if(event.entity instanceof EntityPlayer && !event.entity.getEntityData().hasKey("estPlayer"))
+		else if(!event.world.isRemote)
 		{
-			if(!event.world.isRemote)
+			if(event.entity instanceof EntityPlayer && !event.entity.getEntityData().hasKey("estPlayer"))
 			{
 				EntityPlayer player = (EntityPlayer)event.entity;
 				int randSize = event.world.rand.nextInt(15) + 5;
@@ -56,118 +56,113 @@ public class EntitySpawnHandler
 				if(event.entity instanceof EntityPlayerMP)
 					TerraFirmaCraft.PACKET_PIPELINE.sendTo(new MessageFoodRecord(player, fr), (EntityPlayerMP) event.entity);
 			}
-		}
-		else if(event.entity instanceof EntityBear && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformBear)
-				return;				
-			else
+			else if(event.entity instanceof EntityBear)
 			{
-				EntityTransformBear newBear = new EntityTransformBear(event.world);				
-				newBear.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				event.world.spawnEntityInWorld(newBear);
-				event.setCanceled(true);
+				if(event.entity instanceof EntityTransformBear)
+					return;				
+				else
+				{
+					EntityTransformBear newBear = new EntityTransformBear(event.world);				
+					setupEntitySpawn(newBear, event);
+					newBear.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntityChickenTFC)
+			{
+				if(event.entity instanceof EntityTransformChickenTFC)
+					return;				
+				else
+				{
+					EntityTransformChickenTFC newChicken = new EntityTransformChickenTFC(event.world);				
+					setupEntitySpawn(newChicken, event);
+					newChicken.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntityCowTFC)
+			{
+				if(event.entity instanceof EntityTransformCowTFC)
+					return;				
+				else
+				{
+					EntityTransformCowTFC newCow = new EntityTransformCowTFC(event.world);				
+					setupEntitySpawn(newCow, event);
+					newCow.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntityDeer)
+			{
+				if(event.entity instanceof EntityTransformDeer)
+					return;				
+				else
+				{
+					EntityTransformDeer newDeer = new EntityTransformDeer(event.world);				
+					setupEntitySpawn(newDeer, event);
+					newDeer.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntityHorseTFC)
+			{
+				if(event.entity instanceof EntityTransformHorseTFC)
+					return;				
+				else
+				{
+					EntityTransformHorseTFC newHorse = new EntityTransformHorseTFC(event.world);
+					setupEntitySpawn(newHorse, event);
+					newHorse.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntityPheasantTFC)
+			{
+				if(event.entity instanceof EntityTransformPheasant)
+					return;				
+				else
+				{
+					EntityTransformPheasant newPheasant = new EntityTransformPheasant(event.world);				
+					setupEntitySpawn(newPheasant, event);
+					newPheasant.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntityPigTFC)
+			{
+				if(event.entity instanceof EntityTransformPigTFC)
+					return;				
+				else
+				{
+					EntityTransformPigTFC newPig = new EntityTransformPigTFC(event.world);				
+					setupEntitySpawn(newPig, event);
+					newPig.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntitySheepTFC)
+			{
+				if(event.entity instanceof EntityTransformSheepTFC)
+					return;				
+				else
+				{
+					EntityTransformSheepTFC newSheep = new EntityTransformSheepTFC(event.world);
+					setupEntitySpawn(newSheep, event);
+					newSheep.setHealthFlag(true);
+				}
+			}
+			else if(event.entity instanceof EntityWolfTFC)
+			{
+				if(event.entity instanceof EntityTransformWolfTFC)
+					return;				
+				else
+				{					
+					EntityTransformWolfTFC newWolf = new EntityTransformWolfTFC(event.world);
+					setupEntitySpawn(newWolf, event);
+					newWolf.setHealthFlag(true);
+				}
 			}
 		}
-		else if(event.entity instanceof EntityChickenTFC && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformChickenTFC)
-				return;				
-			else
-			{
-				EntityTransformChickenTFC newChicken = new EntityTransformChickenTFC(event.world);				
-				newChicken.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				event.world.spawnEntityInWorld(newChicken);
-				event.setCanceled(true);
-			}
-		}
-		else if(event.entity instanceof EntityCowTFC && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformCowTFC)
-				return;				
-			else
-			{
-				EntityTransformCowTFC newCow = new EntityTransformCowTFC(event.world);				
-				newCow.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				event.world.spawnEntityInWorld(newCow);
-				event.setCanceled(true);
-			}
-		}
-		else if(event.entity instanceof EntityDeer && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformDeer)
-				return;				
-			else
-			{
-				EntityTransformDeer newDeer = new EntityTransformDeer(event.world);				
-				newDeer.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				event.world.spawnEntityInWorld(newDeer);
-				event.setCanceled(true);
-			}
-		}
-		else if(event.entity instanceof EntityHorseTFC && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformHorseTFC)
-				return;				
-			else
-			{
-				IEntityLivingData entitylivingdata = null;
-				EntityTransformHorseTFC newHorse = new EntityTransformHorseTFC(event.world);
-				newHorse.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				entitylivingdata = newHorse.onSpawnWithEgg(entitylivingdata);
-				event.world.spawnEntityInWorld(newHorse);
-				event.setCanceled(true);
-			}
-		}
-		else if(event.entity instanceof EntityPheasantTFC && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformPheasant)
-				return;				
-			else
-			{
-				EntityTransformPheasant newPheasant = new EntityTransformPheasant(event.world);				
-				newPheasant.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				event.world.spawnEntityInWorld(newPheasant);
-				event.setCanceled(true);
-			}
-		}
-		else if(event.entity instanceof EntityPigTFC && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformPigTFC)
-				return;				
-			else
-			{
-				EntityTransformPigTFC newPig = new EntityTransformPigTFC(event.world);				
-				newPig.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				event.world.spawnEntityInWorld(newPig);
-				event.setCanceled(true);
-			}
-		}
-		else if(event.entity instanceof EntitySheepTFC && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformSheepTFC)
-				return;				
-			else
-			{
-				IEntityLivingData entitylivingdata = null;
-				EntityTransformSheepTFC newSheep = new EntityTransformSheepTFC(event.world);				
-				newSheep.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				entitylivingdata = newSheep.onSpawnWithEgg(entitylivingdata);
-				event.world.spawnEntityInWorld(newSheep);
-				event.setCanceled(true);
-			}
-		}
-		else if(event.entity instanceof EntityWolfTFC && !event.world.isRemote)
-		{
-			if(event.entity instanceof EntityTransformWolfTFC)
-				return;				
-			else
-			{
-				EntityTransformWolfTFC newWolf = new EntityTransformWolfTFC(event.world);
-				newWolf.setLocationAndAngles(event.entity.posX, event.entity.posY, event.entity.posZ, event.entity.rotationYaw, event.entity.prevRotationPitch);
-				event.world.spawnEntityInWorld(newWolf);
-				event.setCanceled(true);
-			}
-		}
+	}
+	
+	private void setupEntitySpawn(Entity entity, EntityJoinWorldEvent event)
+	{
+		entity.copyDataFrom(event.entity, true);
+		entity.copyLocationAndAnglesFrom(event.entity);
+		event.world.removeEntity(event.entity);				
+		event.world.spawnEntityInWorld(entity);
 	}
 }

@@ -34,7 +34,7 @@ public class CookingWithTFC
 	public void preInitialize(FMLPreInitializationEvent event)
 	{				
 		//Handle Configs
-		ConfigHandler.init(event.getSuggestedConfigurationFile());
+		ConfigHandler.init(event.getModConfigurationDirectory());
 		FMLCommonHandler.instance().bus().register(new ConfigHandler());
 		
 		//Initialize Fluids
@@ -56,7 +56,6 @@ public class CookingWithTFC
 		//Register packets
 		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(MessageFoodRecord.class);
 		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(CreateRecipePacket.class);
-		TerraFirmaCraft.PACKET_PIPELINE.registerPacket(ItemCookingPotPacket.class);
 		
 		//Setup Fluids
 		proxy.setupFluids();

@@ -1,5 +1,6 @@
 package com.JAWolfe.cookingwithtfc.inventory.Containers.Slots;
 
+import com.JAWolfe.cookingwithtfc.items.ItemTFCAdjutableFood;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 
 import net.minecraft.inventory.IInventory;
@@ -17,7 +18,7 @@ public class SlotAllFoodsIngreds  extends Slot
 	@Override
 	public boolean isItemValid(ItemStack is)
 	{
-		if(is.getItem() instanceof ItemFoodTFC)
+		if(is.getItem() instanceof ItemFoodTFC || is.getItem() instanceof ItemTFCAdjutableFood)
 			return true;
 		else
 			return false;

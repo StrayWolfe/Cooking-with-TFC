@@ -11,7 +11,7 @@
 tile.GrainsBlock.name=Grain
 tile.MixingBowl.Clay.name=Clay Mixing Bowl
 tile.MixingBowl.Ceramic.name=Ceramic Mixing Bowl
-
+tile.CookingPot.name=Cooking Pot
 tile.PrepTableBlock.name=Food Table
 tile.PrepTableBlock2.name=Food Table
 
@@ -20,9 +20,33 @@ tile.PrepTableBlock2.name=Food Table
 #=========
 item.Rutabaga.name=Rutabaga
 
+item.Porkchop Raw.name=Raw Pork
+item.Porkchop Cooked.name=Cooked Pork
+item.Fish Raw.name=Raw Fish
+item.Fish Cooked.name=Cooked Fish
+item.Beef Raw.name=Raw Beef
+item.Beef Cooked.name=Cooked Beef
+item.Chicken Raw.name=Raw Chicken
+item.Chicken Cooked.name=Cooked Chicken
+item.Calamari Raw.name=Raw Calamari
+item.Calamari Cooked.name=Cooked Calamari
+item.Mutton Raw.name=Raw Mutton
+item.Mutton Cooked.name=Cooked Mutton
+item.Venison Raw.name=Raw Venison
+item.Venison Cooked.name=Cooked Venison
+item.HorseMeat Raw.name=Raw Horse Meat
+item.HorseMeat Cooked.name=Cooked Horse Meat
+
 item.VeggySalad.name=Vegetable Salad
 item.PotatoSalad.name=Potato Salad
 item.FruitSalad.name=Fruit Salad
+
+item.VegetableSoup.name=Vegetable Soup
+item.TomatoSoup.name=Tomato Soup
+item.ChickenSoup.name=Chicken Soup
+item.BeefStew.name=Beef Stew
+item.VenisonStew.name=Venison Stew
+item.FishChowder.name=Fish Chowder
 
 item.HamSandwich.name=Ham Sandwich
 item.ChickenSandwich.name=Chicken Sandwich
@@ -32,7 +56,15 @@ item.FriedEggSandwich.name=Fried Egg Sandwich
 item.MuttonSandwich.name=Mutton Sandwich
 item.VenisonSteakSandwich.name=Venison Steak Sandwich
 
-item.ChickenStock.name=Chicken Stock
+item.Broth.name=Broth
+item.BoiledChicken.name=Boiled Chicken
+item.BoiledBeef.name=Boiled Beef
+item.BoiledFish.name=Boiled Fish
+item.BoiledPork.name=Boiled Pork
+item.BoiledVenison.name=Boiled Venison
+
+item.SeaSalt.name=Sea Salt
+item.Salt.name=Rock Salt
 
 item.clayCookingPot.Clay.name=Clay Cooking Pot
 item.clayCookingPot.Ceramic.name=Ceramic Cooking Pot
@@ -45,6 +77,7 @@ gui.showIngreds=§8Foods: (Hold §fShift§8)
 gui.PrepTable.Recipes=Recipe
 gui.PotContents=§8Contents: (Hold §fCtrl§8)
 gui.ShowContents=§8Contents:
+gui.cookingTime=Time Remaining
 
 #==============
 #= Entities = 
@@ -93,7 +126,13 @@ wood.Acacia=Acacia
 fluid.milkCWTFC=Milk
 fluid.milkvinegarCWTFC=Milk + Vinegar Mix
 fluid.milkcurdledCWTFC=Curdled Milk
-fluid.chickenStock=Chicken Stock
+fluid.broth=Broth
+fluid.vegetableSoup=Vegetable Soup
+fluid.tomatoSoup=Tomato Soup
+fluid.chickenSoup=Chicken Soup
+fluid.beefStew=Beef Stew
+fluid.venisonStew=Venison Stew
+fluid.fishChowder=Fish Chowder
 
 #========
 #= Misc =

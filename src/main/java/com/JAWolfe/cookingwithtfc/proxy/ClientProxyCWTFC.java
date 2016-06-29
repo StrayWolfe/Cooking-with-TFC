@@ -1,6 +1,7 @@
 package com.JAWolfe.cookingwithtfc.proxy;
 
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
+import com.JAWolfe.cookingwithtfc.render.RenderCookingPot;
 import com.JAWolfe.cookingwithtfc.render.RenderMixingBowl;
 import com.JAWolfe.cookingwithtfc.render.RenderPrepTable;
 
@@ -29,5 +30,6 @@ public class ClientProxyCWTFC extends CommonProxyCWTFC
 	{
 		RenderingRegistry.registerBlockHandler(CWTFCBlocks.mixingBowlRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderMixingBowl());
 		RenderingRegistry.registerBlockHandler(CWTFCBlocks.prepTableRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderPrepTable());
+		RenderingRegistry.registerBlockHandler(CWTFCBlocks.cookingPotRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderCookingPot());
 	}
 }

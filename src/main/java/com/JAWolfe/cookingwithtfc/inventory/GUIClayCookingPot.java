@@ -4,189 +4,121 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
-import com.JAWolfe.cookingwithtfc.handlers.messages.ItemCookingPotPacket;
+import com.JAWolfe.cookingwithtfc.crafting.CookingPotManager;
+import com.JAWolfe.cookingwithtfc.crafting.CookingPotRecipe;
 import com.JAWolfe.cookingwithtfc.inventory.Containers.ContainerClayCookingPot;
-import com.JAWolfe.cookingwithtfc.items.Items.ItemClayCookingPot;
 import com.JAWolfe.cookingwithtfc.references.Textures;
-import com.bioxx.tfc.TerraFirmaCraft;
+import com.JAWolfe.cookingwithtfc.tileentities.TECookingPot;
+import com.JAWolfe.cookingwithtfc.util.Helper;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.Player.PlayerInventory;
-import com.bioxx.tfc.GUI.GuiBarrel;
 import com.bioxx.tfc.GUI.GuiContainerTFC;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 public class GUIClayCookingPot extends GuiContainerTFC
-{
-	private EntityPlayer player;
+{	
+	private TECookingPot teCookingPot;
 	
-	public GUIClayCookingPot(InventoryPlayer playerinv, World world, int x, int y, int z)
+	public GUIClayCookingPot(InventoryPlayer playerinv, TECookingPot pot, World world, int x, int y, int z)
 	{
-		super(new ContainerClayCookingPot(playerinv, world, x, y, z), 176, 85);
-		player = playerinv.player;
-		guiLeft = (width - 208) / 2;
-		guiTop = (height - 198) / 2;
-	}
-	
-	@Override
-	public void initGui()
-	{
-		super.initGui();
-		createButtons();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void createButtons()
-	{
-		buttonList.clear();
+		super(new ContainerClayCookingPot(playerinv, pot, world, x, y, z), 176, 97);
 		
-		ItemStack cookingPot = player.getCurrentEquippedItem();
-		if(((ItemClayCookingPot)cookingPot.getItem()).getInputMode(cookingPot))
-			buttonList.add(new GuiModeButton(0, guiLeft + 29, guiTop + 32, 16, 16, this, TFC_Core.translate("gui.Barrel.ToggleOn"), 0, 204, 16, 16));
-		else
-			buttonList.add(new GuiModeButton(0, guiLeft + 29, guiTop + 32, 16, 16, this, TFC_Core.translate("gui.Barrel.ToggleOff"), 0, 188, 16, 16));
-	}
-	
-	@Override
-	public void updateScreen()
-	{
-		super.updateScreen();
-		((GuiButton) buttonList.get(0)).visible = true;
-	}
-	
-	@Override
-	protected void actionPerformed(GuiButton guibutton)
-	{
-		if (guibutton.id == 0)
-		{
-			ItemStack cookingPot = player.getCurrentEquippedItem();
-			
-			if(((ItemClayCookingPot)cookingPot.getItem()).getInputMode(cookingPot))
-			{
-				((ItemClayCookingPot)cookingPot.getItem()).setInputMode(cookingPot, false);
-				TerraFirmaCraft.PACKET_PIPELINE.sendToServer(new ItemCookingPotPacket(false));
-			}
-			else
-			{
-				((ItemClayCookingPot)cookingPot.getItem()).setInputMode(cookingPot, true);
-				TerraFirmaCraft.PACKET_PIPELINE.sendToServer(new ItemCookingPotPacket(true));
-			}
-			
-			createButtons();
-		}
-	}
+		teCookingPot = pot;
+	}	
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY)
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
-		bindTexture(Textures.Gui.CLAYCOOKINGPOTINIT);
+		bindTexture(Textures.Gui.CLAYCOOKINGPOT);
 		
 		guiLeft = (width - xSize) / 2;
 		guiTop = (height - ySize) / 2;
 		
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, this.getShiftedYSize());
 		
-		int scale = 0;
-		if(player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemClayCookingPot)
-		{
-			ItemStack is = player.getCurrentEquippedItem();
-			ItemClayCookingPot cookingPot = (ItemClayCookingPot)is.getItem();
-			
-			if(cookingPot.getPotFluid(is) != null)
+		drawForeground(guiLeft, guiTop);
+
+		if(teCookingPot != null)
+		{			
+			if(teCookingPot.getCookingPotFluid() != null)
 			{
-				scale = cookingPot.getLiquidScaled(is, 50);
-				IIcon liquidIcon = cookingPot.getPotFluid(is).getFluid().getIcon(cookingPot.getPotFluid(is));
+				int scale = teCookingPot.getLiquidScaled(50);
+				FluidStack fluid = teCookingPot.getCookingPotFluid();
+				IIcon liquidIcon = fluid.getFluid().getIcon(fluid);
 				TFC_Core.bindTexture(TextureMap.locationBlocksTexture);
-				int color = cookingPot.getPotFluid(is).getFluid().getColor(cookingPot.getPotFluid(is));				
+				int color = fluid.getFluid().getColor(fluid);				
 				GL11.glColor4ub((byte) ((color >> 16) & 255), (byte) ((color >> 8) & 255), (byte) (color & 255), (byte) ((0xaa) & 255));
 				int div = (int) Math.floor(scale / 8);
 				int rem = scale - (div * 8);
-				this.drawTexturedModelRectFromIcon(guiLeft + 12, guiTop + 65 - scale, liquidIcon, 8, div > 0 ? 8 : rem);
+				this.drawTexturedModelRectFromIcon(guiLeft + 157, guiTop + 68 - scale, liquidIcon, 8, div > 0 ? 8 : rem);
 				for (int c = 0; div > 0 && c < div; c++)
 				{
-					this.drawTexturedModelRectFromIcon(guiLeft + 12, guiTop + 65 - (8 + (c * 8)), liquidIcon, 8, 8);
+					this.drawTexturedModelRectFromIcon(guiLeft + 157, guiTop + 68 - (8 + (c * 8)), liquidIcon, 8, 8);
 				}
 				GL11.glColor3f(0, 0, 0);
 				
-				drawCenteredString(this.fontRendererObj, cookingPot.getPotFluid(is).getFluid().getLocalizedName(cookingPot.getPotFluid(is)), guiLeft + 88, guiTop + 7, 0x555555);
+				Helper.drawCenteredString(this.fontRendererObj, fluid.getFluid().getLocalizedName(fluid), guiLeft + 101, guiTop + 7, 0x555555);
+			}
+			if(teCookingPot.getRecipeID() != -1)
+			{
+				CookingPotRecipe recipe = CookingPotManager.getInstance().getRecipe(teCookingPot.getRecipeID());
+				
+				if(recipe.getOutputFluid() != null)
+					Helper.drawCenteredString(this.fontRendererObj, "Output: " + recipe.getOutputFluid().getFluid().getLocalizedName(recipe.getOutputFluid()), guiLeft + 85, guiTop + 83, 0x555555);
+				else
+				{
+					String name = "";
+					ItemStack[] outputItems = recipe.getOutputItems();
+					
+					name = name.concat(outputItems[0].getDisplayName());
+					if(outputItems.length > 1)
+						name = name.concat("...");
+					
+					Helper.drawCenteredString(this.fontRendererObj, "Output: " + name, guiLeft + 85, guiTop + 83, 0x555555);
+				}
+					
 			}
 		}
 		
-		PlayerInventory.drawInventory(this, width, height, this.getShiftedYSize() - 2);
+		PlayerInventory.drawInventory(this, width, height, this.getShiftedYSize());
+	}
+	
+	@Override
+	protected void drawForeground(int guiLeft, int guiTop)
+	{
+		if (teCookingPot != null)
+		{
+			int scale = teCookingPot.getTemperatureScaled(49);
+			drawTexturedModalRect(guiLeft + 30, guiTop + 65 - scale, 185, 32, 15, 5);
+			
+			if(teCookingPot.getCookTimer() != -1 && teCookingPot.fireTemp > 600)
+			{
+				drawTexturedModalRect(guiLeft + 71, guiTop + 20, 67, 102, 58, 49);
+
+				int imageHeight = (int)(49 * teCookingPot.getCookTimerScale());
+				drawTexturedModalRect(guiLeft + 71, guiTop + 69 - imageHeight, 4, 151 - imageHeight, 58, imageHeight);
+			}
+		}
 	}
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		if (this.mouseInRegion(12, 15, 9, 50, mouseX, mouseY))
-		{
-			ArrayList<String> list = new ArrayList<String>();
-			ItemClayCookingPot cookingPot = (ItemClayCookingPot)player.getCurrentEquippedItem().getItem();
-			list.add(cookingPot.getFluidLevel(player.getCurrentEquippedItem()) + "mB");
-			this.drawHoveringText(list, mouseX - guiLeft, mouseY - guiTop + 8, this.fontRendererObj);
-		}
-	}
-
-	@Override
-	public void drawCenteredString(FontRenderer fontrenderer, String s, int i, int j, int k)
-	{
-		fontrenderer.drawString(s, i - fontrenderer.getStringWidth(s) / 2, j, k);
-	}
-	
-	public class GuiModeButton extends GuiButton
-	{
-		private GUIClayCookingPot screen;
-		private IIcon buttonicon;
-
-		private int xPos;
-		private int yPos = 172;
-		private int xSize = 31;
-		private int ySize = 15;
-
-		public GuiModeButton(int index, int xPos, int yPos, int width, int height, GUIClayCookingPot gui, String s, int xp, int yp, int xs, int ys)
-		{
-			super(index, xPos, yPos, width, height, s);
-			screen = gui;
-			this.xPos = xp;
-			this.yPos = yp;
-			xSize = xs;
-			ySize = ys;
-		}
-
-		@Override
-		public void drawButton(Minecraft mc, int x, int y)
-		{
-			if (this.visible)
+		if(teCookingPot != null)
+		{		
+			if (this.mouseInRegion(156, 17, 10, 52, mouseX, mouseY))
 			{
-				TFC_Core.bindTexture(GuiBarrel.TEXTURE);
-				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-				this.zLevel = 301f;
-				this.drawTexturedModalRect(this.xPosition, this.yPosition, xPos, yPos, xSize, ySize);
-				this.field_146123_n = x >= this.xPosition && y >= this.yPosition && x < this.xPosition + this.width && y < this.yPosition + this.height;
-
-				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-				TFC_Core.bindTexture(TextureMap.locationBlocksTexture);
-				if (buttonicon != null)
-					this.drawTexturedModelRectFromIcon(this.xPosition + 12, this.yPosition + 4, buttonicon, 8, 8);
-
-				this.zLevel = 0;
-				this.mouseDragged(mc, x, y);
-
-				if (field_146123_n)
-				{
-					screen.drawTooltip(x, y, this.displayString);
-					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-				}
+				ArrayList<String> list = new ArrayList<String>();
+				list.add(teCookingPot.getFluidLevel() + "mB");
+				this.drawHoveringText(list, mouseX - guiLeft, mouseY - guiTop + 8, this.fontRendererObj);
 			}
 		}
 	}

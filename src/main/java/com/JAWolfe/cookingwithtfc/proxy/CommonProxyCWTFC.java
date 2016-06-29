@@ -12,6 +12,7 @@ import com.JAWolfe.cookingwithtfc.entities.EntityTransformSheepTFC;
 import com.JAWolfe.cookingwithtfc.entities.EntityTransformWolfTFC;
 import com.JAWolfe.cookingwithtfc.init.CWTFCFluids;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
+import com.JAWolfe.cookingwithtfc.tileentities.TECookingPot;
 import com.JAWolfe.cookingwithtfc.tileentities.TEGrains;
 import com.JAWolfe.cookingwithtfc.tileentities.TEHopperCWTFC;
 import com.JAWolfe.cookingwithtfc.tileentities.TEMixBowl;
@@ -19,6 +20,7 @@ import com.JAWolfe.cookingwithtfc.tileentities.TENestBoxCWTFC;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 
 import com.bioxx.tfc.TerraFirmaCraft;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.TFCItems;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -45,6 +47,7 @@ public abstract class CommonProxyCWTFC implements IProxyCWTFC
 		GameRegistry.registerTileEntity(TEMixBowl.class, "TEMixingBowl");
 		GameRegistry.registerTileEntity(TEPrepTable.class, "TEPrepTable");
 		GameRegistry.registerTileEntity(TEHopperCWTFC.class, "TEHopperCWTFC");
+		GameRegistry.registerTileEntity(TECookingPot.class, "TECookingPot");
 		
 		EntityRegistry.registerGlobalEntityID(EntityTransformSheepTFC.class, "sheepCWTFC", EntityRegistry.findGlobalUniqueEntityId());
 		EntityRegistry.registerGlobalEntityID(EntityTransformHorseTFC.class, "horseCWTFC", EntityRegistry.findGlobalUniqueEntityId());
@@ -68,12 +71,25 @@ public abstract class CommonProxyCWTFC implements IProxyCWTFC
 		FluidRegistry.registerFluid(CWTFCFluids.MILKCURDLEDCWTFC);
 		FluidRegistry.registerFluid(CWTFCFluids.MILKCWTFC);
 		FluidRegistry.registerFluid(CWTFCFluids.MILKVINEGARCWTFC);
-		FluidRegistry.registerFluid(CWTFCFluids.CHICKENSTOCK);
+		FluidRegistry.registerFluid(CWTFCFluids.BROTH);
+		FluidRegistry.registerFluid(CWTFCFluids.VEGETABLESOUP);
+		FluidRegistry.registerFluid(CWTFCFluids.TOMATOSOUP);
+		FluidRegistry.registerFluid(CWTFCFluids.CHICKENSOUP);
+		FluidRegistry.registerFluid(CWTFCFluids.BEEFSTEW);
+		FluidRegistry.registerFluid(CWTFCFluids.VENISONSTEW);
+		FluidRegistry.registerFluid(CWTFCFluids.FISHCHOWDER);
 	}
 	
 	public void setupFluids()
 	{
-		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.MILKCWTFC, 1000), new ItemStack(CWTFCItems.woodenBucketMilkCWTFC), new ItemStack(TFCItems.woodenBucketEmpty));
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.MILKCWTFC, 1000), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.woodenBucketMilkCWTFC), 20, 0), new ItemStack(TFCItems.woodenBucketEmpty));
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.BROTH, 1000), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.Broth), 20, 0), new ItemStack(TFCItems.potteryJug, 1, 1));
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.VEGETABLESOUP, 250), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.VegetableSoup), 10, 0), new ItemStack(TFCItems.potteryBowl, 1, 1));
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.TOMATOSOUP, 250), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.TomatoSoup), 10, 0), new ItemStack(TFCItems.potteryBowl, 1, 1));		
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.CHICKENSOUP, 250), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.ChickenSoup), 10, 0), new ItemStack(TFCItems.potteryBowl, 1, 1));
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.BEEFSTEW, 250), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.BeefStew), 10, 0), new ItemStack(TFCItems.potteryBowl, 1, 1));
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.VENISONSTEW, 250), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.VenisonStew), 10, 0), new ItemStack(TFCItems.potteryBowl, 1, 1));
+		FluidContainerRegistry.registerFluidContainer(new FluidStack(CWTFCFluids.FISHCHOWDER, 250), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.FishChowder), 10, 0), new ItemStack(TFCItems.potteryBowl, 1, 1));
 	}
 	
 	public void registerWAILA()

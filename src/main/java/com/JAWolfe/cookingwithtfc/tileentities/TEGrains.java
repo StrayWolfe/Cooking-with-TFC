@@ -3,7 +3,7 @@ package com.JAWolfe.cookingwithtfc.tileentities;
 import java.util.Random;
 
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
-import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCFoodTransform;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.TileEntities.NetworkTileEntity;
 import com.bioxx.tfc.api.Food;

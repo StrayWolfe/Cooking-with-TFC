@@ -3,7 +3,7 @@ package com.JAWolfe.cookingwithtfc.crafting;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class CookingPotManager 
@@ -31,12 +31,27 @@ public class CookingPotManager
 		recipes.clear();
 	}
 	
-	public CookingPotRecipe findMatchingRecipe(FluidStack inputFluid, Item[] inputIngreds)
+	public List<CookingPotRecipe> getRecipeList()
+	{
+		return recipes;
+	}
+	
+	public int getRecipeID(CookingPotRecipe recipe)
+	{
+		return recipes.indexOf(recipe);
+	}
+	
+	public CookingPotRecipe getRecipe(int recipeID)
+	{
+		return recipes.get(recipeID);
+	}
+	
+	public CookingPotRecipe findMatchingRecipe(FluidStack inputFluid, ItemStack[] inputInv)
 	{
 		for (int i = 0; i < recipes.size(); i++)
 		{
 			CookingPotRecipe irecipe = recipes.get(i);
-			if (irecipe != null && irecipe.matches(inputFluid, inputIngreds))
+			if (irecipe != null && irecipe.matches(inputFluid, inputInv))
 				return irecipe.getRecipe();
 		}
 		return null;

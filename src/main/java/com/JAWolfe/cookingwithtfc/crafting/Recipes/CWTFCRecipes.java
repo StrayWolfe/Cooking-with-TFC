@@ -1,12 +1,15 @@
 package com.JAWolfe.cookingwithtfc.crafting.Recipes;
 
+import java.util.List;
+
 import com.JAWolfe.cookingwithtfc.crafting.PressManager;
 import com.JAWolfe.cookingwithtfc.crafting.PressRecipe;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.init.CWTFCFluids;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
-import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCFoodTransform;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
 import com.bioxx.tfc.Core.Recipes;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCFluids;
 import com.bioxx.tfc.api.TFCItems;
@@ -70,7 +73,8 @@ public class CWTFCRecipes
 		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.sugarCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.RUM, 10000)));
 		
 		barrelmanager.addRecipe(new BarrelMultiItemRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.sugarcaneCWTFC), 1), new FluidStack(TFCFluids.FRESHWATER, 60), ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.sugarCWTFC), 0.1f), new FluidStack(TFCFluids.FRESHWATER, 60)).setMinTechLevel(0));
-		barrelmanager.addRecipe(new BarrelMultiItemRecipe(new ItemStack(TFCItems.powder, 1, 9),new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000), ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.cheeseCWTFC, 1), 16), new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000)).setSealedRecipe(true).setMinTechLevel(0).setRemovesLiquid(true));
+		barrelmanager.addRecipe(new BarrelMultiItemRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.SeaSalt), 1),new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000), ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.cheeseCWTFC), 16), new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000)).setSealedRecipe(true).setMinTechLevel(0).setRemovesLiquid(true));
+		barrelmanager.addRecipe(new BarrelMultiItemRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.RockSalt), 1),new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000), ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.cheeseCWTFC), 16), new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000)).setSealedRecipe(true).setMinTechLevel(0).setRemovesLiquid(true));
 		barrelmanager.addRecipe(new BarrelRecipe(null, new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000), null, new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 10000)).setMinTechLevel(0).setRemovesLiquid(false));
 		barrelmanager.addRecipe(new BarrelLiquidToLiquidRecipe(new FluidStack(CWTFCFluids.MILKCWTFC, 9000), new FluidStack(TFCFluids.VINEGAR, 1000), new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000)).setSealedRecipe(false).setMinTechLevel(0).setRemovesLiquid(false));
 		barrelmanager.addRecipe(new BarrelLiquidToLiquidRecipe(new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 9000), new FluidStack(CWTFCFluids.MILKCWTFC, 1000), new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000)).setSealedRecipe(false).setMinTechLevel(0).setRemovesLiquid(false));
@@ -86,6 +90,9 @@ public class CWTFCRecipes
 		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.barleyGrainCWTFC, 1), new ItemStack(CWTFCItems.barleyGroundCWTFC, 1)));//Barley Flour
 		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.riceGrainCWTFC, 1), new ItemStack(CWTFCItems.riceGroundCWTFC, 1)));//Rice Flour
 		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.maizeEarCWTFC, 1), new ItemStack(CWTFCItems.cornmealGroundCWTFC, 1)));//Cornmeal
+		quernmanager.addRecipe(new QuernRecipe(new ItemStack(TFCItems.looseRock, 1, 5), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.RockSalt, 1), 8)));//Rock Salt
+		
+		removeQuernRecipe(new ItemStack(TFCItems.looseRock, 1, 5), new ItemStack(TFCItems.powder, 4, 9));
 	}
 	
 	public static void registerKilnRecipes()
@@ -120,5 +127,31 @@ public class CWTFCRecipes
 		PressManager pressmanager = PressManager.getInstance();
 		
 		pressmanager.addRecipe(new PressRecipe(CWTFCItems.oliveCWTFC, TFCFluids.OLIVEOIL));
+	}
+	
+	public static void removeQuernRecipe(ItemStack inputStack, ItemStack outputStack)
+	{
+		List<QuernRecipe> quernList = QuernManager.getInstance().getRecipes();
+		for (int i = 0; i < quernList.size(); i++)
+		{
+			if (quernList.get(i) != null)
+			{
+				if (quernList.get(i).isInItem(inputStack) && ItemStack.areItemStacksEqual(quernList.get(i).getResult(), outputStack))
+					quernList.remove(i--);
+			}
+		}
+		
+		if(QuernManager.getInstance().findMatchingRecipe(inputStack) == null && QuernManager.getInstance().isValidItem(inputStack))
+		{
+			List<ItemStack> validItemsList = QuernManager.getInstance().getValidItems();
+			for (int i = 0; i < validItemsList.size(); i++)
+			{
+				if (validItemsList.get(i) != null)
+				{
+					if (ItemStack.areItemStacksEqual(validItemsList.get(i), inputStack))
+						validItemsList.remove(i--);
+				}
+			}
+		}
 	}
  }

@@ -16,7 +16,6 @@ import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -33,6 +32,7 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 	private static final IEntitySelector HORSE_BREEDING_SELECTOR_CWTFC = new EntityHorseBredSelectorCWTFC();
 	private static final IAttribute HORSE_JUMP_STRENGTH_CWTFC = new RangedAttribute("horse.jumpStrengthCWTFC", 0.7D, 0.0D, 2.0D).setDescription("Jump StrengthCWTFC").setShouldWatch(true);
 	
+	private boolean flagHealth;
 	private float mateSizeModCWTFC;
 	private float mateStrengthModCWTFC;
 	private float mateAggroModCWTFC;
@@ -46,6 +46,17 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 	public EntityTransformHorseTFC(World par1World) 
 	{
 		super(par1World);		
+		setupAI();
+	}
+	
+	public EntityTransformHorseTFC(World par1World, IAnimal mother, List<Float> data, int type, int variant)
+	{
+		super(par1World, mother, data, type, variant);
+		setupAI();
+	}
+	
+	private void setupAI()
+	{
 		this.tasks.addTask(3, new EntityAIAvoidEntityTFC(this, EntityTransformWolfTFC.class, 8f, 1.0F, 1.2F));
 		this.tasks.addTask(3, new EntityAIAvoidEntityTFC(this, EntityTransformBear.class, 16f, 1.0F, 1.2F));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.wheatGrainCWTFC, false));
@@ -56,17 +67,12 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.maizeEarCWTFC, false));
 		
 		this.getAttributeMap().registerAttribute(HORSE_JUMP_STRENGTH_CWTFC);
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1250 * getSizeMod() * getStrengthMod());//MaxHealth
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.22499999403953552D * getStrengthMod() * getObedienceMod() / (getSizeMod() * getSizeMod()));
 	}
 	
-	public EntityTransformHorseTFC(World par1World, IAnimal mother, List<Float> data, int type, int variant)
+	public void setHealthFlag(boolean flag)
 	{
-		super(par1World, mother, data, type, variant);
-		
-		this.getAttributeMap().registerAttribute(HORSE_JUMP_STRENGTH_CWTFC);
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1250 * getSizeMod() * getStrengthMod());//MaxHealth
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.22499999403953552D * getStrengthMod() * getObedienceMod() / (getSizeMod() * getSizeMod()));
+		this.flagHealth = flag;
 	}
 	
 	private double calcJumpStrength()
@@ -109,13 +115,6 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 		}
 	}
 	
-	@Override
-	public boolean canMateWith(IAnimal animal)
-	{
-		return animal.getGender() != this.getGender() &&this.isAdult() && animal.isAdult() &&
-				animal instanceof EntityTransformHorseTFC;
-	}
-	
 	private boolean getBreedable()
 	{
 		return this.riddenByEntity == null && this.ridingEntity == null && this.isTame() && this.isAdultHorse() && 
@@ -123,13 +122,10 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 	}
 	
 	@Override
-	public IEntityLivingData onSpawnWithEgg(IEntityLivingData livingData)
+	public boolean canMateWith(IAnimal animal)
 	{
-		float horseMaxHealth = getMaxHealth();
-		IEntityLivingData data = super.onSpawnWithEgg(livingData);
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(horseMaxHealth);
-		this.heal(horseMaxHealth);
-		return data;
+		return animal.getGender() != this.getGender() &&this.isAdult() && animal.isAdult() &&
+				animal instanceof EntityTransformHorseTFC;
 	}
 	
 	@Override
@@ -260,7 +256,15 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 
 		syncData();
 		if(isAdult())
+		{
 			setGrowingAge(0);
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(1250 * getSizeMod() * getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
+		}
 		else
 			setGrowingAge(-1);
 
@@ -303,20 +307,22 @@ public class EntityTransformHorseTFC extends EntityHorseTFC
 		mateMaxHealthCWTFC = nbt.getDouble("MateHealthCWTFC");
 		mateJumpStrengthCWTFC = nbt.getDouble("MateJumpCWTFC");
 		mateMoveSpeedCWTFC = nbt.getDouble("MateSpeedCWTFC");
+		flagHealth = nbt.getBoolean("flagHealth");
 	}
 	
 	@Override
-	public void writeEntityToNBT(NBTTagCompound nbttc)
+	public void writeEntityToNBT(NBTTagCompound nbt)
 	{
-		super.writeEntityToNBT(nbttc);
-		nbttc.setFloat("MateSizeCWTFC", mateSizeModCWTFC);
-		nbttc.setFloat("MateStrengthCWTFC", mateStrengthModCWTFC);
-		nbttc.setFloat("MateAggroCWTFC", mateAggroModCWTFC);
-		nbttc.setFloat("MateObedCWTFC", mateObedModCWTFC);
-		nbttc.setInteger("MateTypeCWTFC", mateTypeCWTFC);
-		nbttc.setInteger("MateVariantCWTFC", mateVariantCWTFC);
-		nbttc.setDouble("MateHealthCWTFC", mateMaxHealthCWTFC);
-		nbttc.setDouble("MateJumpCWTFC", mateJumpStrengthCWTFC);
-		nbttc.setDouble("MateSpeedCWTFC", mateMoveSpeedCWTFC);
+		super.writeEntityToNBT(nbt);
+		nbt.setFloat("MateSizeCWTFC", mateSizeModCWTFC);
+		nbt.setFloat("MateStrengthCWTFC", mateStrengthModCWTFC);
+		nbt.setFloat("MateAggroCWTFC", mateAggroModCWTFC);
+		nbt.setFloat("MateObedCWTFC", mateObedModCWTFC);
+		nbt.setInteger("MateTypeCWTFC", mateTypeCWTFC);
+		nbt.setInteger("MateVariantCWTFC", mateVariantCWTFC);
+		nbt.setDouble("MateHealthCWTFC", mateMaxHealthCWTFC);
+		nbt.setDouble("MateJumpCWTFC", mateJumpStrengthCWTFC);
+		nbt.setDouble("MateSpeedCWTFC", mateMoveSpeedCWTFC);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

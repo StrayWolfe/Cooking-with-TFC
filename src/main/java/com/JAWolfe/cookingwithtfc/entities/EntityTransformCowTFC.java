@@ -19,15 +19,29 @@ import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 
 public class EntityTransformCowTFC extends EntityCowTFC
 {
+	private boolean flagHealth;
 	private static final int FAMILIARITY_CAP = 35;
 
-	public EntityTransformCowTFC(World par1World) {
+	public EntityTransformCowTFC(World par1World) 
+	{
 		super(par1World);
+		setupAI();
+	}
+	
+	public EntityTransformCowTFC(World par1World, IAnimal mother, List<Float> data)
+	{
+		super(par1World, mother, data);
+		setupAI();
+	}
+	
+	private void setupAI()
+	{
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.wheatGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.ryeGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.riceGrainCWTFC, false));
@@ -35,17 +49,11 @@ public class EntityTransformCowTFC extends EntityCowTFC
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.oatGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.maizeEarCWTFC, false));
 		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformWolfTFC.class, 8f, 0.7F, 1.0F));
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
 	}
 	
-	public EntityTransformCowTFC(World par1World, IAnimal mother, List<Float> data)
+	public void setHealthFlag(boolean flag)
 	{
-		super(par1World, mother, data);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+		this.flagHealth = flag;
 	}
 	
 	@Override
@@ -104,7 +112,12 @@ public class EntityTransformCowTFC extends EntityCowTFC
 		if (isAdult())
 		{
 			setGrowingAge(0);
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500 * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
 		}
 		else
 		{
@@ -203,5 +216,19 @@ public class EntityTransformCowTFC extends EntityCowTFC
 		}
 		else
 			return super.interact(player);
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
+		flagHealth = nbt.getBoolean("flagHealth");
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

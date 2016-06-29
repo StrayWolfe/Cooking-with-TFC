@@ -6,15 +6,16 @@ import java.util.List;
 
 import com.JAWolfe.cookingwithtfc.crafting.FoodManager;
 import com.JAWolfe.cookingwithtfc.crafting.FoodRecipe;
-import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCFoodTransform;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCMealTransform;
 import com.JAWolfe.cookingwithtfc.references.Textures;
+import com.JAWolfe.cookingwithtfc.util.Helper;
 
-import static codechicken.lib.gui.GuiDraw.changeTexture;
-import static codechicken.lib.gui.GuiDraw.drawTexturedModalRect;
+import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
@@ -30,7 +31,7 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
 	@Override
 	public String getRecipeName() 
 	{
-		return "Food Preparation";
+		return StatCollector.translateToLocal("tile.PrepTableBlock.name");
 	}
 
 	/**
@@ -39,7 +40,7 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
 	@Override
 	public String getGuiTexture() 
 	{
-		return Textures.Gui.PREPTABLE.toString();
+		return Textures.Gui.PREPTABLE1.toString();
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
 	@Override
     public void loadTransferRects()
     {
-        transferRects.add(new RecipeTransferRect(new Rectangle(105, 63, 56, 18), "preptable"));
+        transferRects.add(new RecipeTransferRect(new Rectangle(101, 59, 56, 18), "preptable"));
     }
 	
 	/**
@@ -89,7 +90,10 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
     public void loadCraftingRecipes(ItemStack result)
     {
 		for (FoodRecipe recipe : recipeList)
-            if (areItemStacksEqual(result, recipe.getResult())) arecipes.add(new CachedPrepTableRecipe(recipe));
+		{
+            if (Helper.areItemStacksEqual(result, recipe.getResult())) 
+            	arecipes.add(new CachedPrepTableRecipe(recipe));
+		}
     }
     
 	@Override
@@ -98,10 +102,16 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
 		for (FoodRecipe recipe : recipeList)
 		{
 			for(int i = 0; i < recipe.getReqIngred().length; i++)
-				if(areItemStacksEqual(ingredient, recipe.getReqIngred()[i])) arecipes.add(new CachedPrepTableRecipe(recipe));
+			{
+				if(Helper.areItemStacksEqual(ingredient, recipe.getReqIngred()[i]))
+					arecipes.add(new CachedPrepTableRecipe(recipe));
+			}
 			
 			for(int i = 0; i < recipe.getReqCookware().length; i++)
-				if (areItemStacksEqual(ingredient, recipe.getReqCookware()[i])) arecipes.add(new CachedPrepTableRecipe(recipe));
+			{
+				if (Helper.areItemStacksEqual(ingredient, recipe.getReqCookware()[i]))
+					arecipes.add(new CachedPrepTableRecipe(recipe));
+			}
 		}
     }
 	
@@ -111,11 +121,6 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
         if (recipeList == null) recipeList = FoodManager.getInstance().getRecipeList();
         
         return super.newInstance();
-    }
-	
-	public static boolean areItemStacksEqual(ItemStack input, ItemStack target)
-    {
-        return input == target || OreDictionary.itemMatches(target, input, false);
     }
 	
 	@Override
@@ -128,8 +133,8 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
     public void drawBackground(int recipe)
     {
         GL11.glColor4f(1, 1, 1, 1);
-        changeTexture(getGuiTexture());
-        drawTexturedModalRect(0, 0, 4, 4, 171 - 4, 81 - 4);
+        GuiDraw.changeTexture(getGuiTexture());
+        GuiDraw.drawTexturedModalRect(0, 0, 4, 4, 171 - 4, 81 - 4);
     }
 	
 	public class CachedPrepTableRecipe extends CachedRecipe
@@ -141,9 +146,17 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
 
         public CachedPrepTableRecipe(ItemStack[] ingred, ItemStack[] cookware, float[] pctList, ItemStack result)
         {
-        	float resultWt = ((ItemTFCFoodTransform)result.getItem()).getMaxFoodWt();
+        	float resultWt;
+        	if(result.getItem() instanceof ItemTFCFoodTransform)
+        		resultWt = ((ItemTFCFoodTransform)result.getItem()).getMaxFoodWt();
+        	else
+        		resultWt = ((ItemTFCMealTransform)result.getItem()).getMaxFoodWt();
         	
-        	this.result = new PositionedStack(ItemTFCFoodTransform.createTag(new ItemStack(result.getItem()), resultWt), 121, 41);
+        	if(result.getItem() instanceof ItemTFCFoodTransform)
+        		this.result = new PositionedStack(ItemTFCFoodTransform.createTag(new ItemStack(result.getItem(), 1, result.getItemDamage()), resultWt), 121, 41);
+        	else
+        		this.result = new PositionedStack(ItemTFCMealTransform.createTag(new ItemStack(result.getItem(), 1, result.getItemDamage()), resultWt, 0, new ItemStack[]{}, new float[]{}), 121, 41);
+        		
         	
         	for(int i = 0; i < ingred.length; i++)
         	{
@@ -155,8 +168,12 @@ public class PrepTableRecipeHandler extends TemplateRecipeHandler
         		else if(i < 12) {x = x + (18 * (i - 8)); y = y + (18 * 2);}
         		else if(i < 16) {x = x + (18 * (i - 12)); y = y + (18 * 3);}
         		
-        		Ingredients.add(new PositionedStack(ItemTFCFoodTransform.createTag(
-        				new ItemStack(ingred[i].getItem()), pctList[i] * resultWt), x, y));
+        		if(result.getItem() instanceof ItemTFCFoodTransform)
+        			Ingredients.add(new PositionedStack(ItemTFCFoodTransform.createTag(
+        				new ItemStack(ingred[i].getItem(), 1, ingred[i].getItemDamage()), pctList[i] * resultWt), x, y));
+        		else
+        			Ingredients.add(new PositionedStack(ItemTFCMealTransform.createTag(new ItemStack(ingred[i].getItem(), 1, ingred[i].getItemDamage()), 
+        					pctList[i] * resultWt, 0, new ItemStack[]{}, new float[]{}), x, y));	
         	}
         	
         	for(int i = 0; i < cookware.length; i++)

@@ -8,4 +8,5 @@ public class ConstantsCWTFC
 	public static final float FEAST_SIZE = 10F;
 	
 	public static int PICKINESS = 1;
+	public static boolean hideTFCFoods = true;
 }

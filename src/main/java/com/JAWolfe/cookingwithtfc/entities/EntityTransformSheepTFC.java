@@ -20,10 +20,22 @@ import net.minecraft.world.World;
 public class EntityTransformSheepTFC extends EntitySheepTFC
 {
 	private float mateSizeModCWTFC;
+	private boolean flagHealth;
 
 	public EntityTransformSheepTFC(World par1World) 
 	{
 		super(par1World);
+		setupAI();
+	}
+	
+	public EntityTransformSheepTFC(World par1World, IAnimal mother, List<Float> data)
+	{
+		super(par1World, mother, data);
+		setupAI();
+	}
+	
+	private void setupAI()
+	{
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.wheatGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.ryeGrainCWTFC, false));
 		this.tasks.addTask(3, new EntityAITempt(this, 1.2F, CWTFCItems.riceGrainCWTFC, false));
@@ -34,17 +46,11 @@ public class EntityTransformSheepTFC extends EntitySheepTFC
 		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformBear.class, 16f, 1.0F, 1.2F));
 		
 		mateSizeModCWTFC = 0;
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
 	}
 	
-	public EntityTransformSheepTFC(World par1World, IAnimal mother, List<Float> data)
+	public void setHealthFlag(boolean flag)
 	{
-		super(par1World, mother, data);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+		this.flagHealth = flag;
 	}
 	
 	@Override
@@ -104,7 +110,13 @@ public class EntityTransformSheepTFC extends EntitySheepTFC
 		if (isAdult())
 		{
 			setGrowingAge(0);
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
+			
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
 		}
 		else
 		{
@@ -149,6 +161,7 @@ public class EntityTransformSheepTFC extends EntitySheepTFC
 	{
 		super.readEntityFromNBT(nbt);
 		mateSizeModCWTFC = nbt.getFloat("MateSizeCWTFC");
+		flagHealth = nbt.getBoolean("flagHealth");
 	}
 	
 	@Override
@@ -156,5 +169,6 @@ public class EntityTransformSheepTFC extends EntitySheepTFC
 	{
 		super.writeEntityToNBT(nbt);
 		nbt.setFloat("MateSizeCWTFC", mateSizeModCWTFC);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

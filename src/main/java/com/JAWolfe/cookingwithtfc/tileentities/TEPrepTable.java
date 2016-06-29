@@ -7,8 +7,10 @@ import java.util.Random;
 import com.JAWolfe.cookingwithtfc.crafting.FoodManager;
 import com.JAWolfe.cookingwithtfc.crafting.FoodRecipe;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
-import com.JAWolfe.cookingwithtfc.items.ItemMixingBowl;
-import com.JAWolfe.cookingwithtfc.items.Items.ItemTFCMealTransform;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCMealTransform;
+import com.JAWolfe.cookingwithtfc.items.ItemBlocks.ItemMixingBowl;
+import com.JAWolfe.cookingwithtfc.util.Helper;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemKnife;
@@ -16,7 +18,6 @@ import com.bioxx.tfc.TileEntities.NetworkTileEntity;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Constant.Global;
-import com.bioxx.tfc.api.Interfaces.IFood;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -75,7 +76,7 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 				{
 					ItemStack foodStack = this.getStackInSlot(j);
 					
-					if(foodStack != null && foodStack.getItem() == ingreds[i].getItem())
+					if(foodStack != null && foodStack.getItem() == ingreds[i].getItem() && foodStack.getItemDamage() == ingreds[i].getItemDamage())
 					{
 						float ingredWt = Food.getWeight(foodStack) - Math.max(Food.getDecay(foodStack), 0);
 						float remainingWt = ingredWt - (foodWt * recipeList.get(recipeListRef).getPctIngred(i));
@@ -155,8 +156,12 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 		if(getRecipeListSize() > 0)
 		{
 			FoodRecipe outputRecipe = recipeList.get(recipeListRef);
-			ItemStack isOutput = new ItemStack(outputRecipe.getResult().getItem(), 1);
-			float recipeWeight = ((ItemFoodTFC)isOutput.getItem()).getFoodMaxWeight(isOutput);
+			ItemStack isOutput = new ItemStack(outputRecipe.getResult().getItem(), 1, outputRecipe.getResult().getItemDamage());
+			float recipeWeight;
+			if(isOutput.getItem() instanceof ItemTFCFoodTransform)
+				recipeWeight = ((ItemFoodTFC)isOutput.getItem()).getFoodMaxWeight(isOutput);
+			else
+				recipeWeight = ((ItemTFCMealTransform)isOutput.getItem()).getMaxFoodWt();
 			
 			ItemStack[] ingreds = outputRecipe.getReqIngred();
 			ItemStack[] slotIngreds = new ItemStack[ingreds.length];
@@ -164,7 +169,7 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 			{
 				for(int j = FOOD_INPUT_START; j < COOKWARE_INPUT_START; j++)
 				{
-					if(this.getStackInSlot(j) != null && this.getStackInSlot(j).getItem() == ingreds[i].getItem())
+					if(this.getStackInSlot(j) != null && this.getStackInSlot(j).getItem() == ingreds[i].getItem() && this.getStackInSlot(j).getItemDamage() == ingreds[i].getItemDamage())
 					{
 						slotIngreds[i] = this.getStackInSlot(j);
 						float weight = Food.getWeight(this.getStackInSlot(j));
@@ -177,8 +182,17 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 				}
 			}
 			
-			ItemTFCMealTransform.createTag(isOutput, recipeWeight, 0, ingreds, outputRecipe.getPctList());
-			combineTastes(isOutput.getTagCompound(), outputRecipe.getPctList(), slotIngreds);
+			if(isOutput.getItem() instanceof ItemTFCFoodTransform)
+				ItemTFCFoodTransform.createTag(isOutput, recipeWeight, 0);
+			else
+			{
+				ItemTFCMealTransform.createTag(isOutput, recipeWeight, 0, ingreds, outputRecipe.getPctList());
+			}
+				
+			Helper.combineTastes(isOutput.getTagCompound(), slotIngreds);
+			
+			if(outputRecipe.isSalted())
+				Food.setSalted(isOutput, true);
 			
 			this.setInventorySlotContents(OUTPUT_SLOT, isOutput);
 		}
@@ -488,31 +502,5 @@ public class TEPrepTable extends NetworkTileEntity implements IInventory
 	public boolean isOpen()
 	{
 		return this.TableOpen;
-	}
-	
-	private void combineTastes(NBTTagCompound nbt, float[] weights, ItemStack[] isArray)
-	{
-		int tasteSweet = 0;
-		int tasteSour = 0;
-		int tasteSalty = 0;
-		int tasteBitter = 0;
-		int tasteUmami = 0;
-
-		for (int i = 0; i < isArray.length; i++)
-		{
-			if(isArray[i] != null)
-			{
-				tasteSweet += ((IFood)isArray[i].getItem()).getTasteSweet(isArray[i]);
-				tasteSour += ((IFood)isArray[i].getItem()).getTasteSour(isArray[i]);
-				tasteSalty += ((IFood)isArray[i].getItem()).getTasteSalty(isArray[i]);
-				tasteBitter += ((IFood)isArray[i].getItem()).getTasteBitter(isArray[i]);
-				tasteUmami += ((IFood)isArray[i].getItem()).getTasteSavory(isArray[i]);
-			}
-		}
-		nbt.setInteger("tasteSweet", tasteSweet);
-		nbt.setInteger("tasteSour", tasteSour);
-		nbt.setInteger("tasteSalty", tasteSalty);
-		nbt.setInteger("tasteBitter", tasteBitter);
-		nbt.setInteger("tasteUmami", tasteUmami);
 	}
 }

@@ -1,12 +1,17 @@
 package com.JAWolfe.cookingwithtfc.handlers;
 
+import java.util.Random;
+
 import com.JAWolfe.cookingwithtfc.core.CWTFC_Core;
 import com.JAWolfe.cookingwithtfc.core.FoodRecord;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
+import com.JAWolfe.cookingwithtfc.items.ItemTFCFoodTransform;
+import com.bioxx.tfc.Blocks.Devices.BlockFoodPrep;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemKnife;
+import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
 
@@ -15,7 +20,6 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,111 +34,120 @@ public class PlayerHandler
 	@SubscribeEvent
 	public void onItemPickup(EntityItemPickupEvent event)
 	{
-		EntityItem item = event.item;
-		ItemStack is = item.getEntityItem();
-		EntityPlayer player = event.entityPlayer;
-		Item droppedItem = is.getItem();
+		Item droppedItem = event.item.getEntityItem().getItem();
 
-		if(droppedItem instanceof ItemFoodTFC)
+		if(droppedItem != null && droppedItem instanceof ItemFoodTFC && !(droppedItem instanceof ItemTFCFoodTransform))
 		{						
-			if(droppedItem == TFCItems.redApple)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.redAppleCWTFC);
-			else if(droppedItem == TFCItems.banana)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.bananaCWTFC);
-			else if(droppedItem == TFCItems.orange)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.orangeCWTFC);
-			else if(droppedItem == TFCItems.greenApple)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.greenAppleCWTFC);
-			else if(droppedItem == TFCItems.lemon)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.lemonCWTFC);
-			else if(droppedItem == TFCItems.olive)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.oliveCWTFC);
-			else if(droppedItem == TFCItems.cherry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.cherryCWTFC);
-			else if(droppedItem == TFCItems.peach)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.peachCWTFC);
-			else if(droppedItem == TFCItems.plum)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.plumCWTFC);
-			else if(droppedItem == TFCItems.wintergreenBerry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.wintergreenBerryCWTFC);
-			else if(droppedItem == TFCItems.blueberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.blueberryCWTFC);
-			else if(droppedItem == TFCItems.raspberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.raspberryCWTFC);
-			else if(droppedItem == TFCItems.strawberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.strawberryCWTFC);
-			else if(droppedItem == TFCItems.blackberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.blackberryCWTFC);
-			else if(droppedItem == TFCItems.bunchberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.bunchberryCWTFC);
-			else if(droppedItem == TFCItems.cranberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.cranberryCWTFC);
-			else if(droppedItem == TFCItems.snowberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.snowberryCWTFC);
-			else if(droppedItem == TFCItems.elderberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.elderberryCWTFC);
-			else if(droppedItem == TFCItems.gooseberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.gooseberryCWTFC);
-			else if(droppedItem == TFCItems.cloudberry)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.cloudberryCWTFC);
-			else if(droppedItem == TFCItems.tomato)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.tomatoCWTFC);
-			else if(droppedItem == TFCItems.potato)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.potatoCWTFC);
-			else if(droppedItem == TFCItems.onion)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.onionCWTFC);
-			else if(droppedItem == TFCItems.cabbage)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.cabbageCWTFC);
-			else if(droppedItem == TFCItems.garlic)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.garlicCWTFC);
-			else if(droppedItem == TFCItems.carrot)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.carrotCWTFC);
-			else if(droppedItem == TFCItems.greenbeans)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.greenbeansCWTFC);
-			else if(droppedItem == TFCItems.greenBellPepper)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.greenBellPepperCWTFC);
-			else if(droppedItem == TFCItems.yellowBellPepper)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.yellowBellPepperCWTFC);
-			else if(droppedItem == TFCItems.redBellPepper)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.redBellPepperCWTFC);
-			else if(droppedItem == TFCItems.squash)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.squashCWTFC);
-			else if(droppedItem == TFCItems.seaWeed)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.seaWeedCWTFC);
-			else if(droppedItem == TFCItems.porkchopRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.porkchopRawCWTFC);
-			else if(droppedItem == TFCItems.fishRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.fishRawCWTFC);
-			else if(droppedItem == TFCItems.beefRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.beefRawCWTFC);
-			else if(droppedItem == TFCItems.chickenRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.chickenRawCWTFC);
-			else if(droppedItem == TFCItems.soybean)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.soybeanCWTFC);
-			else if(droppedItem == TFCItems.eggCooked)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.eggCookedCWTFC);
-			else if(droppedItem == TFCItems.calamariRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.calamariRawCWTFC);
-			else if(droppedItem == TFCItems.muttonRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.muttonRawCWTFC);
-			else if(droppedItem == TFCItems.venisonRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.venisonRawCWTFC);
-			else if(droppedItem == TFCItems.horseMeatRaw)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.horseMeatRawCWTFC);
-			else if(droppedItem == TFCItems.barleyWhole)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.barleyWholeCWTFC);
-			else if(droppedItem == TFCItems.oatWhole)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.oatWholeCWTFC);
-			else if(droppedItem == TFCItems.riceWhole)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.riceWholeCWTFC);
-			else if(droppedItem == TFCItems.ryeWhole)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.ryeWholeCWTFC);
-			else if(droppedItem == TFCItems.wheatWhole)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.wheatWholeCWTFC);
-			else if(droppedItem == TFCItems.maizeEar)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.maizeEarCWTFC);
-			else if(droppedItem == TFCItems.sugarcane)
-				CWTFC_Core.handleFoodItemPickups(item, player, is, CWTFCItems.sugarcaneCWTFC);
+			if(droppedItem == TFCItems.redApple) droppedItem = CWTFCItems.redAppleCWTFC;
+			else if(droppedItem == TFCItems.banana) droppedItem = CWTFCItems.bananaCWTFC;
+			else if(droppedItem == TFCItems.orange) droppedItem = CWTFCItems.orangeCWTFC;
+			else if(droppedItem == TFCItems.greenApple) droppedItem = CWTFCItems.greenAppleCWTFC;
+			else if(droppedItem == TFCItems.lemon) droppedItem = CWTFCItems.lemonCWTFC;
+			else if(droppedItem == TFCItems.olive) droppedItem = CWTFCItems.oliveCWTFC;
+			else if(droppedItem == TFCItems.cherry) droppedItem = CWTFCItems.cherryCWTFC;
+			else if(droppedItem == TFCItems.peach) droppedItem = CWTFCItems.peachCWTFC;
+			else if(droppedItem == TFCItems.plum) droppedItem = CWTFCItems.plumCWTFC;
+			else if(droppedItem == TFCItems.wintergreenBerry) droppedItem = CWTFCItems.wintergreenBerryCWTFC;
+			else if(droppedItem == TFCItems.blueberry) droppedItem = CWTFCItems.blueberryCWTFC;
+			else if(droppedItem == TFCItems.raspberry) droppedItem = CWTFCItems.raspberryCWTFC;
+			else if(droppedItem == TFCItems.strawberry) droppedItem = CWTFCItems.strawberryCWTFC;
+			else if(droppedItem == TFCItems.blackberry) droppedItem = CWTFCItems.blackberryCWTFC;
+			else if(droppedItem == TFCItems.bunchberry) droppedItem = CWTFCItems.bunchberryCWTFC;
+			else if(droppedItem == TFCItems.cranberry) droppedItem = CWTFCItems.cranberryCWTFC;
+			else if(droppedItem == TFCItems.snowberry) droppedItem = CWTFCItems.snowberryCWTFC;
+			else if(droppedItem == TFCItems.elderberry) droppedItem = CWTFCItems.elderberryCWTFC;
+			else if(droppedItem == TFCItems.gooseberry) droppedItem = CWTFCItems.gooseberryCWTFC;
+			else if(droppedItem == TFCItems.cloudberry) droppedItem = CWTFCItems.cloudberryCWTFC;
+			else if(droppedItem == TFCItems.tomato) droppedItem = CWTFCItems.tomatoCWTFC;
+			else if(droppedItem == TFCItems.potato) droppedItem = CWTFCItems.potatoCWTFC;
+			else if(droppedItem == TFCItems.onion) droppedItem = CWTFCItems.onionCWTFC;
+			else if(droppedItem == TFCItems.cabbage) droppedItem = CWTFCItems.cabbageCWTFC;
+			else if(droppedItem == TFCItems.garlic) droppedItem = CWTFCItems.garlicCWTFC;
+			else if(droppedItem == TFCItems.carrot) droppedItem = CWTFCItems.carrotCWTFC;
+			else if(droppedItem == TFCItems.greenbeans) droppedItem = CWTFCItems.greenbeansCWTFC;
+			else if(droppedItem == TFCItems.greenBellPepper) droppedItem = CWTFCItems.greenBellPepperCWTFC;
+			else if(droppedItem == TFCItems.yellowBellPepper) droppedItem = CWTFCItems.yellowBellPepperCWTFC;
+			else if(droppedItem == TFCItems.redBellPepper) droppedItem = CWTFCItems.redBellPepperCWTFC;
+			else if(droppedItem == TFCItems.squash) droppedItem = CWTFCItems.squashCWTFC;
+			else if(droppedItem == TFCItems.seaWeed) droppedItem = CWTFCItems.seaWeedCWTFC;
+			else if(droppedItem == TFCItems.porkchopRaw) droppedItem = CWTFCItems.porkchopRawCWTFC;
+			else if(droppedItem == TFCItems.fishRaw) droppedItem = CWTFCItems.fishRawCWTFC;
+			else if(droppedItem == TFCItems.beefRaw) droppedItem = CWTFCItems.beefRawCWTFC;
+			else if(droppedItem == TFCItems.chickenRaw) droppedItem = CWTFCItems.chickenRawCWTFC;
+			else if(droppedItem == TFCItems.soybean) droppedItem = CWTFCItems.soybeanCWTFC;
+			else if(droppedItem == TFCItems.egg) droppedItem = CWTFCItems.eggCWTFC;
+			else if(droppedItem == TFCItems.eggCooked) droppedItem = CWTFCItems.eggCookedCWTFC;
+			else if(droppedItem == TFCItems.calamariRaw) droppedItem = CWTFCItems.calamariRawCWTFC;
+			else if(droppedItem == TFCItems.muttonRaw) droppedItem = CWTFCItems.muttonRawCWTFC;
+			else if(droppedItem == TFCItems.venisonRaw) droppedItem = CWTFCItems.venisonRawCWTFC;
+			else if(droppedItem == TFCItems.horseMeatRaw) droppedItem = CWTFCItems.horseMeatRawCWTFC;
+			else if(droppedItem == TFCItems.cheese) droppedItem = CWTFCItems.cheeseCWTFC;
+			else if(droppedItem == TFCItems.barleyWhole) droppedItem = CWTFCItems.barleyWholeCWTFC;
+			else if(droppedItem == TFCItems.barleyGrain) droppedItem = CWTFCItems.barleyGrainCWTFC;
+			else if(droppedItem == TFCItems.barleyGround) droppedItem = CWTFCItems.barleyGroundCWTFC;
+			else if(droppedItem == TFCItems.barleyDough) droppedItem = CWTFCItems.barleyDoughCWTFC;
+			else if(droppedItem == TFCItems.barleyBread) droppedItem = CWTFCItems.barleyBreadCWTFC;
+			else if(droppedItem == TFCItems.oatWhole) droppedItem = CWTFCItems.oatWholeCWTFC;
+			else if(droppedItem == TFCItems.oatGrain) droppedItem = CWTFCItems.oatGrainCWTFC;
+			else if(droppedItem == TFCItems.oatGround) droppedItem = CWTFCItems.oatGroundCWTFC;
+			else if(droppedItem == TFCItems.oatDough) droppedItem = CWTFCItems.oatDoughCWTFC;
+			else if(droppedItem == TFCItems.oatBread) droppedItem = CWTFCItems.oatBreadCWTFC;
+			else if(droppedItem == TFCItems.riceWhole) droppedItem = CWTFCItems.riceWholeCWTFC;
+			else if(droppedItem == TFCItems.riceGrain) droppedItem = CWTFCItems.riceGrainCWTFC;
+			else if(droppedItem == TFCItems.riceGround) droppedItem = CWTFCItems.riceGroundCWTFC;
+			else if(droppedItem == TFCItems.riceDough) droppedItem = CWTFCItems.riceDoughCWTFC;
+			else if(droppedItem == TFCItems.riceBread) droppedItem = CWTFCItems.riceBreadCWTFC;
+			else if(droppedItem == TFCItems.ryeWhole) droppedItem = CWTFCItems.ryeWholeCWTFC;
+			else if(droppedItem == TFCItems.ryeGrain) droppedItem = CWTFCItems.ryeGrainCWTFC;
+			else if(droppedItem == TFCItems.ryeGround) droppedItem = CWTFCItems.ryeGroundCWTFC;
+			else if(droppedItem == TFCItems.ryeDough) droppedItem = CWTFCItems.ryeDoughCWTFC;
+			else if(droppedItem == TFCItems.ryeBread) droppedItem = CWTFCItems.ryeBreadCWTFC;
+			else if(droppedItem == TFCItems.wheatWhole) droppedItem = CWTFCItems.wheatWholeCWTFC;
+			else if(droppedItem == TFCItems.wheatGrain) droppedItem = CWTFCItems.wheatGrainCWTFC;
+			else if(droppedItem == TFCItems.wheatGround) droppedItem = CWTFCItems.wheatGroundCWTFC;
+			else if(droppedItem == TFCItems.wheatDough) droppedItem = CWTFCItems.wheatDoughCWTFC;
+			else if(droppedItem == TFCItems.wheatBread) droppedItem = CWTFCItems.wheatBreadCWTFC;
+			else if(droppedItem == TFCItems.maizeEar) droppedItem = CWTFCItems.maizeEarCWTFC;
+			else if(droppedItem == TFCItems.cornmealGround) droppedItem = CWTFCItems.cornmealGroundCWTFC;
+			else if(droppedItem == TFCItems.cornmealDough) droppedItem = CWTFCItems.cornmealDoughCWTFC;
+			else if(droppedItem == TFCItems.cornBread) droppedItem = CWTFCItems.cornBreadCWTFC;
+			else if(droppedItem == TFCItems.sugarcane) droppedItem = CWTFCItems.sugarcaneCWTFC;
+			
+			EntityPlayer player = event.entityPlayer;
+			event.item.delayBeforeCanPickup = 100;
+			event.item.setDead();
+			event.item.setInvisible(true);
+			Random rand = player.worldObj.rand;
+			player.worldObj.playSoundAtEntity(player, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+			
+			ItemStack is = event.item.getEntityItem();
+			ItemStack food = ItemFoodTFC.createTag(new ItemStack(droppedItem, 1, is.getItemDamage()), Food.getWeight(is), Food.getDecay(is));
+			Food.setSweetMod(food, Food.getSweetMod(is));
+			Food.setSourMod(food, Food.getSourMod(is));
+			Food.setSaltyMod(food, Food.getSaltyMod(is));
+			Food.setBitterMod(food, Food.getBitterMod(is));
+			Food.setSavoryMod(food, Food.getSavoryMod(is));
+			
+			if(Food.isBrined(is))
+				Food.setBrined(food, true);
+			if(Food.isPickled(is))
+				Food.setPickled(food, true);
+			if(Food.isSalted(is))
+				Food.setSalted(food, true);
+			if(Food.getCooked(is) != 0.0)
+				Food.setCooked(food, Food.getCooked(is));
+			if(!Food.getCookedProfile(is).equals(new int[] {0,0,0,0,0}))
+				Food.setCookedProfile(food, Food.getCookedProfile(is));
+			if(!Food.getFuelProfile(is).equals(new int[] {0,0,0,0,0}))
+				Food.setFuelProfile(food, Food.getFuelProfile(is));
+			if(Food.getDried(is) != 0)
+				Food.setDried(food, Food.getDried(is));
+			if(Food.isInfused(is))
+				Food.setInfusion(food, Food.getInfusion(is));
+			if(Food.isSmoked(is))
+				Food.setSmokeCounter(food, Food.getSmokeCounter(is));
+			
+			player.inventory.addItemStackToInventory(food);
 		}
 	}
 	
@@ -146,9 +159,20 @@ public class PlayerHandler
 
 		ItemStack itemInHand = event.entityPlayer.getCurrentEquippedItem();
 		
+		//Remove existing FoodPrep surfaces
+		if(event.action == Action.RIGHT_CLICK_BLOCK && event.world.getBlock(event.x, event.y, event.z) instanceof BlockFoodPrep)
+		{
+			Block block = event.world.getBlock(event.x, event.y, event.z);
+			int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
+			block.breakBlock(event.world, event.x, event.y, event.z, block, meta);
+			event.world.setBlockToAir(event.x, event.y, event.z);
+			event.setCanceled(true);			
+		}
+		
 		if(itemInHand == null)
 			return;
 
+		//Prevent new Foodprep surfaces from being made
 		if(event.action == Action.RIGHT_CLICK_BLOCK && event.getResult() != Result.DENY 
 				&& itemInHand.getItem() instanceof ItemKnife)
 		{
@@ -162,6 +186,7 @@ public class PlayerHandler
 			}
 		}
 		
+		//Replace TFC hopper with CWTFC hopper
 		if(event.action == Action.RIGHT_CLICK_BLOCK && event.getResult() != Result.DENY &&
 				event.entityPlayer.getCurrentEquippedItem().getUnlocalizedName().equals(TFCBlocks.hopper.getUnlocalizedName()))
 		{
@@ -186,6 +211,7 @@ public class PlayerHandler
 	{
 		EntityLivingBase entity = event.entityLiving;
 
+		//Reset eaten foods after death
 		if (entity instanceof EntityPlayer)
 		{
 			FoodRecord fr = CWTFC_Core.getPlayerFoodRecord((EntityPlayer)entity);
@@ -197,19 +223,4 @@ public class PlayerHandler
 			CWTFC_Core.setPlayerFoodRecord((EntityPlayer)entity, fr);
 		}
 	}
-	
-	/*@SubscribeEvent
-	public void vanillaChestHandler(PlayerInteractEvent event)
-	{
-		if (event.entityPlayer.worldObj.isRemote)
-			return;
-		
-		Block block = event.world.getBlock(event.x, event.y, event.z);
-		if(block == Blocks.chest)
-		{
-			event.setCanceled(true);
-			event.world.createExplosion(event.entity, event.x, event.y + 1, event.z, 0, false);
-			event.world.setBlock(event.x, event.y, event.z, TFCBlocks.chest, event.world.getBlockMetadata(event.x, event.y, event.z), 3);
-		}
-	}*/
 }

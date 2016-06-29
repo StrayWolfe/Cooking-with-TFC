@@ -53,16 +53,24 @@ public class CWTFCItemRegistry extends CWTFCItems
 		
 		//Proteins
 		GameRegistry.registerItem(porkchopRawCWTFC, porkchopRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(porkchopCookedCWTFC, porkchopCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(fishRawCWTFC, fishRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(fishCookedCWTFC, fishCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(beefRawCWTFC, beefRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(beefCookedCWTFC, beefCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(chickenRawCWTFC, chickenRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(chickenCookedCWTFC, chickenCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(soybeanCWTFC, soybeanCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(eggCWTFC, eggCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(eggCookedCWTFC, eggCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(calamariRawCWTFC, calamariRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(calamariCookedCWTFC, calamariCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(muttonRawCWTFC, muttonRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(muttonCookedCWTFC, muttonCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(venisonRawCWTFC, venisonRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(venisonCookedCWTFC, venisonCookedCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(horseMeatRawCWTFC, horseMeatRawCWTFC.getUnlocalizedName());
+		GameRegistry.registerItem(horseMeatCookedCWTFC, horseMeatCookedCWTFC.getUnlocalizedName());
 		
 		//Grains
 		GameRegistry.registerItem(barleyWholeCWTFC, barleyWholeCWTFC.getUnlocalizedName());
@@ -108,6 +116,14 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(PotatoSalad, PotatoSalad.getUnlocalizedName());
 		GameRegistry.registerItem(FruitSalad, FruitSalad.getUnlocalizedName());
 		
+		//Soups & Stews
+		GameRegistry.registerItem(VegetableSoup, VegetableSoup.getUnlocalizedName());
+		GameRegistry.registerItem(TomatoSoup, TomatoSoup.getUnlocalizedName());
+		GameRegistry.registerItem(ChickenSoup, ChickenSoup.getUnlocalizedName());
+		GameRegistry.registerItem(BeefStew, BeefStew.getUnlocalizedName());
+		GameRegistry.registerItem(VenisonStew, VenisonStew.getUnlocalizedName());
+		GameRegistry.registerItem(FishChowder, FishChowder.getUnlocalizedName());
+		
 		//Sandwiches
 		GameRegistry.registerItem(HamSandwich, HamSandwich.getUnlocalizedName());		
 		GameRegistry.registerItem(ChickenSandwich, ChickenSandwich.getUnlocalizedName());
@@ -117,7 +133,15 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(MuttonSandwich, MuttonSandwich.getUnlocalizedName());
 		GameRegistry.registerItem(VenisonSteakSandwich, VenisonSteakSandwich.getUnlocalizedName());
 		
-		GameRegistry.registerItem(ChickenStock, ChickenStock.getUnlocalizedName());
+		GameRegistry.registerItem(Broth, Broth.getUnlocalizedName());
+		GameRegistry.registerItem(BoiledChicken, BoiledChicken.getUnlocalizedName());
+		GameRegistry.registerItem(BoiledBeef, BoiledBeef.getUnlocalizedName());
+		GameRegistry.registerItem(BoiledFish, BoiledFish.getUnlocalizedName());
+		GameRegistry.registerItem(BoiledPork, BoiledPork.getUnlocalizedName());
+		GameRegistry.registerItem(BoiledVenison, BoiledVenison.getUnlocalizedName());
+		
+		GameRegistry.registerItem(SeaSalt, SeaSalt.getUnlocalizedName());
+		GameRegistry.registerItem(RockSalt, RockSalt.getUnlocalizedName());
 		
 		//Cookware
 		GameRegistry.registerItem(ClayCookingPot, ClayCookingPot.getUnlocalizedName());

@@ -12,29 +12,35 @@ import com.bioxx.tfc.api.Entities.IAnimal;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class EntityTransformDeer extends EntityDeer
 {
-
+	private boolean flagHealth;
+	
 	public EntityTransformDeer(World par1World) 
 	{
 		super(par1World);
-
-		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformWolfTFC.class, 8f, 0.7F, 1.0F));
-		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformBear.class, 16f, 0.7F, 1.0F));
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+		setupAI();
 	}
 	
 	public EntityTransformDeer(World par1World, IAnimal mother, List<Float> data)
 	{
 		super(par1World, mother, data);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+		setupAI();
+	}
+	
+	private void setupAI()
+	{
+		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformWolfTFC.class, 8f, 0.7F, 1.0F));
+		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformBear.class, 16f, 0.7F, 1.0F));
+	}
+	
+	public void setHealthFlag(boolean flag)
+	{
+		this.flagHealth = flag;
 	}
 
 	@Override
@@ -65,7 +71,12 @@ public class EntityTransformDeer extends EntityDeer
 		if (isAdult())
 		{
 			setGrowingAge(0);
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(400 * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
 		}
 		else
 		{
@@ -115,5 +126,19 @@ public class EntityTransformDeer extends EntityDeer
 		TFC_Core.preventEntityDataUpdate = true;
 		super.onLivingUpdate();
 		TFC_Core.preventEntityDataUpdate = false;
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
+		flagHealth = nbt.getBoolean("flagHealth");
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

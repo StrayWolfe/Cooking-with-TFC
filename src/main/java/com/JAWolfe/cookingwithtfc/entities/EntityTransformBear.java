@@ -16,32 +16,38 @@ import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class EntityTransformBear extends EntityBear 
 {
+	private boolean flagHealth;
 	private boolean isWet;
 	private Random rand;
 
 	public EntityTransformBear(World par1World) 
 	{
 		super(par1World);	
-		 
-		this.targetSheep = new EntityAITargetNonTamedTFC(this, EntityTransformSheepTFC.class, 200, false);
-		this.targetDeer = new EntityAITargetNonTamedTFC(this, EntityTransformDeer.class, 200, false);
-		this.targetPig = new EntityAITargetNonTamedTFC(this, EntityTransformPigTFC.class, 200, false);
-		this.targetHorse = new EntityAITargetNonTamedTFC(this, EntityTransformHorseTFC.class, 200, false);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(TFC_MobData.BEAR_HEALTH * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+		setupAI();
 	}
 	
 	public EntityTransformBear(World par1World, IAnimal mother, List<Float> data)
 	{
 		super(par1World, mother, data);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(TFC_MobData.BEAR_HEALTH * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+		setupAI();
+	}
+	
+	private void setupAI()
+	{
+		this.targetSheep = new EntityAITargetNonTamedTFC(this, EntityTransformSheepTFC.class, 200, false);
+		this.targetDeer = new EntityAITargetNonTamedTFC(this, EntityTransformDeer.class, 200, false);
+		this.targetPig = new EntityAITargetNonTamedTFC(this, EntityTransformPigTFC.class, 200, false);
+		this.targetHorse = new EntityAITargetNonTamedTFC(this, EntityTransformHorseTFC.class, 200, false);
+	}
+	
+	public void setHealthFlag(boolean flag)
+	{
+		this.flagHealth = flag;
 	}
 	
 	@Override
@@ -102,6 +108,13 @@ public class EntityTransformBear extends EntityBear
 				isWet = true;
 				worldObj.setEntityState(this, (byte) 8);
 			}
+			
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(TFC_MobData.BEAR_HEALTH * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
 
 			if (isPregnant() && TFC_Time.getTotalTicks() >= getTimeOfConception() + getPregnancyRequiredTime())
 			{
@@ -120,5 +133,19 @@ public class EntityTransformBear extends EntityBear
 
 		this.handleFamiliarityUpdate();
 		this.syncData();
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
+		flagHealth = nbt.getBoolean("flagHealth");
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

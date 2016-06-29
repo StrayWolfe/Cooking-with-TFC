@@ -2,7 +2,6 @@ package com.JAWolfe.cookingwithtfc.crafting;
 
 import com.bioxx.tfc.Items.Tools.ItemKnife;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class FoodRecipe 
@@ -11,8 +10,9 @@ public class FoodRecipe
 	private ItemStack[] cookware;
 	private ItemStack[] ingredients;
 	private float[] pctIngedients;
+	private boolean salted = false;
 	
-	public FoodRecipe(ItemStack[] cookware, Item[] ingredients, float[] pctIngreds, ItemStack result)
+	public FoodRecipe(ItemStack[] cookware, ItemStack[] ingredients, float[] pctIngreds, ItemStack result)
 	{
 		this.cookware = cookware;
 		this.result = result;	
@@ -20,7 +20,7 @@ public class FoodRecipe
 		this.ingredients = new ItemStack[ingredients.length];
 		for(int i = 0; i < ingredients.length; i++)
 		{
-			this.ingredients[i] = new ItemStack(ingredients[i], 1);
+			this.ingredients[i] = new ItemStack(ingredients[i].getItem(), 1, ingredients[i].getItemDamage());
 		}
 		
 		this.pctIngedients = pctIngreds;
@@ -113,5 +113,16 @@ public class FoodRecipe
 	public float getPctIngred(int index)
 	{
 		return this.pctIngedients[index];
+	}
+	
+	public FoodRecipe setSalted(boolean Salted)
+	{
+		this.salted = Salted;
+		return this;
+	}
+	
+	public boolean isSalted()
+	{
+		return this.salted;
 	}
 }

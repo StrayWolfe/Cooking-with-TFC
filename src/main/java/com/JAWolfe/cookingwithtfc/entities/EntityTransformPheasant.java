@@ -11,21 +11,21 @@ import net.minecraft.world.World;
 
 public class EntityTransformPheasant extends EntityPheasantTFC
 {
+	private boolean flagHealth;
 
 	public EntityTransformPheasant(World par1World) 
 	{
 		super(par1World);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
 	}
 	
 	public EntityTransformPheasant(World world, double posX, double posY, double posZ, NBTTagCompound genes)
 	{
 		super(world, posX, posY, posZ, genes);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
+	}
+	
+	public void setHealthFlag(boolean flag)
+	{
+		this.flagHealth = flag;
 	}
 
 	@Override
@@ -49,12 +49,33 @@ public class EntityTransformPheasant extends EntityPheasantTFC
 		super.onLivingUpdate();
 		
 		if (isAdult())
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
+		{
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
+		}
 		else
 		{
 			float maxBaseHealth = 50 * this.getSizeMod() * this.getStrengthMod();
 			float growthMod = ((TFC_Core.getPercentGrown(this) * 0.5F) + 0.5F) * maxBaseHealth;
 			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(growthMod);
 		}
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
+		flagHealth = nbt.getBoolean("flagHealth");
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

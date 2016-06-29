@@ -32,11 +32,22 @@ import net.minecraft.world.World;
 public class EntityTransformWolfTFC extends EntityWolfTFC
 {	
 	private float mateSizeModCWTFC;
+	private boolean flagHealth;
 
 	public EntityTransformWolfTFC(World par1World) 
 	{
 		super(par1World);
-
+		setupAI();		
+	}
+	
+	public EntityTransformWolfTFC(World par1World, IAnimal mother, List<Float> data)
+	{
+		super(par1World, mother, data);
+		setupAI();
+	}
+	
+	private void setupAI()
+	{
 		mateSizeModCWTFC = 1f;
 		
 		this.targetChicken = new EntityAITargetNonTamedTFC(this, EntityTransformChickenTFC.class, 200, false);
@@ -45,17 +56,11 @@ public class EntityTransformWolfTFC extends EntityWolfTFC
 		this.targetCow = new EntityAITargetNonTamedTFC(this, EntityTransformCowTFC.class, 200, false);
 		this.targetDeer = new EntityAITargetNonTamedTFC(this, EntityTransformDeer.class, 200, false);
 		this.targetHorse = new EntityAITargetNonTamedTFC(this, EntityTransformHorseTFC.class, 200, false);
-		
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(TFC_MobData.WOLF_HEALTH * this.getSizeMod() * this.getStrengthMod());
-		this.setHealth(this.getMaxHealth());
 	}
 	
-	public EntityTransformWolfTFC(World par1World, IAnimal mother, List<Float> data)
+	public void setHealthFlag(boolean flag)
 	{
-		super(par1World, mother, data);
-		float growthMod = 0.5F * (TFC_MobData.WOLF_HEALTH * this.getSizeMod() * this.getStrengthMod());
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(growthMod);
-		this.setHealth(this.getMaxHealth());
+		this.flagHealth = flag;
 	}
 	
 	@Override
@@ -155,7 +160,13 @@ public class EntityTransformWolfTFC extends EntityWolfTFC
 		if (isAdult())
 		{
 			setGrowingAge(0);
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(TFC_MobData.WOLF_HEALTH * this.getSizeMod() * this.getStrengthMod());
+			
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(TFC_MobData.WOLF_HEALTH * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
 		}
 		else
 		{
@@ -216,6 +227,7 @@ public class EntityTransformWolfTFC extends EntityWolfTFC
 	{
 		super.readEntityFromNBT(nbt);
 		mateSizeModCWTFC = nbt.getFloat("MateSizeCWTFC");
+		flagHealth = nbt.getBoolean("flagHealth");
 	}
 	
 	@Override
@@ -223,5 +235,6 @@ public class EntityTransformWolfTFC extends EntityWolfTFC
 	{
 		super.writeEntityToNBT(nbt);
 		nbt.setFloat("MateSizeCWTFC", mateSizeModCWTFC);
+		nbt.setBoolean("flagHealth", flagHealth);
 	}
 }

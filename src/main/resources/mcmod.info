@@ -13,9 +13,9 @@
         "logoFile": "",
         "screenshots": [],
         "parent": "",
-        "requiredMods": [],
+        "requiredMods": ["Forge", "terrafirmacraft"],
         "dependencies": ["terrafirmacraft"],
-        "dependants": [  ],
+        "dependants": [],
         "useDependencyInformation": "true"
     }]
 }

@@ -17,7 +17,7 @@ public class ConfigHandler
 	{
 		if(config == null)
 		{
-			config = new Configuration(configFile);
+			config = new Configuration(new File(configFile, DetailsCWTFC.ModName + ".cfg"));
 			loadConfig();
 		}
 	}
@@ -33,6 +33,9 @@ public class ConfigHandler
 	{			
 		ConstantsCWTFC.PICKINESS = config.getInt("pickiness", Configuration.CATEGORY_GENERAL, 1, 1, 3,
 				"Set the level of how picky players can be with foods: (Picky = 1, Pickier = 2, Pickiest = 3)");
+		
+		ConstantsCWTFC.hideTFCFoods = config.getBoolean("HideTFCFoods", Configuration.CATEGORY_GENERAL, true, 
+				"Hide TFC Foods from the creative menu and NEI: ");
 
 		if(config.hasChanged())
 			config.save();

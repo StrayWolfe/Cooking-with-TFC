@@ -7,11 +7,13 @@ import com.JAWolfe.cookingwithtfc.blocks.blockPrepTable;
 import com.JAWolfe.cookingwithtfc.blocks.blockPrepTable2;
 import com.JAWolfe.cookingwithtfc.init.CWTFCBlocks;
 import com.JAWolfe.cookingwithtfc.init.Items.CWTFCItems;
+import com.JAWolfe.cookingwithtfc.tileentities.TECookingPot;
 import com.JAWolfe.cookingwithtfc.tileentities.TEGrains;
 import com.JAWolfe.cookingwithtfc.tileentities.TEMixBowl;
 import com.JAWolfe.cookingwithtfc.tileentities.TENestBoxCWTFC;
 import com.JAWolfe.cookingwithtfc.tileentities.TEPrepTable;
 import com.bioxx.tfc.Core.TFC_Core;
+import com.bioxx.tfc.Core.TFC_Time;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -49,6 +51,9 @@ public class WAILAInfo implements IWailaDataProvider
 		
 		reg.registerBodyProvider(new WAILAInfo(), TENestBoxCWTFC.class);
 		reg.registerNBTProvider(new WAILAInfo(), TENestBoxCWTFC.class);
+		
+		reg.registerBodyProvider(new WAILAInfo(), TECookingPot.class);
+		reg.registerNBTProvider(new WAILAInfo(), TECookingPot.class);
 	}
 	
 	@Override
@@ -93,6 +98,8 @@ public class WAILAInfo implements IWailaDataProvider
 			currenttip = grainBody(itemStack, currenttip, accessor, config);
 		else if (tileEntity instanceof TENestBoxCWTFC)
 			currenttip = nestBoxBody(itemStack, currenttip, accessor, config);
+		else if(tileEntity instanceof TECookingPot)
+			currenttip = cookingPotBody(itemStack, currenttip, accessor, config);
 		
 		return currenttip;
 	}
@@ -208,5 +215,17 @@ public class WAILAInfo implements IWailaDataProvider
 		}
 
 		return null;
+	}
+	
+	public List<String> cookingPotBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		NBTTagCompound tag = accessor.getNBTData();		
+		
+		int time = (int)((tag.getInteger("cookTimer")/(float)TFC_Time.HOUR_LENGTH) * 60);
+		
+		if(time > 0)
+			currenttip.add(TFC_Core.translate("gui.cookingTime") + ": " + time + " minutes");
+
+		return currenttip;
 	}
 }
