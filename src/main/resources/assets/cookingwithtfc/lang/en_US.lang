@@ -13,7 +13,7 @@ tile.MixingBowl.Clay.name=Clay Mixing Bowl
 tile.MixingBowl.Ceramic.name=Ceramic Mixing Bowl
 tile.CookingPot.name=Cooking Pot
 tile.PrepTableBlock.name=Food Table
-tile.PrepTableBlock2.name=Food Table
+tile.MeatsBlock.name=Meat
 
 #=========
 #= Items =
@@ -51,10 +51,12 @@ item.FishChowder.name=Fish Chowder
 item.HamSandwich.name=Ham Sandwich
 item.ChickenSandwich.name=Chicken Sandwich
 item.RoastBeefSandwich.name=Roast Beef Sandwich
-item.SalmonSandwich.name=Salmon Sandwich
+item.SalmonSandwich.name=Seafood Sandwich
 item.FriedEggSandwich.name=Fried Egg Sandwich
 item.MuttonSandwich.name=Mutton Sandwich
-item.VenisonSteakSandwich.name=Venison Steak Sandwich
+item.VenisonSteakSandwich.name=Steak Sandwich
+item.VegetarianSandwich.name=Vegetarian Sandwich
+item.ToastSandwich.name=Bread Sandwich
 
 item.Broth.name=Broth
 item.BoiledChicken.name=Boiled Chicken
@@ -63,8 +65,8 @@ item.BoiledFish.name=Boiled Fish
 item.BoiledPork.name=Boiled Pork
 item.BoiledVenison.name=Boiled Venison
 
-item.SeaSalt.name=Sea Salt
-item.Salt.name=Rock Salt
+item.Salt.Rock.name=Rock Salt
+item.Salt.Sea.name=Sea Salt
 
 item.clayCookingPot.Clay.name=Clay Cooking Pot
 item.clayCookingPot.Ceramic.name=Ceramic Cooking Pot
@@ -101,6 +103,7 @@ word.Oat=Oat
 word.Rice=Rice
 word.Rye=Rye
 word.Wheat=Wheat
+word.Sandwich=Sandwich
 
 wood.Oak=Oak
 wood.Aspen=Aspen

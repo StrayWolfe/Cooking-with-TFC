@@ -8,13 +8,13 @@
         "mcversion": "${minecraft_version}",
         "url": "",
         "updateUrl": "",
-        "authorList": ["JAWolfe"],
+        "authorList": ["StrayWolfe"],
         "credits": "",
         "logoFile": "",
         "screenshots": [],
         "parent": "",
         "requiredMods": ["Forge", "terrafirmacraft"],
-        "dependencies": ["terrafirmacraft"],
+        "dependencies": ["terrafirmacraft", "tfcm"],
         "dependants": [],
         "useDependencyInformation": "true"
     }]

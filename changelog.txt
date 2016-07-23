@@ -1,6 +1,30 @@
 Changelog
 =================================================
 -------------------------------------------------
+Cooking With TFC 0.0.3.0
+-------------------------------------------------
+New Features
++Added GUI-less sandwich making with dynamic recipes
++Added GUI-less salad making with dynamic recipes
++Added GUI-less meat salting
++Added GUI-less mixing bowl for dough
++Added GUI-less cooking pot cooking
++Added config to toggle diminishing returns
++Added config to diable TFC food conversion on pickup
++Added API
+
+Tweaks
++Removed all GUIs
++Changed prep table behavior to facilitate GUI-less cooking
++Rewrote code layout and mod versioning to follow standard conventions
+
+Compatibility
++Added Terramisc compatibility
+
+Bug Fixes
++Fixed TFC food disappearing when picked up
++Fixed pheasants turning into chickens
+-------------------------------------------------
 Cooking With TFC 0.02.05
 -------------------------------------------------
 New Features

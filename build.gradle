@@ -25,7 +25,6 @@ ext.configFile = file "build.prop"
 
 configFile.withReader 
 {
-    // read config.  it shall from now on be referenced as simply config or as project.config
     def prop = new Properties()
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
@@ -39,7 +38,7 @@ allprojects
 	
     group = config.group_name
     version = config.mod_version
-    archivesBaseName = config.mod_id + "-" + config.minecraft_version
+    archivesBaseName = config.mod_id
 
     minecraft 
 	{
@@ -93,24 +92,31 @@ task sourceJar(type: Jar){
     appendix = 'src'
 }
 
-tasks.build.dependsOn('sourceJar', 'deobfJar')
+task updateBuild(){
+	def build = Integer.parseInt(config.build_number) + 1
+	project.version = "${config.minecraft_version}-${config.mod_version}.${build}"
+    ant.propertyfile(file: "build.prop") 
+	{
+        entry(key: "build_number", value: build)
+    }
+}
+
+tasks.build.dependsOn('updateBuild', 'sourceJar', 'deobfJar')
 
 processResources 
 {
-	// First we just copy in the mcmod.info file
 	from(sourceSets.main.resources.srcDirs) 
 	{
         include '**/*.info'
         include '**/*.prop'
 
-        // replaces
         expand ([
-            'mod_version': project.config.mod_version,
+            'mod_version': project.version,
             'tfc_version': project.config.tfc_version,
             'minecraft_version': project.config.minecraft_version,
         ])
     }
-    // copy everything else, that we didn't copy before
+    
     from(sourceSets.main.resources.srcDirs) 
 	{
         exclude '**/*.info'

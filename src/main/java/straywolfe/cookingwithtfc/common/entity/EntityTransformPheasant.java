@@ -1,0 +1,81 @@
+package straywolfe.cookingwithtfc.common.entity;
+
+import com.bioxx.tfc.Core.TFC_Core;
+import com.bioxx.tfc.Entities.Mobs.EntityPheasantTFC;
+import com.bioxx.tfc.api.Entities.IAnimal;
+
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+
+public class EntityTransformPheasant extends EntityPheasantTFC
+{
+	private boolean flagHealth;
+
+	public EntityTransformPheasant(World par1World) 
+	{
+		super(par1World);
+	}
+	
+	public EntityTransformPheasant(World world, double posX, double posY, double posZ, NBTTagCompound genes)
+	{
+		super(world, posX, posY, posZ, genes);
+	}
+	
+	public void setHealthFlag(boolean flag)
+	{
+		this.flagHealth = flag;
+	}
+
+	@Override
+	public EntityAgeable createChildTFC(EntityAgeable entityageable)
+	{
+		if (entityageable instanceof IAnimal)
+		{
+			IAnimal animal = (IAnimal) entityageable;
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setFloat("m_size", animal.getSizeMod());
+			nbt.setFloat("f_size", animal.getSizeMod());
+			return new EntityTransformPheasant(worldObj, posX, posY, posZ, nbt);
+		}
+
+		return null;
+	}
+	
+	@Override
+	public void onLivingUpdate()
+	{
+		super.onLivingUpdate();
+		
+		if (isAdult())
+		{
+			if(flagHealth)
+			{
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50 * this.getSizeMod() * this.getStrengthMod());
+				this.setHealth(this.getMaxHealth());
+				flagHealth = false;
+			}
+		}
+		else
+		{
+			float maxBaseHealth = 50 * this.getSizeMod() * this.getStrengthMod();
+			float growthMod = ((TFC_Core.getPercentGrown(this) * 0.5F) + 0.5F) * maxBaseHealth;
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(growthMod);
+		}
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
+		flagHealth = nbt.getBoolean("flagHealth");
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
+		nbt.setBoolean("flagHealth", flagHealth);
+	}
+}
