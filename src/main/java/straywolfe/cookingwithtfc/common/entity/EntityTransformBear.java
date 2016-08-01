@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 
-public class EntityTransformBear extends EntityBear 
+public class EntityTransformBear extends EntityBear
 {
 	private boolean flagHealth;
 	private boolean isWet;

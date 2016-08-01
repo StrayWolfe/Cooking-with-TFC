@@ -22,7 +22,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
-import straywolfe.cookingwithtfc.api.CWTFCItems;
+import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.lib.Textures;
 import straywolfe.cookingwithtfc.common.tileentity.TileMixBowl;
@@ -79,9 +79,7 @@ public class BlockMixBowl extends BlockTerraContainer
 						te.setCompleted(false);
 					}
 				}
-				else if(item.getItem() == CWTFCItems.barleyGroundCWTFC || item.getItem() == CWTFCItems.cornmealGroundCWTFC ||
-						item.getItem() == CWTFCItems.oatGroundCWTFC || item.getItem() == CWTFCItems.riceGroundCWTFC ||
-						item.getItem() == CWTFCItems.ryeGroundCWTFC || item.getItem() == CWTFCItems.wheatGroundCWTFC)
+				else if(Helper.isOre("itemFlour", item))
 				{
 					if(te.getContents() == null)
 					{

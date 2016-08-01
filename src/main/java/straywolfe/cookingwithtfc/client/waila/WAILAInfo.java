@@ -240,15 +240,15 @@ public class WAILAInfo implements IWailaDataProvider
 		String breadType = tag.getString("breadType");
 		int breadMeta = 0;
 		
-		if(CWTFCItems.cornBreadCWTFC.getUnlocalizedName().equals(breadType))
+		if(TFCItems.cornBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 1;
-		else if(CWTFCItems.oatBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.oatBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 2;
-		else if(CWTFCItems.riceBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.riceBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 3;
-		else if(CWTFCItems.ryeBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.ryeBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 4;
-		else if(CWTFCItems.wheatBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.wheatBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 5;
 		
 		ItemStack stack = ItemTFCMealTransform.createTag(new ItemStack(CWTFCItems.ChickenSandwich, 1, breadMeta), 999, -24, new ItemStack[]{}, new float[]{});
@@ -265,32 +265,32 @@ public class WAILAInfo implements IWailaDataProvider
 		String sandwichName = TFC_Core.translate("word.Sandwich");
 		int topToast = tag.getInteger("topToast");
 		
-		if(CWTFCItems.cornBreadCWTFC.getUnlocalizedName().equals(breadType))
+		if(TFCItems.cornBread.getUnlocalizedName().equals(breadType))
 			breadName = TFC_Core.translate("word.Corn");
-		else if(CWTFCItems.oatBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.oatBread.getUnlocalizedName().equals(breadType))
 			breadName = TFC_Core.translate("word.Oat");
-		else if(CWTFCItems.riceBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.riceBread.getUnlocalizedName().equals(breadType))
 			breadName = TFC_Core.translate("word.Rice");
-		else if(CWTFCItems.ryeBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.ryeBread.getUnlocalizedName().equals(breadType))
 			breadName = TFC_Core.translate("word.Rye");
-		else if(CWTFCItems.wheatBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.wheatBread.getUnlocalizedName().equals(breadType))
 			breadName = TFC_Core.translate("word.Wheat");
 		
-		if(CWTFCItems.chickenCookedCWTFC.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledChicken.getUnlocalizedName().equals(meatType))
+		if(TFCItems.chickenRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledChicken.getUnlocalizedName().equals(meatType))
 			sandwichName = TFC_Core.translate(CWTFCItems.ChickenSandwich.getUnlocalizedName() + ".name");
-		else if(CWTFCItems.porkchopCookedCWTFC.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledPork.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.porkchopRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledPork.getUnlocalizedName().equals(meatType))
 			sandwichName = TFC_Core.translate(CWTFCItems.HamSandwich.getUnlocalizedName() + ".name");
-		else if(CWTFCItems.eggCookedCWTFC.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.eggCooked.getUnlocalizedName().equals(meatType))
 			sandwichName = TFC_Core.translate(CWTFCItems.FriedEggSandwich.getUnlocalizedName() + ".name");
-		else if(CWTFCItems.muttonCookedCWTFC.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.muttonRaw.getUnlocalizedName().equals(meatType))
 			sandwichName = TFC_Core.translate(CWTFCItems.MuttonSandwich.getUnlocalizedName() + ".name");
-		else if(CWTFCItems.beefCookedCWTFC.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledBeef.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.beefRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledBeef.getUnlocalizedName().equals(meatType))
 			sandwichName = TFC_Core.translate(CWTFCItems.RoastBeefSandwich.getUnlocalizedName() + ".name");
-		else if(CWTFCItems.fishCookedCWTFC.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledFish.getUnlocalizedName().equals(meatType) ||
-				CWTFCItems.calamariCookedCWTFC.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.fishRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledFish.getUnlocalizedName().equals(meatType) ||
+				TFCItems.calamariRaw.getUnlocalizedName().equals(meatType))
 			sandwichName = TFC_Core.translate(CWTFCItems.SalmonSandwich.getUnlocalizedName() + ".name");
-		else if(CWTFCItems.venisonCookedCWTFC.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledVenison.getUnlocalizedName().equals(meatType) ||
-				CWTFCItems.horseMeatCookedCWTFC.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.venisonRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledVenison.getUnlocalizedName().equals(meatType) ||
+				TFCItems.horseMeatRaw.getUnlocalizedName().equals(meatType))
 			sandwichName = TFC_Core.translate(CWTFCItems.VenisonSteakSandwich.getUnlocalizedName() + ".name");
 		else if(topToast == 1)
 			sandwichName = TFC_Core.translate(CWTFCItems.ToastSandwich.getUnlocalizedName() + ".name");

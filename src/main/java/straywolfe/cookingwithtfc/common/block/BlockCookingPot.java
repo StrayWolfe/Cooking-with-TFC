@@ -6,6 +6,7 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Blocks.BlockTerraContainer;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Effects.GasFX;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemCustomBucketMilk;
 import com.bioxx.tfc.Items.Tools.ItemKnife;
 import com.bioxx.tfc.TileEntities.TEFirepit;
@@ -36,7 +37,6 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileCookingPot;
@@ -79,7 +79,7 @@ public class BlockCookingPot extends BlockTerraContainer
 						player.setCurrentItemOrArmor(0, teCookingPot.getLastItem());
 					}
 					//Right click with ingredient to add ingredients
-					else if(equippedItem.getItem() instanceof ItemTFCFoodTransform)
+					else if(equippedItem.getItem() instanceof ItemFoodTFC)
 					{
 						ItemStack knife = null;
 						boolean knifeNotNeeded = false;
@@ -116,6 +116,7 @@ public class BlockCookingPot extends BlockTerraContainer
 							else
 								Food.setWeight(equippedItem, Food.getWeight(equippedItem) - foodWt);
 							
+							Food.setDecay(food, 0);
 							Food.setWeight(food, foodWt);
 							
 							teCookingPot.setLastItem(food);

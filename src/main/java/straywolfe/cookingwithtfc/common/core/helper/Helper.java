@@ -21,6 +21,20 @@ public class Helper
         return input == target || OreDictionary.itemMatches(target, input, false);
     }
 	
+	public static boolean isOre(String oreDict, ItemStack ore)
+	{
+		for(ItemStack ostack : OreDictionary.getOres(oreDict)) 
+		{
+			ItemStack cstack = ostack.copy();
+			if(cstack.getItemDamage() == Short.MAX_VALUE)
+				cstack.setItemDamage(ore.getItemDamage());
+			
+			if(ore.isItemEqual(cstack)) 
+				return true;
+		}
+		return false;
+	}
+	
 	public static ItemStack getItemStackForFluid(FluidStack fluidStack)
     {
         if (fluidStack == null)

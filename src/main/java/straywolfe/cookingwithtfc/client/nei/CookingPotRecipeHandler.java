@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import com.bioxx.tfc.Items.ItemTerra;
+
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.PositionedStack;
@@ -347,13 +349,34 @@ public class CookingPotRecipeHandler extends TemplateRecipeHandler
 	        			if(inputs.get(i) instanceof ItemStack)
 	        			{
 	        				ItemStack inputitem = (ItemStack)inputs.get(i);
-	        				
-			        		if(inputitem.getItem() instanceof ItemTFCFoodTransform)
-			        			Ingredients.add(new PositionedStack(ItemTFCFoodTransform.createTag(
-			        				new ItemStack(inputitem.getItem(), 1, inputitem.getItemDamage()), 2), x, y));
-			        		else
-			        			Ingredients.add(new PositionedStack(ItemTFCMealTransform.createTag(new ItemStack(inputitem.getItem(), 1, inputitem.getItemDamage()), 
-			        					2, 0, new ItemStack[]{}, new float[]{}), x, y));
+	      
+	        				if(inputitem.getItemDamage() == Short.MAX_VALUE && inputitem.getItem() instanceof ItemTerra)
+	        				{
+	        					ArrayList<ItemStack> tfcItems = new ArrayList();
+	        					
+	        					for(int meta = 0; meta < ((ItemTerra)inputitem.getItem()).metaNames.length; meta++)
+	        					{
+	        						if(inputitem.getItem() instanceof ItemTFCFoodTransform)
+					        		{
+	        							tfcItems.add(ItemTFCFoodTransform.createTag(new ItemStack(inputitem.getItem(), 1, meta), 2));
+					        		}
+					        		else
+					        			tfcItems.add(ItemTFCMealTransform.createTag(new ItemStack(inputitem.getItem(), 1, meta), 2, 0, new ItemStack[]{}, new float[]{}));
+	        					}
+	        					
+	        					Ingredients.add(new PositionedStack(tfcItems, x, y));
+	        				}
+	        				else
+	        				{
+				        		if(inputitem.getItem() instanceof ItemTFCFoodTransform)
+				        		{
+				        			Ingredients.add(new PositionedStack(ItemTFCFoodTransform.createTag(new ItemStack(inputitem.getItem(), 
+				        					1, inputitem.getItemDamage()), 2), x, y));
+				        		}
+				        		else
+				        			Ingredients.add(new PositionedStack(ItemTFCMealTransform.createTag(new ItemStack(inputitem.getItem(), 
+				        					1, inputitem.getItemDamage()), 2, 0, new ItemStack[]{}, new float[]{}), x, y));
+	        				}
 	        			}
 	        			else if(inputs.get(i) instanceof String)
 	        			{

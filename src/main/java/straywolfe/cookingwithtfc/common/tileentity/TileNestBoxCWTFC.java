@@ -8,7 +8,7 @@ import com.bioxx.tfc.api.TFCOptions;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformChickenTFC;
+import com.bioxx.tfc.Entities.Mobs.EntityChickenTFC;
 
 public class TileNestBoxCWTFC extends TENestBox
 {	
@@ -20,9 +20,9 @@ public class TileNestBoxCWTFC extends TENestBox
 			EntityAnimal bird = getBird();
 			if(bird!=null)
 			{
-				ItemStack item = ((EntityTransformChickenTFC)bird).getEggs();
+				ItemStack item = ((EntityChickenTFC)bird).getEggs();
 
-				EntityTransformChickenTFC father = (EntityTransformChickenTFC) getRooster();
+				EntityChickenTFC father = (EntityChickenTFC) getRooster();
 				for(int i = 0; item != null && i < this.getSizeInventory();i++)
 				{
 					if(inventory[i] == null)
@@ -32,7 +32,7 @@ public class TileNestBoxCWTFC extends TENestBox
 						{
 							NBTTagCompound nbt = item.getTagCompound();
 							nbt.setLong("Fertilized", TFC_Time.getTotalTicks() + (long) (TFCOptions.animalTimeMultiplier * TFC_Time.ticksInMonth * 0.75f));
-							nbt.setTag("Genes", this.createGenes((EntityTransformChickenTFC) bird, father));
+							nbt.setTag("Genes", this.createGenes((EntityChickenTFC) bird, father));
 							item.setTagCompound(nbt);
 						}
 						worldObj.playSoundAtEntity(bird,"mob.chicken.plop", 1.0F, (worldObj.rand.nextFloat() - worldObj.rand.nextFloat()) * 0.2F + 1.0F);
@@ -50,7 +50,7 @@ public class TileNestBoxCWTFC extends TENestBox
 					long time = inventory[i].getTagCompound().getLong("Fertilized");
 					if(time <= TFC_Time.getTotalTicks())
 					{
-						EntityTransformChickenTFC chick = new EntityTransformChickenTFC(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 
+						EntityChickenTFC chick = new EntityChickenTFC(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 
 								(NBTTagCompound) inventory[i].getTagCompound().getTag("Genes"));
 						if(worldObj.isAirBlock(xCoord, yCoord + 1, zCoord))
 							chick.setLocationAndAngles (xCoord, yCoord + 1, zCoord, 0.0F, 0.0F);

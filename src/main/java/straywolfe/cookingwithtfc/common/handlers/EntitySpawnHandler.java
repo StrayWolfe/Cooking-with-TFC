@@ -18,15 +18,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
 import straywolfe.cookingwithtfc.common.core.FoodRecord;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformBear;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformChickenTFC;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformCowTFC;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformDeer;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformHorseTFC;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformPheasant;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformPigTFC;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformSheepTFC;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformWolfTFC;
+import straywolfe.cookingwithtfc.common.entity.*;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 
 public class EntitySpawnHandler 
@@ -62,104 +54,53 @@ public class EntitySpawnHandler
 						TerraFirmaCraft.PACKET_PIPELINE.sendTo(new MessageFoodRecord(player, fr), (EntityPlayerMP) event.entity);
 				}
 			}
-			else if(event.entity instanceof EntityBear)
+			else if(event.entity instanceof EntityTransformBear)
 			{
-				if(event.entity instanceof EntityTransformBear)
-					return;				
-				else
-				{
-					EntityTransformBear newBear = new EntityTransformBear(event.world);				
-					setupEntitySpawn(newBear, event);
-					newBear.setHealthFlag(true);
-				}
+				EntityBear newBear = new EntityBear(event.world);				
+				setupEntitySpawn(newBear, event);
 			}
-			else if(event.entity instanceof EntityChickenTFC)
+			else if(event.entity instanceof EntityTransformChicken)
 			{
-				if(event.entity instanceof EntityTransformChickenTFC)
-					return;
-				else if(event.entity instanceof EntityPheasantTFC)
+				if(event.entity instanceof EntityTransformPheasant)
 				{
-					if(event.entity instanceof EntityTransformPheasant)
-						return;				
-					else
-					{
-						EntityTransformPheasant newPheasant = new EntityTransformPheasant(event.world);				
-						setupEntitySpawn(newPheasant, event);
-						newPheasant.setHealthFlag(true);
-					}
+					EntityPheasantTFC newPheasant = new EntityPheasantTFC(event.world);				
+					setupEntitySpawn(newPheasant, event);
 				}
 				else
 				{
-					EntityTransformChickenTFC newChicken = new EntityTransformChickenTFC(event.world);				
+					EntityChickenTFC newChicken = new EntityChickenTFC(event.world);				
 					setupEntitySpawn(newChicken, event);
-					newChicken.setHealthFlag(true);
 				}
 			}
-			else if(event.entity instanceof EntityCowTFC)
+			else if(event.entity instanceof EntityTransformCowTFC)
 			{
-				if(event.entity instanceof EntityTransformCowTFC)
-					return;				
-				else
-				{
-					EntityTransformCowTFC newCow = new EntityTransformCowTFC(event.world);				
-					setupEntitySpawn(newCow, event);
-					newCow.setHealthFlag(true);
-				}
+				EntityCowTFC newCow = new EntityCowTFC(event.world);				
+				setupEntitySpawn(newCow, event);
 			}
-			else if(event.entity instanceof EntityDeer)
+			else if(event.entity instanceof EntityTransformDeer)
 			{
-				if(event.entity instanceof EntityTransformDeer)
-					return;				
-				else
-				{
-					EntityTransformDeer newDeer = new EntityTransformDeer(event.world);				
-					setupEntitySpawn(newDeer, event);
-					newDeer.setHealthFlag(true);
-				}
+				EntityDeer newDeer = new EntityDeer(event.world);				
+				setupEntitySpawn(newDeer, event);
 			}
-			else if(event.entity instanceof EntityHorseTFC)
+			else if(event.entity instanceof EntityTransformHorseTFC)
 			{
-				if(event.entity instanceof EntityTransformHorseTFC)
-					return;				
-				else
-				{
-					EntityTransformHorseTFC newHorse = new EntityTransformHorseTFC(event.world);
-					setupEntitySpawn(newHorse, event);
-					newHorse.setHealthFlag(true);
-				}
+				EntityHorseTFC newHorse = new EntityHorseTFC(event.world);
+				setupEntitySpawn(newHorse, event);
 			}
-			else if(event.entity instanceof EntityPigTFC)
+			else if(event.entity instanceof EntityTransformPigTFC)
 			{
-				if(event.entity instanceof EntityTransformPigTFC)
-					return;				
-				else
-				{
-					EntityTransformPigTFC newPig = new EntityTransformPigTFC(event.world);				
-					setupEntitySpawn(newPig, event);
-					newPig.setHealthFlag(true);
-				}
+				EntityPigTFC newPig = new EntityPigTFC(event.world);				
+				setupEntitySpawn(newPig, event);
 			}
-			else if(event.entity instanceof EntitySheepTFC)
+			else if(event.entity instanceof EntityTransformSheepTFC)
 			{
-				if(event.entity instanceof EntityTransformSheepTFC)
-					return;				
-				else
-				{
-					EntityTransformSheepTFC newSheep = new EntityTransformSheepTFC(event.world);
-					setupEntitySpawn(newSheep, event);
-					newSheep.setHealthFlag(true);
-				}
+				EntitySheepTFC newSheep = new EntitySheepTFC(event.world);
+				setupEntitySpawn(newSheep, event);
 			}
-			else if(event.entity instanceof EntityWolfTFC)
-			{
-				if(event.entity instanceof EntityTransformWolfTFC)
-					return;				
-				else
-				{					
-					EntityTransformWolfTFC newWolf = new EntityTransformWolfTFC(event.world);
-					setupEntitySpawn(newWolf, event);
-					newWolf.setHealthFlag(true);
-				}
+			else if(event.entity instanceof EntityTransformWolfTFC)
+			{					
+				EntityWolfTFC newWolf = new EntityWolfTFC(event.world);
+				setupEntitySpawn(newWolf, event);
 			}
 		}
 	}

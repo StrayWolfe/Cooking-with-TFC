@@ -28,7 +28,7 @@ import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 
-public class ItemTFCFoodTransform extends ItemFoodTFC implements IFood
+public class ItemTFCFoodTransform extends ItemFoodTFC
 {
 	private float consumeSize;
 	private boolean hasCustomIcon = false;
@@ -52,7 +52,7 @@ public class ItemTFCFoodTransform extends ItemFoodTFC implements IFood
 	@Override
 	public void getSubItems(Item item, CreativeTabs tabs, List list)
 	{
-		list.add(ItemFoodTFC.createTag(new ItemStack(this, 1), getFoodMaxWeight(new ItemStack(this, 1))));
+		list.add(ItemFoodTFC.createTag(new ItemStack(this), getFoodMaxWeight(new ItemStack(this))));
 	}
 	
 	@Override

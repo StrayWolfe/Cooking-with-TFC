@@ -5,6 +5,7 @@ import java.util.List;
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Blocks.BlockTerraContainer;
 import com.bioxx.tfc.Core.TFC_Core;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemKnife;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCItems;
@@ -20,7 +21,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 import straywolfe.cookingwithtfc.common.tileentity.TileBowl;
 
 public class BlockBowl extends BlockTerraContainer
@@ -58,7 +58,7 @@ public class BlockBowl extends BlockTerraContainer
 					}
 				}
 				//Add Ingredient to top
-				else if(equipped.getItem() instanceof ItemTFCFoodTransform && ((ItemTFCFoodTransform)equipped.getItem()).edible)
+				else if(equipped.getItem() instanceof ItemFoodTFC && ((ItemFoodTFC)equipped.getItem()).isEdible(equipped))
 				{
 					ItemStack knife = null;
 					boolean knifeNotNeeded = false;
@@ -93,6 +93,7 @@ public class BlockBowl extends BlockTerraContainer
 						else
 							Food.setWeight(equipped, Food.getWeight(equipped) - 5);
 						
+						Food.setDecay(food, 0);
 						Food.setWeight(food, 5);
 						
 						te.setTopIngredient(food);

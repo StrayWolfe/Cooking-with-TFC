@@ -47,12 +47,12 @@ public class AIFindNest extends EntityAIFindNest
 	@Override
 	public boolean shouldExecute()
 	{
-		if(chicken instanceof EntityTransformChickenTFC && !(chicken instanceof EntityTransformPheasant))
+		if(chicken instanceof EntityTransformChicken && !(chicken instanceof EntityTransformPheasant))
 		{
-			return ((EntityTransformChickenTFC) chicken).isAdult() &&((EntityTransformChickenTFC) chicken).getFamiliarity() >= 15 &&
+			return ((EntityTransformChicken) chicken).isAdult() &&((EntityTransformChicken) chicken).getFamiliarity() >= 15 &&
 					chicken.worldObj.getBlock((int)chicken.posX, (int)chicken.posY,(int)chicken.posZ) != CWTFCBlocks.nestBoxCWTFC &&
 					chicken.worldObj.getBlock((int)chicken.posX, (int)chicken.posY - 1,(int)chicken.posZ) != CWTFCBlocks.nestBoxCWTFC &&
-					this.getNearbySitableBlockDistance() && ((EntityTransformChickenTFC) chicken).getGender() == GenderEnum.FEMALE;
+					this.getNearbySitableBlockDistance() && ((EntityTransformChicken) chicken).getGender() == GenderEnum.FEMALE;
 		}
 		return false;
 	}
@@ -97,9 +97,9 @@ public class AIFindNest extends EntityAIFindNest
 			this.compoundDistance += this.chicken.getDistance(this.chicken.lastTickPosX, this.chicken.lastTickPosY, this.chicken.lastTickPosZ);
 			if(this.currentTick - 40 > this.lastCheckedTick)
 			{
-				ArrayList<EntityTransformChickenTFC> crowd = (ArrayList<EntityTransformChickenTFC>) chicken.worldObj.getEntitiesWithinAABB(EntityTransformChickenTFC.class, chicken.boundingBox.expand(24, 2, 24));
-				ArrayList<EntityTransformChickenTFC> invalid = new ArrayList<EntityTransformChickenTFC>();
-				for(EntityTransformChickenTFC chicken : crowd){
+				ArrayList<EntityTransformChicken> crowd = (ArrayList<EntityTransformChicken>) chicken.worldObj.getEntitiesWithinAABB(EntityTransformChicken.class, chicken.boundingBox.expand(24, 2, 24));
+				ArrayList<EntityTransformChicken> invalid = new ArrayList<EntityTransformChicken>();
+				for(EntityTransformChicken chicken : crowd){
 					if(chicken.getGender().equals(GenderEnum.MALE) || chicken.isChild()){
 						invalid.add(chicken);
 					}

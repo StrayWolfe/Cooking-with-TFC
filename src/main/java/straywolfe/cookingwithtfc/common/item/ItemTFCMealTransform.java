@@ -3,7 +3,6 @@ package straywolfe.cookingwithtfc.common.item;
 import java.util.List;
 
 import com.bioxx.tfc.Reference;
-import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_Sounds;
 import com.bioxx.tfc.Core.TFC_Time;
@@ -14,13 +13,12 @@ import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.Render.Item.FoodItemRenderer;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.FoodRegistry;
-import com.bioxx.tfc.api.TFCCrafting;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.TFCOptions;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
 import com.bioxx.tfc.api.Enums.EnumSize;
 import com.bioxx.tfc.api.Enums.EnumWeight;
-import com.bioxx.tfc.api.Interfaces.IFood;
+import com.bioxx.tfc.api.Interfaces.ICookableFood;
 import com.bioxx.tfc.api.Util.Helper;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -31,7 +29,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -40,7 +37,7 @@ import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 
-public class ItemTFCMealTransform extends ItemTerra implements IFood
+public class ItemTFCMealTransform extends ItemTerra implements ICookableFood
 {
 	protected int tasteSweet;
 	protected int tasteSour;
@@ -148,21 +145,7 @@ public class ItemTFCMealTransform extends ItemTerra implements IFood
 	public ItemStack onEaten(ItemStack is, World world, EntityPlayer player)
 	{
 		if(Settings.diminishingReturns)
-		{
 			is = CWTFC_Core.processEating(is, world, player, getConsumeSize(), true);
-			
-			if (hasBowl && is.stackSize == 0)
-			{
-				if (TFCCrafting.enableBowlsAlwaysBreak || world.rand.nextInt(2) == 0)
-				{
-					world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
-				}
-				else if (!player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryBowl, 1, 1)))
-				{
-					return new ItemStack(TFCItems.potteryBowl, 1, 1);
-				}
-			}
-		}
 		else
 		{
 			world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -170,7 +153,6 @@ public class ItemTFCMealTransform extends ItemTerra implements IFood
 			FoodStatsTFC foodstats = TFC_Core.getPlayerFoodStats(player);
 			if(!world.isRemote)
 			{
-				//add the nutrition contents
 				if (is.hasTagCompound())
 				{
 					float weight = Food.getWeight(is);
@@ -186,25 +168,28 @@ public class ItemTFCMealTransform extends ItemTerra implements IFood
 							foodstats.addNutrition(FoodRegistry.getInstance().getFoodGroup(fg[i]), eatAmount * nWeights[i] * 2.5f);
 					}
 
-					//fill the stomach
 					foodstats.stomachLevel += eatAmount * getFillingBoost();
 					foodstats.setSatisfaction(foodstats.getSatisfaction() + ((eatAmount / 3f) * tasteFactor), fg);
 
-					//Now remove the eaten amount from the itemstack.
 					if (FoodStatsTFC.reduceFood(is, eatAmount))
 					{
 						is.stackSize = 0;
 					}
 				}
-				else
-				{
-					String error = TFC_Core.translate("error.error") + " " + is.getUnlocalizedName() + " " +
-							TFC_Core.translate("error.NBT") + " " + TFC_Core.translate("error.Contact");
-					TerraFirmaCraft.LOG.error(error);
-					TFC_Core.sendInfoMessage(player, new ChatComponentText(error));
-				}
 			}
 			TFC_Core.setPlayerFoodStats(player, foodstats);
+		}
+		
+		if (hasBowl && is.stackSize == 0)
+		{
+			if (Settings.bowlBreakFreq != -1 && world.rand.nextInt(Settings.bowlBreakFreq) == 0)
+			{
+				world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
+			}
+			else if (!player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryBowl, 1, 1)))
+			{
+				return new ItemStack(TFCItems.potteryBowl, 1, 1);
+			}
 		}
 		
 		return is;
@@ -349,7 +334,7 @@ public class ItemTFCMealTransform extends ItemTerra implements IFood
 	}
 
 	@Override
-	public EnumFoodGroup getFoodGroup() {return null;}
+	public EnumFoodGroup getFoodGroup() {return EnumFoodGroup.None;}
 
 	@Override
 	public int getFoodID() {return 0;}
@@ -525,4 +510,10 @@ public class ItemTFCMealTransform extends ItemTerra implements IFood
 	{
 		return true;
 	}
+
+	@Override
+	public boolean canSmoke() {return false;}
+
+	@Override
+	public float getSmokeAbsorbMultiplier() {return 0;}
 }

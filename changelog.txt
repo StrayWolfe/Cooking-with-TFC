@@ -1,6 +1,25 @@
 Changelog
 =================================================
 -------------------------------------------------
+Cooking With TFC 0.0.4.0
+-------------------------------------------------
+New Feature
++Add config to set the rate of bowls breaking 
+
+Tweaks
++Bowls now have a 2% chance of breaking rather than 50%
++TFC Food is now supported by the new hunger system
++Animals are now converted back into TFC animals
++TFC Food is no longer converted to CWTFC Food
++CWTFC Food is now converted back to TFC Food on pickup
++Added recipe to convert CWTFC nestbox to TFC
++Cooking pot, sandwich, salad and meat salting now work with TFC food
+
+Bug Fixes
++Cooking pot recipes with salt now register as valid
++Waila shows correct amount of salt used in cooking pot
+
+-------------------------------------------------
 Cooking With TFC 0.0.3.0
 -------------------------------------------------
 New Features

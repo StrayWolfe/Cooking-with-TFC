@@ -1,5 +1,7 @@
 package straywolfe.cookingwithtfc.common.item;
 
+import com.bioxx.tfc.api.TFCItems;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
@@ -149,12 +151,19 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(ClayCookingPot, ClayCookingPot.getUnlocalizedName());
 		
 		//Ore Dictionary
-		OreDictionary.registerOre("itemFlour", barleyGroundCWTFC);
-		OreDictionary.registerOre("itemFlour", cornmealGroundCWTFC);
-		OreDictionary.registerOre("itemFlour", oatGroundCWTFC);
-		OreDictionary.registerOre("itemFlour", riceGroundCWTFC);
-		OreDictionary.registerOre("itemFlour", ryeGroundCWTFC);
-		OreDictionary.registerOre("itemFlour", wheatGroundCWTFC);
+		OreDictionary.registerOre("itemFlour", TFCItems.barleyGround);
+		OreDictionary.registerOre("itemFlour", TFCItems.cornmealGround);
+		OreDictionary.registerOre("itemFlour", TFCItems.oatGround);
+		OreDictionary.registerOre("itemFlour", TFCItems.riceGround);
+		OreDictionary.registerOre("itemFlour", TFCItems.ryeGround);
+		OreDictionary.registerOre("itemFlour", TFCItems.wheatGround);
+		
+		OreDictionary.registerOre("itemBread", TFCItems.barleyBread);
+		OreDictionary.registerOre("itemBread", TFCItems.cornBread);
+		OreDictionary.registerOre("itemBread", TFCItems.oatBread);
+		OreDictionary.registerOre("itemBread", TFCItems.riceBread);
+		OreDictionary.registerOre("itemBread", TFCItems.ryeBread);
+		OreDictionary.registerOre("itemBread", TFCItems.wheatBread);
 		
 		LogHelper.info("Done Registering Items");
 	}

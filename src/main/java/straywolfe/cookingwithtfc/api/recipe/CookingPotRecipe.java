@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
+import straywolfe.cookingwithtfc.common.core.helper.Helper;
 
 public class CookingPotRecipe 
 {
@@ -98,29 +98,20 @@ public class CookingPotRecipe
 						Object recipeIngred = recipeIngreds.get(j);
 						if(recipeIngred instanceof String) 
 						{
-							boolean found = false;
-							for(ItemStack ostack : OreDictionary.getOres((String) recipeIngred)) 
+							if(Helper.isOre((String) recipeIngred, stack))
 							{
-								ItemStack cstack = ostack.copy();
-								if(cstack.getItemDamage() == Short.MAX_VALUE)
-									cstack.setItemDamage(stack.getItemDamage());
-		
-								if(stack.isItemEqual(cstack)) 
-								{
-									oreID = j;
-									found = true;
-									break;
-								}
-							}		
-		
-							if(found)
+								oreID = j;
 								break;
+							}
 						}
-						else if(recipeIngred instanceof ItemStack && ((ItemStack) recipeIngred).getItem() == stack.getItem() && 
-								((ItemStack) recipeIngred).getItemDamage() == stack.getItemDamage()) 
+						else if(recipeIngred instanceof ItemStack && ((ItemStack) recipeIngred).getItem() == stack.getItem()) 
 						{
-							stackID = j;
-							break;
+							int recipeDmg = ((ItemStack) recipeIngred).getItemDamage();
+							if(recipeDmg == Short.MAX_VALUE || recipeDmg == stack.getItemDamage())
+							{
+								stackID = j;
+								break;
+							}
 						}
 					}
 					

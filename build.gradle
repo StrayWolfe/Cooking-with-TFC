@@ -44,8 +44,8 @@ allprojects
 	{
         version = config.minecraft_version + "-" + config.forge_version
 		
-		replaceIn "references/DetailsCWTFC.java"
-		replace "@MOD_VERSION@", config.mod_version
+		replaceIn "common/lib/ModInfo.java"
+		replace "@MOD_VERSION@", "${config.mod_version}"
 	
         if(file('../run').exists()) 
 		{
@@ -92,19 +92,28 @@ task sourceJar(type: Jar){
     appendix = 'src'
 }
 
-task updateBuild(){
-	def build = Integer.parseInt(config.build_number) + 1
-	project.version = "${config.minecraft_version}-${config.mod_version}.${build}"
-    ant.propertyfile(file: "build.prop") 
-	{
-        entry(key: "build_number", value: build)
-    }
+task buildNumber{
+	if(config.release_type == 'snapshot'){
+		def build = Integer.parseInt(config.build_number) + 1
+		project.version = "${config.minecraft_version}-${config.mod_version}.${build}"
+		ant.propertyfile(file: "build.prop") 
+		{
+			entry(key: "build_number", value: build)
+		}
+	}
+	else{
+		project.version = "${config.minecraft_version}-${config.mod_version}"
+	}
 }
 
-tasks.build.dependsOn('updateBuild', 'sourceJar', 'deobfJar')
+tasks.build.dependsOn('buildNumber', 'sourceJar', 'deobfJar')
 
 processResources 
 {
+	inputs.property "mod_version", project.version
+	inputs.property "tfc_version", project.config.tfc_version
+    inputs.property "minecraft_version", project.config.minecraft_version
+	
 	from(sourceSets.main.resources.srcDirs) 
 	{
         include '**/*.info'

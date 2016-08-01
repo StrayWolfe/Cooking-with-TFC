@@ -5,6 +5,7 @@ import java.util.List;
 import com.bioxx.tfc.Blocks.BlockTerraContainer;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_Textures;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemKnife;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.Constant.Global;
@@ -22,8 +23,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import straywolfe.cookingwithtfc.common.item.ItemBread;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
+import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.tileentity.TileSandwich;
 
 public class BlockSandwich extends BlockTerraContainer
@@ -57,13 +57,13 @@ public class BlockSandwich extends BlockTerraContainer
 					}
 				}
 				//Add Ingredient to top
-				else if(equipped.getItem() instanceof ItemTFCFoodTransform && ((ItemTFCFoodTransform)equipped.getItem()).edible)
+				else if(equipped.getItem() instanceof ItemFoodTFC && ((ItemFoodTFC)equipped.getItem()).isEdible(equipped))
 				{
 					ItemStack knife = null;
 					boolean knifeNotNeeded = false;
 					int slot = 0;
 					
-					if(equipped.getItem() instanceof ItemBread)
+					if(Helper.isOre("itemBread", equipped))
 					{
 						if(Food.getWeight(equipped) - 1 <= 0)
 							knifeNotNeeded = true;
@@ -87,14 +87,14 @@ public class BlockSandwich extends BlockTerraContainer
 					
 					if((knife != null && te.getSandwichContents()[te.getTopToast()] == null) || knifeNotNeeded)
 					{						
-						if(te.getSandwichContents()[4] != null && !(equipped.getItem() instanceof ItemBread))
+						if(te.getSandwichContents()[4] != null && !(Helper.isOre("itemBread", equipped)))
 							return true;
 						
 						ItemStack food = equipped.copy();
 						
 						if(Food.getDecay(equipped) > 0)
 						{
-							if(equipped.getItem() instanceof ItemBread)
+							if(Helper.isOre("itemBread", equipped))
 								Food.setWeight(equipped, Food.getWeight(equipped) - Food.getDecay(equipped) - 1);
 							else
 								Food.setWeight(equipped, Food.getWeight(equipped) - Food.getDecay(equipped) - 2);
@@ -103,13 +103,15 @@ public class BlockSandwich extends BlockTerraContainer
 						}
 						else
 						{
-							if(equipped.getItem() instanceof ItemBread)
+							if(Helper.isOre("itemBread", equipped))
 								Food.setWeight(equipped, Food.getWeight(equipped) - 1);
 							else
 								Food.setWeight(equipped, Food.getWeight(equipped) - 2);
 						}
 						
-						if(equipped.getItem() instanceof ItemBread)
+						Food.setDecay(food, 0);
+						
+						if(Helper.isOre("itemBread", equipped))
 							Food.setWeight(food, 1);
 						else
 							Food.setWeight(food, 2);

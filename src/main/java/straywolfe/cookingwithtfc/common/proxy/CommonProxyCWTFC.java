@@ -39,7 +39,7 @@ public class CommonProxyCWTFC
 		EntityRegistry.registerModEntity(EntityTransformCowTFC.class, "cowCWTFC", 6, TerraFirmaCraft.instance, 160, 5, true);
 		EntityRegistry.registerModEntity(EntityTransformWolfTFC.class, "wolfCWTFC", 7, TerraFirmaCraft.instance, 160, 5, true);
 		EntityRegistry.registerModEntity(EntityTransformBear.class, "bearCWTFC", 8, TerraFirmaCraft.instance, 160, 5, true);
-		EntityRegistry.registerModEntity(EntityTransformChickenTFC.class, "chickenCWTFC", 9, TerraFirmaCraft.instance, 160, 5, true);
+		EntityRegistry.registerModEntity(EntityTransformChicken.class, "chickenCWTFC", 9, TerraFirmaCraft.instance, 160, 5, true);
 		EntityRegistry.registerModEntity(EntityTransformPigTFC.class, "pigCWTFC", 10, TerraFirmaCraft.instance, 160, 5, true);
 		EntityRegistry.registerModEntity(EntityTransformDeer.class, "deerCWTFC", 11, TerraFirmaCraft.instance, 160, 5, true);
 		EntityRegistry.registerModEntity(EntityTransformPheasant.class, "PheasantCWTFC", 26, TerraFirmaCraft.instance, 160, 5, true);
@@ -79,6 +79,5 @@ public class CommonProxyCWTFC
 	public void registerWAILA()
 	{
 		FMLInterModComms.sendMessage("Waila", "register", "straywolfe.cookingwithtfc.client.waila.WAILAInfo.callbackRegister");
-		FMLInterModComms.sendMessage("Waila", "register", "straywolfe.cookingwithtfc.client.waila.WAILAMobs.callbackRegister");
 	}
 }

@@ -3,7 +3,9 @@ package straywolfe.cookingwithtfc.common.tileentity;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.TileEntities.NetworkTileEntity;
 import com.bioxx.tfc.api.Food;
+import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -12,8 +14,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
-import straywolfe.cookingwithtfc.common.item.ItemBread;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 
 public class TileSandwich extends NetworkTileEntity
@@ -42,36 +42,36 @@ public class TileSandwich extends NetworkTileEntity
 		Item sandwichtype;
 		
 		//Chicken Sandwich
-		if(CWTFCItems.chickenCookedCWTFC.getUnlocalizedName().equals(meatType) || 
+		if(TFCItems.chickenRaw.getUnlocalizedName().equals(meatType) || 
 				CWTFCItems.BoiledChicken.getUnlocalizedName().equals(meatType))
 			sandwichtype = CWTFCItems.ChickenSandwich;
 		//Ham Sandwich
-		else if(CWTFCItems.porkchopCookedCWTFC.getUnlocalizedName().equals(meatType) || 
+		else if(TFCItems.porkchopRaw.getUnlocalizedName().equals(meatType) || 
 				CWTFCItems.BoiledPork.getUnlocalizedName().equals(meatType))
 			sandwichtype = CWTFCItems.HamSandwich;
 		//Egg Sandwich
-		else if(CWTFCItems.eggCookedCWTFC.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.eggCooked.getUnlocalizedName().equals(meatType))
 			sandwichtype = CWTFCItems.FriedEggSandwich;
 		
 		//Mutton Sandwich
-		else if(CWTFCItems.muttonCookedCWTFC.getUnlocalizedName().equals(meatType))
+		else if(TFCItems.muttonRaw.getUnlocalizedName().equals(meatType))
 			sandwichtype = CWTFCItems.MuttonSandwich;
 		
 		//Roast Beef Sandwich
-		else if(CWTFCItems.beefCookedCWTFC.getUnlocalizedName().equals(meatType) || 
+		else if(TFCItems.beefRaw.getUnlocalizedName().equals(meatType) || 
 				CWTFCItems.BoiledBeef.getUnlocalizedName().equals(meatType))
 			sandwichtype = CWTFCItems.RoastBeefSandwich;
 		
 		//Salmon Sandwich
-		else if(CWTFCItems.fishCookedCWTFC.getUnlocalizedName().equals(meatType) || 
+		else if(TFCItems.fishRaw.getUnlocalizedName().equals(meatType) || 
 				CWTFCItems.BoiledFish.getUnlocalizedName().equals(meatType) ||
-				CWTFCItems.calamariCookedCWTFC.getUnlocalizedName().equals(meatType))
+				TFCItems.calamariRaw.getUnlocalizedName().equals(meatType))
 			sandwichtype = CWTFCItems.SalmonSandwich;
 		
 		//Steak Sandwich
-		else if(CWTFCItems.venisonCookedCWTFC.getUnlocalizedName().equals(meatType) || 
+		else if(TFCItems.venisonRaw.getUnlocalizedName().equals(meatType) || 
 				CWTFCItems.BoiledVenison.getUnlocalizedName().equals(meatType) ||
-				CWTFCItems.horseMeatCookedCWTFC.getUnlocalizedName().equals(meatType))
+				TFCItems.horseMeatRaw.getUnlocalizedName().equals(meatType))
 			sandwichtype = CWTFCItems.VenisonSteakSandwich;
 		
 		//Toast Sandwich
@@ -84,15 +84,15 @@ public class TileSandwich extends NetworkTileEntity
 		
 		int breadMeta = 0;
 		
-		if(CWTFCItems.cornBreadCWTFC.getUnlocalizedName().equals(breadType))
+		if(TFCItems.cornBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 1;
-		else if(CWTFCItems.oatBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.oatBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 2;
-		else if(CWTFCItems.riceBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.riceBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 3;
-		else if(CWTFCItems.ryeBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.ryeBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 4;
-		else if(CWTFCItems.wheatBreadCWTFC.getUnlocalizedName().equals(breadType))
+		else if(TFCItems.wheatBread.getUnlocalizedName().equals(breadType))
 			breadMeta = 5;
 		
 		float sandwichWt = 0;
@@ -146,7 +146,7 @@ public class TileSandwich extends NetworkTileEntity
 			{
 				sandwichContents[i] = is;
 				
-				if(is.getItem() instanceof ItemBread)
+				if(Helper.isOre("itemBread", is))
 				{
 					if(i != 0)
 						topToast = i;
@@ -155,7 +155,7 @@ public class TileSandwich extends NetworkTileEntity
 				}
 				
 				
-				if(((ItemTFCFoodTransform)is.getItem()).getFoodGroup() == EnumFoodGroup.Protein && meatType == "")
+				if(((ItemFoodTFC)is.getItem()).getFoodGroup() == EnumFoodGroup.Protein && meatType == "")
 					meatType = is.getItem().getUnlocalizedName();
 					
 				return;
@@ -171,7 +171,7 @@ public class TileSandwich extends NetworkTileEntity
 			{				
 				ItemStack item = sandwichContents[i].copy();
 				
-				if(i != 0 && item.getItem() instanceof ItemBread)
+				if(i != 0 && Helper.isOre("itemBread", item))
 					topToast = 5;
 				
 				if(item.getItem().getUnlocalizedName().equals(meatType))

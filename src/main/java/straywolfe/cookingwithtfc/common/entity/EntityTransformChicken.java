@@ -25,19 +25,19 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 
-public class EntityTransformChickenTFC extends EntityChickenTFC
+public class EntityTransformChicken extends EntityChickenTFC
 {	
 	private boolean flagHealth;
 	private static final int EGG_TIME = TFC_Time.DAY_LENGTH;
 	
-	public EntityTransformChickenTFC(World par1World) 
+	public EntityTransformChicken(World par1World) 
 	{
 		super(par1World);
 		setupAI();
 	}
 	
 	// Chickens hatching from a nestbox
-	public EntityTransformChickenTFC(World world, double posX, double posY, double posZ, NBTTagCompound genes)
+	public EntityTransformChicken(World world, double posX, double posY, double posZ, NBTTagCompound genes)
 	{
 		super(world, posX, posY, posZ, genes);
 		setupAI();
@@ -50,7 +50,7 @@ public class EntityTransformChickenTFC extends EntityChickenTFC
 		this.tasks.addTask(1, new EntityAIPanic(this, 1.4D));
 		this.tasks.addTask(4, new EntityAIFollowParent(this, 1.1D));
 		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityTransformChickenTFC.class, 6.0F));
+		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityTransformChicken.class, 6.0F));
 		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityTransformWolfTFC.class, 8.0F, 1.0D, 1.2D));
 		this.tasks.addTask(7, new EntityAILookIdle(this));
 		this.tasks.addTask(6, new EntityAIEatGrass(this));
@@ -89,7 +89,7 @@ public class EntityTransformChickenTFC extends EntityChickenTFC
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setFloat("m_size", animal.getSizeMod());
 			nbt.setFloat("f_size", animal.getSizeMod());
-			return new EntityTransformChickenTFC(worldObj, posX, posY, posZ, nbt);
+			return new EntityTransformChicken(worldObj, posX, posY, posZ, nbt);
 		}
 
 		return null;

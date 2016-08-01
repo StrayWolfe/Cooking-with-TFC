@@ -8,11 +8,6 @@ import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCFluids;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Constant.Global;
-import com.bioxx.tfc.api.Crafting.BarrelAlcoholRecipe;
-import com.bioxx.tfc.api.Crafting.BarrelLiquidToLiquidRecipe;
-import com.bioxx.tfc.api.Crafting.BarrelManager;
-import com.bioxx.tfc.api.Crafting.BarrelMultiItemRecipe;
-import com.bioxx.tfc.api.Crafting.BarrelRecipe;
 import com.bioxx.tfc.api.Crafting.CraftingManagerTFC;
 import com.bioxx.tfc.api.Crafting.KilnCraftingManager;
 import com.bioxx.tfc.api.Crafting.KilnRecipe;
@@ -22,15 +17,12 @@ import com.bioxx.tfc.api.Crafting.QuernRecipe;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
-import straywolfe.cookingwithtfc.api.CWTFCFluids;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.api.recipe.PressManager;
 import straywolfe.cookingwithtfc.api.recipe.PressRecipe;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 import terramisc.core.TFCMBlocks;
 import terramisc.core.TFCMFluids;
 
@@ -38,8 +30,7 @@ public class CWTFCRecipes
 {
 	public static void registerRecipes() 
 	{		
-		Recipes.removeRecipe(new ItemStack(TFCBlocks.nestBox,1));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(CWTFCBlocks.nestBoxCWTFC,1), "S S","PSP","PPP", 'S', new ItemStack(TFCItems.straw,1), 'P', "woodLumber"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCBlocks.nestBox), new ItemStack(CWTFCBlocks.nestBoxCWTFC)));
 		
 		for(int i = 0; i < Global.WOOD_ALL.length; i++)
 		{
@@ -57,7 +48,6 @@ public class CWTFCRecipes
 		if(Loader.isModLoaded("tfcm"))
 			Recipes.removeRecipe(new ItemStack(TFCMBlocks.blockFruitPress,1));
 		
-		registerBarrelRecipes();
 		registerQuernRecipes();
 		registerKilnRecipes();
 		registerKnappingRecipes();
@@ -65,38 +55,11 @@ public class CWTFCRecipes
 		CWTFCFoodRecipes.Recipes();
 	}
 	
-	public static void registerBarrelRecipes() 
-	{
-		BarrelManager barrelmanager = BarrelManager.getInstance();
-		
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.redAppleCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.CIDER, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.greenAppleCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.CIDER, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.potatoCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.VODKA, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.barleyGroundCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.BEER, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.cornmealGroundCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.CORNWHISKEY, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.riceGroundCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.SAKE, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.ryeGroundCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.RYEWHISKEY, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.wheatGroundCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.WHISKEY, 10000)));
-		barrelmanager.addRecipe(new BarrelAlcoholRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.sugarCWTFC), 160), new FluidStack(TFCFluids.FRESHWATER, 10000), null, new FluidStack(TFCFluids.RUM, 10000)));
-		
-		barrelmanager.addRecipe(new BarrelMultiItemRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.sugarcaneCWTFC), 1), new FluidStack(TFCFluids.FRESHWATER, 60), ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.sugarCWTFC), 0.1f), new FluidStack(TFCFluids.FRESHWATER, 60)).setMinTechLevel(0));
-		barrelmanager.addRecipe(new BarrelMultiItemRecipe(ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.Salt, 1, OreDictionary.WILDCARD_VALUE), 1),new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000), ItemTFCFoodTransform.createTag(new ItemStack(CWTFCItems.cheeseCWTFC), 16), new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 1000)).setSealedRecipe(true).setMinTechLevel(0).setRemovesLiquid(true));
-		barrelmanager.addRecipe(new BarrelRecipe(null, new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000), null, new FluidStack(CWTFCFluids.MILKCURDLEDCWTFC, 10000)).setMinTechLevel(0).setRemovesLiquid(false));
-		barrelmanager.addRecipe(new BarrelLiquidToLiquidRecipe(new FluidStack(CWTFCFluids.MILKCWTFC, 9000), new FluidStack(TFCFluids.VINEGAR, 1000), new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000)).setSealedRecipe(false).setMinTechLevel(0).setRemovesLiquid(false));
-		barrelmanager.addRecipe(new BarrelLiquidToLiquidRecipe(new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 9000), new FluidStack(CWTFCFluids.MILKCWTFC, 1000), new FluidStack(CWTFCFluids.MILKVINEGARCWTFC, 10000)).setSealedRecipe(false).setMinTechLevel(0).setRemovesLiquid(false));
-	}
-	
 	public static void registerQuernRecipes() 
 	{
 		QuernManager quernmanager = QuernManager.getInstance();
-		
-		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.wheatGrainCWTFC, 1), new ItemStack(CWTFCItems.wheatGroundCWTFC, 1)));//Wheat Flour
-		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.ryeGrainCWTFC, 1), new ItemStack(CWTFCItems.ryeGroundCWTFC, 1)));//Rye Flour
-		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.oatGrainCWTFC, 1), new ItemStack(CWTFCItems.oatGroundCWTFC, 1)));//Oat Flour
-		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.barleyGrainCWTFC, 1), new ItemStack(CWTFCItems.barleyGroundCWTFC, 1)));//Barley Flour
-		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.riceGrainCWTFC, 1), new ItemStack(CWTFCItems.riceGroundCWTFC, 1)));//Rice Flour
-		quernmanager.addRecipe(new QuernRecipe(new ItemStack(CWTFCItems.maizeEarCWTFC, 1), new ItemStack(CWTFCItems.cornmealGroundCWTFC, 1)));//Cornmeal
-		quernmanager.addRecipe(new QuernRecipe(new ItemStack(TFCItems.looseRock, 1, 5), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.Salt, 1, 1), 8)));//Rock Salt
+
+		quernmanager.addRecipe(new QuernRecipe(new ItemStack(TFCItems.looseRock, 1, 5), ItemFoodTFC.createTag(new ItemStack(CWTFCItems.Salt), 8)));//Rock Salt
 		
 		removeQuernRecipe(new ItemStack(TFCItems.looseRock, 1, 5), new ItemStack(TFCItems.powder, 4, 9));
 	}
@@ -132,23 +95,23 @@ public class CWTFCRecipes
 	{
 		PressManager pressmanager = PressManager.getInstance();
 		
-		pressmanager.addRecipe(new PressRecipe(CWTFCItems.oliveCWTFC, TFCFluids.OLIVEOIL, 1));
+		pressmanager.addRecipe(new PressRecipe(TFCItems.olive, TFCFluids.OLIVEOIL, 1));
 		
 		if(Loader.isModLoaded("tfcm"))
 		{
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.cherryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.plumCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.wintergreenBerryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.blueberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.raspberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.strawberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.blackberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.bunchberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.cranberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.snowberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.elderberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.gooseberryCWTFC, TFCMFluids.FRUITJUICE, 8));
-			pressmanager.addRecipe(new PressRecipe(CWTFCItems.cloudberryCWTFC, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.cherry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.plum, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.wintergreenBerry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.blueberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.raspberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.strawberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.blackberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.bunchberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.cranberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.snowberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.elderberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.gooseberry, TFCMFluids.FRUITJUICE, 8));
+			pressmanager.addRecipe(new PressRecipe(TFCItems.cloudberry, TFCMFluids.FRUITJUICE, 8));
 		}
 	}
 	

@@ -8,7 +8,6 @@ public class Settings
 	public static final float FEAST_SIZE = 20F;
 	
 	public static int PICKINESS = 1;
+	public static int bowlBreakFreq = 50;
 	public static boolean diminishingReturns = true;
-	public static boolean hideTFCFoods = true;
-	public static boolean enableTFCFoodConversion = true;
 }

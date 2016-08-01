@@ -13,12 +13,12 @@ import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.Render.Item.FoodItemRenderer;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.FoodRegistry;
-import com.bioxx.tfc.api.TFCCrafting;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.TFCOptions;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
 import com.bioxx.tfc.api.Enums.EnumSize;
 import com.bioxx.tfc.api.Enums.EnumWeight;
+import com.bioxx.tfc.api.Interfaces.ICookableFood;
 import com.bioxx.tfc.api.Interfaces.IFood;
 import com.bioxx.tfc.api.Util.Helper;
 
@@ -38,7 +38,7 @@ import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 
-public class ItemTFCAdjutableFood extends ItemMeal implements IFood
+public class ItemTFCAdjutableFood extends ItemMeal implements ICookableFood
 {
 	private EnumFoodGroup foodgroup;
 	public int foodID;
@@ -120,33 +120,7 @@ public class ItemTFCAdjutableFood extends ItemMeal implements IFood
 	public ItemStack onEaten(ItemStack is, World world, EntityPlayer player)
 	{
 		if(Settings.diminishingReturns)
-		{
 			is = CWTFC_Core.processEating(is, world, player, consumeSize, false);
-			
-			if (isBowl && is.stackSize == 0)
-			{
-				if (TFCCrafting.enableBowlsAlwaysBreak || world.rand.nextInt(2) == 0)
-				{
-					world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
-				}
-				else if (!player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryBowl, 1, 1)))
-				{
-					return new ItemStack(TFCItems.potteryBowl, 1, 1);
-				}
-			}
-			
-			if(isJug && is.stackSize == 0)
-			{
-				if (world.rand.nextInt(50) == 0)
-				{
-					world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
-				}
-				else if (!player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryJug, 1, 1)))
-				{
-					return new ItemStack(TFCItems.potteryJug, 1, 1);
-				}
-			}
-		}
 		else
 		{
 			FoodStatsTFC foodstats = TFC_Core.getPlayerFoodStats(player);
@@ -181,6 +155,18 @@ public class ItemTFCAdjutableFood extends ItemMeal implements IFood
 
 			world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 			TFC_Core.setPlayerFoodStats(player, foodstats);
+		}
+		
+		if (is.stackSize == 0)
+		{
+			if (Settings.bowlBreakFreq != -1 && world.rand.nextInt(Settings.bowlBreakFreq) == 0)
+			{
+				world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
+			}
+			else if(isJug && !player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryJug, 1, 1)))
+				return new ItemStack(TFCItems.potteryJug, 1, 1);
+			else if (isBowl && !player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryBowl, 1, 1)))
+				return new ItemStack(TFCItems.potteryBowl, 1, 1);
 		}
 		
 		return is;
@@ -391,4 +377,10 @@ public class ItemTFCAdjutableFood extends ItemMeal implements IFood
 		else
 			return EnumWeight.HEAVY;
 	}
+
+	@Override
+	public boolean canSmoke() {return false;}
+
+	@Override
+	public float getSmokeAbsorbMultiplier() {return 0;}
 }

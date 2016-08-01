@@ -2,13 +2,13 @@ package straywolfe.cookingwithtfc.common.tileentity;
 
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.TileEntities.NetworkTileEntity;
+import com.bioxx.tfc.api.TFCItems;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
-import straywolfe.cookingwithtfc.api.CWTFCItems;
 
 public class TileMixBowl extends NetworkTileEntity
 {	
@@ -28,25 +28,32 @@ public class TileMixBowl extends NetworkTileEntity
 		{
 			Item doughType = null;
 		
-			if(bowlContents.getItem() == CWTFCItems.barleyGroundCWTFC)
-				doughType = CWTFCItems.barleyDoughCWTFC;
-			else if(bowlContents.getItem() == CWTFCItems.cornmealGroundCWTFC)
-				doughType = CWTFCItems.cornmealDoughCWTFC;
-			else if(bowlContents.getItem() == CWTFCItems.oatGroundCWTFC)
-				doughType = CWTFCItems.oatDoughCWTFC;
-			else if(bowlContents.getItem() == CWTFCItems.riceGroundCWTFC)
-				doughType = CWTFCItems.riceDoughCWTFC;
-			else if(bowlContents.getItem() == CWTFCItems.ryeGroundCWTFC)
-				doughType = CWTFCItems.ryeDoughCWTFC;
-			else if(bowlContents.getItem() == CWTFCItems.wheatGroundCWTFC)
-				doughType = CWTFCItems.wheatDoughCWTFC;
+			if(bowlContents.getItem() == TFCItems.barleyGround)
+				doughType = TFCItems.barleyDough;
+			else if(bowlContents.getItem() == TFCItems.cornmealGround)
+				doughType = TFCItems.cornmealDough;
+			else if(bowlContents.getItem() == TFCItems.oatGround)
+				doughType = TFCItems.oatDough;
+			else if(bowlContents.getItem() == TFCItems.riceGround)
+				doughType = TFCItems.riceDough;
+			else if(bowlContents.getItem() == TFCItems.ryeGround)
+				doughType = TFCItems.ryeDough;
+			else if(bowlContents.getItem() == TFCItems.wheatGround)
+				doughType = TFCItems.wheatDough;
 			
-			ItemStack dough = new ItemStack(doughType);
-			
-			if(bowlContents.stackTagCompound != null)
+			ItemStack dough = null;
+					
+			if(doughType != null)
 			{
-				dough.stackTagCompound = (NBTTagCompound)bowlContents.stackTagCompound.copy();
+				dough = new ItemStack(doughType);
+			
+				if(bowlContents.stackTagCompound != null)
+				{
+					dough.stackTagCompound = (NBTTagCompound)bowlContents.stackTagCompound.copy();
+				}
 			}
+			else
+				dough = bowlContents;
 			
 			return dough;
 		}

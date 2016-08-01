@@ -22,7 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
-import straywolfe.cookingwithtfc.common.entity.EntityTransformChickenTFC;
+import straywolfe.cookingwithtfc.common.entity.EntityTransformChicken;
 import straywolfe.cookingwithtfc.common.entity.EntityTransformCowTFC;
 import straywolfe.cookingwithtfc.common.entity.EntityTransformDeer;
 import straywolfe.cookingwithtfc.common.entity.EntityTransformHorseTFC;
@@ -50,7 +50,7 @@ public class EntityTransformWolfTFC extends EntityWolfTFC
 	{
 		mateSizeModCWTFC = 1f;
 		
-		this.targetChicken = new EntityAITargetNonTamedTFC(this, EntityTransformChickenTFC.class, 200, false);
+		this.targetChicken = new EntityAITargetNonTamedTFC(this, EntityTransformChicken.class, 200, false);
 		this.targetPheasant = new EntityAITargetNonTamedTFC(this, EntityTransformPheasant.class, 200, false);
 		this.targetPig = new EntityAITargetNonTamedTFC(this, EntityTransformPigTFC.class, 200, false);
 		this.targetCow = new EntityAITargetNonTamedTFC(this, EntityTransformCowTFC.class, 200, false);

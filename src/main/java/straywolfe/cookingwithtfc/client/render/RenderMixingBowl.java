@@ -2,6 +2,8 @@ package straywolfe.cookingwithtfc.client.render;
 
 import org.lwjgl.opengl.GL11;
 
+import com.bioxx.tfc.api.TFCItems;
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -9,7 +11,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
-import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.lib.Textures;
 import straywolfe.cookingwithtfc.common.tileentity.TileMixBowl;
 
@@ -34,17 +35,17 @@ public class RenderMixingBowl implements ISimpleBlockRenderingHandler
 			ItemStack contents = te.getContents();
 			int color = 0xFFFFFF;
 			
-			if(contents.getItem() == CWTFCItems.barleyGroundCWTFC)
+			if(contents.getItem() == TFCItems.barleyGround)
 				color = 0xE4D8C2;
-			else if(contents.getItem() == CWTFCItems.cornmealGroundCWTFC)
+			else if(contents.getItem() == TFCItems.cornmealGround)
 				color = 0xC9A858;
-			else if(contents.getItem() == CWTFCItems.oatGroundCWTFC)
+			else if(contents.getItem() == TFCItems.oatGround)
 				color = 0xBEA57A;
-			else if(contents.getItem() == CWTFCItems.riceGroundCWTFC)
+			else if(contents.getItem() == TFCItems.riceGround)
 				color = 0xE7DEDD;
-			else if(contents.getItem() == CWTFCItems.ryeGroundCWTFC)
+			else if(contents.getItem() == TFCItems.ryeGround)
 				color = 0xB2C3A7;
-			else if(contents.getItem() == CWTFCItems.wheatGroundCWTFC)
+			else if(contents.getItem() == TFCItems.wheatGround)
 				color = 0xD4C1A0;
 			
 			renderer.setRenderBounds(minX + 0.065F, 0.25F, minZ + 0.065F, maxX - 0.065F, 0.26F, maxZ - 0.065F);			
@@ -55,17 +56,17 @@ public class RenderMixingBowl implements ISimpleBlockRenderingHandler
 			ItemStack contents = te.getContents();
 			int color = 0xFFFFFF;
 				
-			if(contents.getItem() == CWTFCItems.barleyGroundCWTFC)
+			if(contents.getItem() == TFCItems.barleyGround)
 				color = 0xD3D09D;
-			else if(contents.getItem() == CWTFCItems.cornmealGroundCWTFC)
+			else if(contents.getItem() == TFCItems.cornmealGround)
 				color = 0xC09540;
-			else if(contents.getItem() == CWTFCItems.oatGroundCWTFC)
+			else if(contents.getItem() == TFCItems.oatGround)
 				color = 0x79582A;
-			else if(contents.getItem() == CWTFCItems.riceGroundCWTFC)
+			else if(contents.getItem() == TFCItems.riceGround)
 				color = 0xD6CAC5;
-			else if(contents.getItem() == CWTFCItems.ryeGroundCWTFC)
+			else if(contents.getItem() == TFCItems.ryeGround)
 				color = 0xBAC9B6;
-			else if(contents.getItem() == CWTFCItems.wheatGroundCWTFC)
+			else if(contents.getItem() == TFCItems.wheatGround)
 				color = 0xB49A6A;
 			
 			renderer.setRenderBounds(minX + 0.065F, 0.15F, minZ + 0.065F, maxX - 0.065F, 0.16F, maxZ - 0.065F);			

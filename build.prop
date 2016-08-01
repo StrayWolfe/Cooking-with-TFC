@@ -1,8 +1,9 @@
-#Fri, 22 Jul 2016 16:09:35 -0500
+#Mon, 01 Aug 2016 12:35:22 -0500
 minecraft_version=1.7.10
 forge_version=10.13.4.1558-1.7.10
 tfc_version=0.79.29
-mod_version=0.0.3.0
+mod_version=0.0.4.0
 build_number=6
+release_type=release
 mod_id=CookingWithTFC
 group_name=straywolfe.cookingwithtfc

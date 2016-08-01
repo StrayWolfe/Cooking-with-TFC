@@ -5,6 +5,17 @@
 #To create the § symbol which is used for assigning a color to the following text press Alt + 21 on Windows. For other OSes, view the above link.
 #This file needs to be UTF-8 encoded to work with MC 1.7+
 
+#==============
+#= Entities = 
+#==============
+entity.cookingwithtfc.bearCWTFC.name=Bear
+entity.cookingwithtfc.chickenCWTFC.name=Chicken
+entity.cookingwithtfc.cowCWTFC.name=Cow
+entity.cookingwithtfc.deerCWTFC.name=Deer
+entity.cookingwithtfc.PheasantCWTFC.name=Pheasant
+entity.cookingwithtfc.pigCWTFC.name=Pig
+entity.cookingwithtfc.wolfCWTFC.name=Wolf
+
 #==========
 #= Blocks =
 #==========

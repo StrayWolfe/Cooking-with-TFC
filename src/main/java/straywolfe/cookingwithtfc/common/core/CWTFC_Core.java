@@ -33,7 +33,7 @@ public class CWTFC_Core
 		foodrecord.writeNBT(player.getEntityData());
 	}
 	
-	private static float getFoodsCount(FoodRecord foodrecord, ItemStack is)
+	public static float getFoodsCount(FoodRecord foodrecord, ItemStack is)
 	{
 		int repeatFoods = 0;
 		for(int i = 0; i < foodrecord.RecordSize; ++i)

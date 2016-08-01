@@ -30,7 +30,6 @@ import straywolfe.cookingwithtfc.api.recipe.CookingPotManager;
 import straywolfe.cookingwithtfc.api.recipe.CookingPotRecipe;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.item.ItemTFCAdjutableFood;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 
 public class TileCookingPot extends TEFireEntity implements IInventory
@@ -180,7 +179,7 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 					float[] foodPct;
 					float weight = Food.getWeight(cookingPotInv[FLUIDOUTPUT]);
 					
-					if(inputFluid != null && (inputFluid.getItem() instanceof ItemTFCAdjutableFood || inputFluid.getItem() instanceof ItemTFCFoodTransform))
+					if(inputFluid != null && (inputFluid.getItem() instanceof ItemTFCAdjutableFood || inputFluid.getItem() instanceof ItemFoodTFC))
 					{
 						inputFoods = new ItemStack[ingredCount + 1];
 						foodPct = new float[ingredCount + 1];
@@ -201,7 +200,7 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 						}
 					}
 					
-					if(inputFluid != null && (inputFluid.getItem() instanceof ItemTFCAdjutableFood || inputFluid.getItem() instanceof ItemTFCFoodTransform))
+					if(inputFluid != null && (inputFluid.getItem() instanceof ItemTFCAdjutableFood || inputFluid.getItem() instanceof ItemFoodTFC))
 					{
 						inputFoods[tracker] = inputFluid;
 						foodPct[tracker] = Food.getWeight(inputFluid) / (weight * cookingPotInv[FLUIDOUTPUT].stackSize);

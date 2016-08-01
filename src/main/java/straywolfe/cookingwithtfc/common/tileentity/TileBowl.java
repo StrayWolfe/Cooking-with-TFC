@@ -5,6 +5,7 @@ import com.bioxx.tfc.TileEntities.NetworkTileEntity;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
@@ -13,7 +14,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 
 public class TileBowl extends NetworkTileEntity
@@ -121,11 +121,11 @@ public class TileBowl extends NetworkTileEntity
 		{
 			if(saladContents[i] != null)
 			{
-				EnumFoodGroup fg = ((ItemTFCFoodTransform)saladContents[i].getItem()).getFoodGroup();
+				EnumFoodGroup fg = ((ItemFoodTFC)saladContents[i].getItem()).getFoodGroup();
 				
 				if(fg == EnumFoodGroup.Fruit)
 					fruit++;
-				else if(saladContents[i].getItem() == CWTFCItems.potatoCWTFC)
+				else if(saladContents[i].getItem() == TFCItems.potato)
 					potato = true;
 				else if(fg == EnumFoodGroup.Vegetable)
 					veggy++;

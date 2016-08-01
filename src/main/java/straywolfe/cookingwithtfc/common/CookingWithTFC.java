@@ -14,6 +14,7 @@ import com.bioxx.tfc.TerraFirmaCraft;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -21,6 +22,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = ModInfo.ModID, name = ModInfo.ModName, version = ModInfo.ModVersion, dependencies = ModInfo.ModDependencies)
 public class CookingWithTFC
 {
+	@Instance(ModInfo.ModID)
+	public static CookingWithTFC instance;
+	
 	@SidedProxy(serverSide = ModInfo.SERVER_PROXY_CLASS, clientSide = ModInfo.CLIENT_PROXY_CLASS)
 	public static CommonProxyCWTFC proxy;
 	

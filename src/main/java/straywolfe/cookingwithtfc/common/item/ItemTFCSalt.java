@@ -6,6 +6,8 @@ import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Render.Item.FoodItemRenderer;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -22,7 +24,6 @@ public class ItemTFCSalt extends ItemTFCFoodTransform
 		super(fg, sw, so, sa, bi, um, size, decayrate, edible, usable);
 		this.hasSubtypes = true;
 		this.metaNames = new String[]{"Rock", "Sea"};
-		this.metaIcons = new IIcon[2];
 		
 		CWTFCItems.subfoodList.add(this);
 	}
@@ -33,24 +34,36 @@ public class ItemTFCSalt extends ItemTFCFoodTransform
 	{
 		for(int i = 0; i < metaNames.length; i++)
 		{
-			list.add(createTag(new ItemStack(this, 1, i), this.getFoodMaxWeight(new ItemStack(this, 1)), 0));
+			list.add(createTag(new ItemStack(this, 1, i), this.getFoodMaxWeight(new ItemStack(this)), 0));
 		}
 	}
 	
 	@Override
 	public void registerIcons(IIconRegister registerer)
 	{	
+		metaIcons = new IIcon[2];
 		metaIcons[0] = registerer.registerIcon(Reference.MOD_ID + ":Salt");
 		metaIcons[1] = registerer.registerIcon(ModInfo.ModID + ":SeaSalt");
+		
 		MinecraftForgeClient.registerItemRenderer(this, new FoodItemRenderer());
 	}
 	
 	@Override
-	public IIcon getIconFromDamage(int i)
+	public IIcon getIcon(ItemStack stack, int pass)
 	{
-		if(metaNames != null && i < metaNames.length)
-			return metaIcons[i];
+		if(stack.getItemDamage() == 0)
+			return metaIcons[0];
 		else
-			return itemIcon;
+			return metaIcons[1];
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIconFromDamage(int damage)
+	{
+		if(damage == 0)
+			return metaIcons[0];
+		else
+			return metaIcons[1];
 	}
 }
