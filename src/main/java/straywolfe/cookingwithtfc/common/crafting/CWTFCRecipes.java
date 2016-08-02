@@ -1,5 +1,7 @@
 package straywolfe.cookingwithtfc.common.crafting;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.bioxx.tfc.Core.Recipes;
@@ -16,7 +18,11 @@ import com.bioxx.tfc.api.Crafting.QuernRecipe;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
@@ -31,6 +37,28 @@ public class CWTFCRecipes
 	public static void registerRecipes() 
 	{		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(TFCBlocks.nestBox), new ItemStack(CWTFCBlocks.nestBoxCWTFC)));
+		
+		removeDoughRecipe(TFCItems.wheatGround, TFCItems.wheatDough, TFCItems.woodenBucketWater);
+		removeDoughRecipe(TFCItems.barleyGround, TFCItems.barleyDough, TFCItems.woodenBucketWater);
+		removeDoughRecipe(TFCItems.ryeGround, TFCItems.ryeDough, TFCItems.woodenBucketWater);
+		removeDoughRecipe(TFCItems.oatGround, TFCItems.oatDough, TFCItems.woodenBucketWater);
+		removeDoughRecipe(TFCItems.riceGround, TFCItems.riceDough, TFCItems.woodenBucketWater);
+		removeDoughRecipe(TFCItems.cornmealGround, TFCItems.cornmealDough, TFCItems.woodenBucketWater);
+		removeDoughRecipe(TFCItems.wheatGround, TFCItems.wheatDough, TFCItems.redSteelBucketWater);
+		removeDoughRecipe(TFCItems.barleyGround, TFCItems.barleyDough, TFCItems.redSteelBucketWater);
+		removeDoughRecipe(TFCItems.ryeGround, TFCItems.ryeDough, TFCItems.redSteelBucketWater);
+		removeDoughRecipe(TFCItems.oatGround, TFCItems.oatDough, TFCItems.redSteelBucketWater);
+		removeDoughRecipe(TFCItems.riceGround, TFCItems.riceDough, TFCItems.redSteelBucketWater);
+		removeDoughRecipe(TFCItems.cornmealGround, TFCItems.cornmealDough, TFCItems.redSteelBucketWater);
+		
+		removeFoodSaltRecipe(TFCItems.venisonRaw);
+		removeFoodSaltRecipe(TFCItems.beefRaw);
+		removeFoodSaltRecipe(TFCItems.chickenRaw);
+		removeFoodSaltRecipe(TFCItems.porkchopRaw);
+		removeFoodSaltRecipe(TFCItems.fishRaw);
+		removeFoodSaltRecipe(TFCItems.calamariRaw);
+		removeFoodSaltRecipe(TFCItems.muttonRaw);
+		removeFoodSaltRecipe(TFCItems.horseMeatRaw);
 		
 		for(int i = 0; i < Global.WOOD_ALL.length; i++)
 		{
@@ -136,6 +164,51 @@ public class CWTFCRecipes
 				{
 					if (ItemStack.areItemStacksEqual(validItemsList.get(i), inputStack))
 						validItemsList.remove(i--);
+				}
+			}
+		}
+	}
+	
+	public static void removeDoughRecipe(Item foodInput, Item foodOutput, Item bucket)
+	{
+		removeShapelessRecipe(ItemFoodTFC.createTag(new ItemStack(foodOutput)), ItemFoodTFC.createTag(new ItemStack(foodInput)), new ItemStack(bucket));
+	}
+	
+	public static void removeFoodSaltRecipe(Item food)
+	{
+		removeShapelessRecipe(ItemFoodTFC.createTag(new ItemStack(food, 1)), ItemFoodTFC.createTag(new ItemStack(food, 1)), new ItemStack(TFCItems.powder, 1, 9));
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void removeShapelessRecipe(ItemStack output, ItemStack ... inputs)
+	{
+		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		for (int i = 0; i < recipes.size(); i++)
+		{
+			if (recipes.get(i) != null && recipes.get(i) instanceof ShapelessRecipes)
+			{
+				ShapelessRecipes recipe = (ShapelessRecipes)recipes.get(i);
+				if(ItemStack.areItemStacksEqual(recipe.getRecipeOutput(), output))
+				{
+					ArrayList arraylist = new ArrayList(recipe.recipeItems);
+					
+					for(ItemStack input : inputs)
+					{
+						Iterator iterator = arraylist.iterator();
+
+	                    while (iterator.hasNext())
+	                    {
+	                    	ItemStack itemstack1 = (ItemStack)iterator.next();
+	                    	if (input.getItem() == itemstack1.getItem() && (itemstack1.getItemDamage() == 32767 || input.getItemDamage() == itemstack1.getItemDamage()))
+	                        {
+	                    		arraylist.remove(itemstack1);
+	                            break;
+	                        }
+	                    }
+					}
+					
+					if (arraylist.isEmpty())
+						recipes.remove(i--);
 				}
 			}
 		}

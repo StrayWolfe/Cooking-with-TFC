@@ -1,5 +1,6 @@
 package straywolfe.cookingwithtfc.common.handlers;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.bioxx.tfc.Blocks.Devices.BlockFoodPrep;
@@ -10,12 +11,14 @@ import com.bioxx.tfc.Items.Tools.ItemKnife;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.TFCItems;
+import com.bioxx.tfc.api.Constant.Global;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,6 +43,7 @@ import straywolfe.cookingwithtfc.common.lib.Settings;
 
 public class PlayerHandler 
 {	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SubscribeEvent
 	public void onItemPickup(EntityItemPickupEvent event)
 	{
@@ -150,16 +154,57 @@ public class PlayerHandler
 				}
 				
 				ItemStack food;
+				boolean flag = false;
 				
 				if(droppedItem == CWTFCItems.Salt)
-					food = ItemFoodTFC.createTag(new ItemStack(CWTFCItems.Salt), 8);
+				{
+					ArrayList<ItemStack> salts = new ArrayList();
+					float wt = 8 * is.stackSize;
+					
+					while(wt > 0)
+					{
+						if(wt > Global.FOOD_MAX_WEIGHT)
+						{
+							salts.add(ItemFoodTFC.createTag(new ItemStack(CWTFCItems.Salt), 160));
+							wt -= 160;
+						}
+						else
+						{
+							salts.add(ItemFoodTFC.createTag(new ItemStack(CWTFCItems.Salt), wt));
+							wt = 0;
+						}
+					}
+					
+					for(ItemStack salt : salts)
+					{
+						if(!player.inventory.addItemStackToInventory(salt))
+						{
+							EntityItem entityitem;
+							if(salt != null)
+							{
+								entityitem = new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, salt);
+								entityitem.motionX = 0;
+								entityitem.motionY = 0;
+								entityitem.motionZ = 0;
+								player.worldObj.spawnEntityInWorld(entityitem);
+							}
+						}
+					}
+					
+					flag = true;
+				}
 				else
+				{
 					food = new ItemStack(droppedItem);
 				
-				if (is.stackTagCompound != null)
-					food.stackTagCompound = (NBTTagCompound)is.stackTagCompound.copy();
+					if (is.stackTagCompound != null)
+						food.stackTagCompound = (NBTTagCompound)is.stackTagCompound.copy();
+					
+					if(player.inventory.addItemStackToInventory(food))
+						flag = true;
+				}
 				
-				if(player.inventory.addItemStackToInventory(food))
+				if(flag)
 				{
 					event.item.delayBeforeCanPickup = 100;
 					event.item.setDead();

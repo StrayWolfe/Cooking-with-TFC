@@ -14,6 +14,7 @@ Tweaks
 +CWTFC Food is now converted back to TFC Food on pickup
 +Added recipe to convert CWTFC nestbox to TFC
 +Cooking pot, sandwich, salad and meat salting now work with TFC food
++Removed old TFC meat salting and dough crafting recipes
 
 Bug Fixes
 +Cooking pot recipes with salt now register as valid
