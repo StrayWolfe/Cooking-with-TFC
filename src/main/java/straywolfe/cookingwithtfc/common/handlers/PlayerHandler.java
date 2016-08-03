@@ -242,10 +242,10 @@ public class PlayerHandler
 	
 	@SubscribeEvent
 	public void stopEating(PlayerUseItemEvent.Tick event)
-	{
+	{		
 		if(event.item.getItem() instanceof ItemFoodTFC)
 		{
-			if(event.entityPlayer.getItemInUseCount() <= 1)
+			if(event.duration <= 1)
 			{
 				event.entityPlayer.setCurrentItemOrArmor(0, CWTFC_Core.processEating(event.item, event.entityPlayer.worldObj, event.entityPlayer, 5, false));
 				event.entityPlayer.clearItemInUse();

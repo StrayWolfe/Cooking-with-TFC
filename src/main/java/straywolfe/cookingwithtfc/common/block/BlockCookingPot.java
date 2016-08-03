@@ -431,7 +431,7 @@ public class BlockCookingPot extends BlockTerraContainer
 	}
 	
 	@Override
-	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player)
 	{
 		return null;
 	}
