@@ -1,8 +1,8 @@
 package straywolfe.cookingwithtfc.common.block;
 
-
 import com.bioxx.tfc.Blocks.BlockTerraContainer;
 import com.bioxx.tfc.Core.TFC_Textures;
+import com.bioxx.tfc.api.TFCItems;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -14,20 +14,23 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileGrains;
 
 public class BlockGrains extends BlockTerraContainer
 {			
-	private IIcon[] barleyIcon = new IIcon[4];
-	private IIcon[] oatIcon = new IIcon[4];
-	private IIcon[] riceIcon = new IIcon[4];
-	private IIcon[] ryeIcon = new IIcon[4];
-	private IIcon[] wheatIcon = new IIcon[4];
+	@SideOnly(Side.CLIENT)
+	private IIcon[] barleyIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon[] oatIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon[] riceIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon[] ryeIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon[] wheatIcon;
 	
 	public BlockGrains()
 	{
@@ -49,15 +52,15 @@ public class BlockGrains extends BlockTerraContainer
 				
 			if(te.getplacedGrains() != null)
 			{
-				if(te.getplacedGrains().getItem() == CWTFCItems.barleyWholeCWTFC)
+				if(te.getplacedGrains().getItem() == TFCItems.barleyWhole)
 					return barleyIcon[te.stage];
-				else if(te.getplacedGrains().getItem() == CWTFCItems.oatWholeCWTFC)
+				else if(te.getplacedGrains().getItem() == TFCItems.oatWhole)
 					return oatIcon[te.stage];
-				else if(te.getplacedGrains().getItem() == CWTFCItems.riceWholeCWTFC)
+				else if(te.getplacedGrains().getItem() == TFCItems.riceWhole)
 					return riceIcon[te.stage];
-				else if(te.getplacedGrains().getItem() == CWTFCItems.ryeWholeCWTFC)
+				else if(te.getplacedGrains().getItem() == TFCItems.ryeWhole)
 					return ryeIcon[te.stage];
-				else if(te.getplacedGrains().getItem() == CWTFCItems.wheatWholeCWTFC)
+				else if(te.getplacedGrains().getItem() == TFCItems.wheatWhole)
 					return wheatIcon[te.stage];
 			}
 		}
@@ -65,8 +68,15 @@ public class BlockGrains extends BlockTerraContainer
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegisterer)
 	{
+		barleyIcon = new IIcon[4];
+		oatIcon = new IIcon[4];
+		riceIcon = new IIcon[4];
+		ryeIcon = new IIcon[4];
+		wheatIcon = new IIcon[4];
+		
 		for(int i = 1; i < 5; i++)
 		{
 			barleyIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":" + "Barley (" + i + ")");
@@ -132,18 +142,6 @@ public class BlockGrains extends BlockTerraContainer
 	
 	@Override
 	public void harvestBlock(World world, EntityPlayer entityplayer, int x, int y, int z, int l)
-	{
-		eject(world, x, y, z);
-	}
-
-	@Override
-	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion ex)
-	{
-		eject(world, x, y, z);
-	}
-
-	@Override
-	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metaData)
 	{
 		eject(world, x, y, z);
 	}

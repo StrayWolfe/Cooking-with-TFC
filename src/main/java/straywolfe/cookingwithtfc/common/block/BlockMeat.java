@@ -3,22 +3,23 @@ package straywolfe.cookingwithtfc.common.block;
 import java.util.List;
 
 import com.bioxx.tfc.Blocks.BlockTerraContainer;
-import com.bioxx.tfc.Core.TFC_Textures;
 import com.bioxx.tfc.api.Food;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.tileentity.TileMeat;
 
@@ -88,15 +89,9 @@ public class BlockMeat extends BlockTerraContainer
 		return new TileMeat();
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegisterer) {}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta)
-	{
-		return TFC_Textures.invisibleTexture;
-	}
 	
 	@Override
 	public boolean isOpaqueCube()
@@ -111,6 +106,12 @@ public class BlockMeat extends BlockTerraContainer
 	}
 	
 	@Override
+	public int getRenderType()
+	{
+		return CWTFCBlocks.meatRenderID;
+	}	
+	
+	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
 	{
 		if(!world.isRemote && world.isAirBlock(x, y - 1, z))
@@ -122,46 +123,74 @@ public class BlockMeat extends BlockTerraContainer
 	
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
-    {
-		TileMeat te = (TileMeat)world.getTileEntity(x, y, z);
-		float xCoord = te.getMeatCoord(0);
-		float zCoord = te.getMeatCoord(1);
-		
-		if(xCoord != -1 && zCoord != -1)
+    {		
+		TileEntity tileentity = world.getTileEntity(x, y, z);
+		if(tileentity != null && tileentity instanceof TileMeat)
 		{
-			float minX = xCoord;
-			float maxX = xCoord + 0.5F;
-			float minY = 0.0F;
-			float maxY = 0.09F;
-			float minZ = zCoord;
-			float maxZ = zCoord + 0.5F;
+			TileMeat te = (TileMeat)tileentity;
+			float xCoord = te.getMeatCoord(0);
+			float zCoord = te.getMeatCoord(1);
 			
-			setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+			if(xCoord != -1 && zCoord != -1)
+			{
+				float minX = xCoord;
+				float maxX = xCoord + 0.5F;
+				float minY = 0.0F;
+				float maxY = 0.09F;
+				float minZ = zCoord;
+				float maxZ = zCoord + 0.5F;
+				
+				setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+			}
+			else
+				setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.00F, 0.0F);
 		}
-		else
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.01F, 1.0F);
     }
     
     @SuppressWarnings("rawtypes")
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity)
 	{
-    	TileMeat te = (TileMeat)world.getTileEntity(x, y, z);
-		float xCoord = te.getMeatCoord(0);
-		float zCoord = te.getMeatCoord(1);
-		
-		if(xCoord != -1 && zCoord != -1)
+    	TileEntity tileentity = world.getTileEntity(x, y, z);
+		if(tileentity != null && tileentity instanceof TileMeat)
 		{
-			float minX = xCoord;
-			float maxX = xCoord + 0.5F;
-			float minY = 0.0F;
-			float maxY = 0.09F;
-			float minZ = zCoord;
-			float maxZ = zCoord + 0.5F;
+	    	TileMeat te = (TileMeat)tileentity;
+			float xCoord = te.getMeatCoord(0);
+			float zCoord = te.getMeatCoord(1);
 			
-			setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-			setBlockBoundsBasedOnState(world, x, y, z);
+			if(xCoord != -1 && zCoord != -1)
+			{
+				float minX = xCoord;
+				float maxX = xCoord + 0.5F;
+				float minY = 0.0F;
+				float maxY = 0.09F;
+				float minZ = zCoord;
+				float maxZ = zCoord + 0.5F;
+				
+				setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+				super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+				setBlockBoundsBasedOnState(world, x, y, z);
+			}
+			else
+			{
+				setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.00F, 0.0F);
+				super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+				setBlockBoundsBasedOnState(world, x, y, z);
+			}
 		}
 	}
+    
+    @Override
+	@SideOnly(Side.CLIENT)
+    public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer)
+    {
+    	return true;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer)
+    {
+        return true;
+    }
 }

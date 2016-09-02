@@ -64,6 +64,7 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 	{
 		if(!worldObj.isRemote)
 		{
+			boolean update = false;
 			List list = worldObj.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1.1, zCoord + 1));
 
 			if (list != null && !list.isEmpty() && cookingPotInv[0] == null)
@@ -82,48 +83,37 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 							{
 								setInventorySlotContents(0, new ItemStack(item, 1, is.getItemDamage()));
 								is.stackSize--;
-								handleFuelStack();
+								if(handleFuelStack())
+									update = true;
 							}
 						}
 
 						if (is.stackSize == 0)
 						{
 							entity.setDead();
-							int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-							worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, meta, 3);
-							worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+							update = true;
 						}
 					}
 				}
 			}
 			
-			if(fireTemp > 600 && hasLid)
-				cookFood();
+			if(fireTemp > 600 && hasLid && cookFood())
+				update = true;
 			
-			handleFuelStack();
+			if(handleFuelStack())
+				update = true;
 			
 			if (fireTemp < 1 && worldObj.getBlockMetadata(xCoord, yCoord, zCoord) != 0)
-			{
 				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 3);
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			}
 			else if (fireTemp >= 1 && worldObj.getBlockMetadata(xCoord, yCoord, zCoord) != 1)
-			{
 				worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 1, 3);
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-			}
 			
 			if(fuelTimeLeft > 0 && fireTemp >= 1)
 			{
 				if(worldObj.getBlockMetadata(xCoord, yCoord, zCoord) != 2)
-				{
 					worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 2, 3);
-					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-				}
 			}
-			else if(fuelTimeLeft <= 0 && fireTemp >= 1 && cookingPotInv[3] != null &&
-						(!worldObj.canLightningStrikeAt(xCoord, yCoord, zCoord) && !worldObj.canLightningStrikeAt(xCoord, yCoord + 1, zCoord) ||
-							!worldObj.isRaining()))
+			else if(fuelTimeLeft <= 0 && fireTemp >= 1 && cookingPotInv[3] != null && !TFC_Core.isExposedToRain(worldObj, xCoord, yCoord, zCoord))
 			{
 				if(cookingPotInv[3] != null)
 				{
@@ -146,11 +136,16 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 			
 			if(fuelTimeLeft <= 0)
 				TFC_Core.handleItemTicking(this, worldObj, xCoord, yCoord, zCoord);
+			
+			if(update)
+				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 	}
 	
-	private void cookFood()
+	private boolean cookFood()
 	{
+		boolean update = false;
+		
 		if(recipeID != -1)
 		{
 			if(cookTimer == 0)
@@ -235,11 +230,13 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 				recipeID = cookTimer = cookTime = -1;
 				isDone = true;
 				
-				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				update = true;
 			}
 			else
 				cookTimer--;
 		}
+		
+		return update;
 	}
 	
 	public void recipeHandling()
@@ -292,23 +289,30 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 		}
 	}
 	
-	public void handleFuelStack()
+	public boolean handleFuelStack()
 	{
+		boolean update = false;
+		
 		if(cookingPotInv[1] == null && cookingPotInv[0] != null)
 		{
 			cookingPotInv[1] = cookingPotInv[0];
 			cookingPotInv[0] = null;
+			update = true;
 		}
 		if(cookingPotInv[2] == null && cookingPotInv[1] != null)
 		{
 			cookingPotInv[2] = cookingPotInv[1];
 			cookingPotInv[1] = null;
+			update = true;
 		}
 		if(cookingPotInv[3] == null && cookingPotInv[2] != null)
 		{
 			cookingPotInv[3] = cookingPotInv[2];
 			cookingPotInv[2] = null;
+			update = true;
 		}
+		
+		return update;
 	}
 	
 	public boolean addLiquid(FluidStack fluid)
@@ -685,10 +689,11 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 			}
 		}
 		
-		entityitem = new EntityItem(worldObj, xCoord + f, yCoord + f1, zCoord + f2, new ItemStack(CWTFCItems.ClayCookingPot, 1, 1));
-		entityitem.motionX = (float)rand.nextGaussian() * f3;
-		entityitem.motionY = (float)rand.nextGaussian() * f3 + 0.2F;
-		entityitem.motionZ = (float)rand.nextGaussian() * f3;
+		ItemStack pot = new ItemStack(CWTFCItems.ClayCookingPot, 1, 1);
+		entityitem = new EntityItem(worldObj, xCoord + f, yCoord + f1, zCoord + f2, pot);
+		entityitem.motionX = (float)rand.nextGaussian() * 0.05F;
+		entityitem.motionY = (float)rand.nextGaussian() * 0.05F + 0.2F;
+		entityitem.motionZ = (float)rand.nextGaussian() * 0.05F;
 		worldObj.spawnEntityInWorld(entityitem);
 	}
 	

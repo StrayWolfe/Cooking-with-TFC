@@ -30,27 +30,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
-import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileCookingPot;
 
 public class BlockCookingPot extends BlockTerraContainer
 {	
+	@SideOnly(Side.CLIENT)
 	public static IIcon PotatoSalad;
 	
 	public BlockCookingPot()
 	{
 		super(Material.clay);
-		this.setHardness(1F);
-		this.setBlockName("CookingPot");
-		this.setBlockBounds(0.25f, 0, 0.25f, 0.75f, 0.5f, 0.75f);
+		setHardness(1F);
+		setBlockName("CookingPot");
+		setBlockBounds(0.25f, 0, 0.25f, 0.75f, 0.5f, 0.75f);
 	}
 	
 	@Override
@@ -246,7 +245,6 @@ public class BlockCookingPot extends BlockTerraContainer
 						teFirepit.setInventorySlotContents(4, firewood[2]);
 						teFirepit.setInventorySlotContents(5, firewood[3]);
 						
-						player.setCurrentItemOrArmor(0, new ItemStack(CWTFCItems.ClayCookingPot, 1, 1));
 						return true;
 					}
 				}
@@ -353,6 +351,7 @@ public class BlockCookingPot extends BlockTerraContainer
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegisterer)
 	{
 		blockIcon = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "clay/Ceramic");
@@ -403,29 +402,23 @@ public class BlockCookingPot extends BlockTerraContainer
 	}
 	
 	@Override
-	public void harvestBlock(World world, EntityPlayer entityplayer, int x, int y, int z, int meta)
+	public void harvestBlock(World world, EntityPlayer entityplayer, int x, int y, int z, int l)
 	{
 		eject(world, x, y, z);
 	}
 
 	@Override
-	public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion exp)
-	{
-		eject(world, x, y, z);
-	}
-
-	@Override
-	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int meta)
+	public void breakBlock(World world, int x, int y, int z, Block block, int metadata)
 	{
 		eject(world, x, y, z);
 	}
 	
 	public void eject(World world, int x, int y, int z)
 	{
-		if (world.getTileEntity(x, y, z) instanceof TileCookingPot)
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te != null && te instanceof TileCookingPot)
 		{
-			TileCookingPot te = (TileCookingPot)world.getTileEntity(x, y, z);
-			te.ejectContents();
+			((TileCookingPot)te).ejectContents();			
 			world.removeTileEntity(x, y, z);
 		}
 	}

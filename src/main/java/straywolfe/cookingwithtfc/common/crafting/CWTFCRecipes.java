@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
@@ -60,6 +61,12 @@ public class CWTFCRecipes
 		removeFoodSaltRecipe(TFCItems.muttonRaw);
 		removeFoodSaltRecipe(TFCItems.horseMeatRaw);
 		
+		removeRefiningRecipe(TFCItems.wheatWhole, TFCItems.wheatGrain);
+		removeRefiningRecipe(TFCItems.ryeWhole, TFCItems.ryeGrain);
+		removeRefiningRecipe(TFCItems.barleyWhole, TFCItems.barleyGrain);
+		removeRefiningRecipe(TFCItems.oatWhole, TFCItems.oatGrain);
+		removeRefiningRecipe(TFCItems.riceWhole, TFCItems.riceGrain);
+		
 		for(int i = 0; i < Global.WOOD_ALL.length; i++)
 		{
 			int l = i%16;
@@ -96,27 +103,34 @@ public class CWTFCRecipes
 	{
 		KilnCraftingManager kilnmanager = KilnCraftingManager.getInstance();
 		
-		kilnmanager.addRecipe(new KilnRecipe(new ItemStack(CWTFCBlocks.mixingBowl,1,0), 0, new ItemStack(CWTFCBlocks.mixingBowl,1,1)));
-		kilnmanager.addRecipe(new KilnRecipe(new ItemStack(CWTFCItems.ClayCookingPot,1,0), 0, new ItemStack(CWTFCItems.ClayCookingPot,1,1)));
+		kilnmanager.addRecipe(new KilnRecipe(new ItemStack(CWTFCBlocks.mixingBowl, 1, 0), 0, new ItemStack(CWTFCBlocks.mixingBowl, 1, 1)));
+		kilnmanager.addRecipe(new KilnRecipe(new ItemStack(CWTFCItems.ClayCookingPot, 1, 0), 0, new ItemStack(CWTFCItems.ClayCookingPot, 1, 1)));
 	}
 	
 	public static void registerKnappingRecipes()
 	{
 		CraftingManagerTFC craftingmanager = CraftingManagerTFC.getInstance();
 		
-		craftingmanager.addRecipe(new ItemStack(CWTFCBlocks.mixingBowl, 1, 0), new Object[] { 
+		craftingmanager.addRecipe(new ItemStack(CWTFCBlocks.mixingBowl), new Object[] { 
 				"#####",
 				"#####",
 				"     ",
 				"     ",
 				"#   #", '#', new ItemStack(TFCItems.flatClay, 1, 1)});
 		
-		craftingmanager.addRecipe(new ItemStack(CWTFCItems.ClayCookingPot, 1, 0), new Object[] { 
+		craftingmanager.addRecipe(new ItemStack(CWTFCItems.ClayCookingPot), new Object[] { 
 				"## ##",
 				"# # #",
 				"     ",
 				"     ",
 				"#   #", '#', new ItemStack(TFCItems.flatClay, 1, 1)});
+		
+		craftingmanager.addRecipe(new ItemStack(CWTFCItems.ClayOvenWall), new Object[] { 
+				"#####",
+				"#####",
+				"     ",
+				"     ",
+				"     ", '#', new ItemStack(TFCItems.flatClay, 1, 1)});
 	}
 	
 	public static void registerPressRecipes()
@@ -179,6 +193,85 @@ public class CWTFCRecipes
 		removeShapelessRecipe(ItemFoodTFC.createTag(new ItemStack(food, 1)), ItemFoodTFC.createTag(new ItemStack(food, 1)), new ItemStack(TFCItems.powder, 1, 9));
 	}
 	
+	public static void removeRefiningRecipe(Item foodInput, Item foodOutput)
+	{
+		removeShapelessOreRecipe(ItemFoodTFC.createTag(new ItemStack(foodOutput, 1)), ItemFoodTFC.createTag(new ItemStack(foodInput, 1)), "itemKnife");
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void removeShapelessOreRecipe(ItemStack output, Object ... inputs)
+	{
+		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+		for (int i = 0; i < recipes.size(); i++)
+		{
+			if (recipes.get(i) != null && recipes.get(i) instanceof ShapelessOreRecipe)
+			{
+				ShapelessOreRecipe recipe = (ShapelessOreRecipe)recipes.get(i);
+				if(ItemStack.areItemStacksEqual(recipe.getRecipeOutput(), output))
+				{
+					ArrayList recipeIngredients = new ArrayList(recipe.getInput());
+					Boolean wrongRecipe = false;
+					
+					for(Object input : inputs)
+					{
+						Boolean foundMatch = false;
+						
+						if(input instanceof ItemStack)
+						{
+							for(int index = 0; index < recipeIngredients.size(); index++)
+							{
+								Object ingredient = recipeIngredients.get(index);
+								if(ingredient instanceof ItemStack && 
+									OreDictionary.itemMatches((ItemStack)input, (ItemStack)ingredient, false))
+								{
+									recipeIngredients.remove(ingredient);
+		                    		foundMatch = true;
+		                            break;
+								}
+							}
+						}
+						else if(input instanceof String)
+						{
+							ArrayList<ItemStack> oreInputs = OreDictionary.getOres((String)input);
+							for(int index = 0; index < recipeIngredients.size(); index++)
+							{
+								Object ingredient = recipeIngredients.get(index);
+								if(ingredient instanceof ArrayList)
+								{
+									Iterator<ItemStack> itr = ((ArrayList<ItemStack>)ingredient).iterator();
+			                        while (itr.hasNext() && !foundMatch)
+			                        {
+			                        	ItemStack is = itr.next();
+			                        	Iterator<ItemStack> itr2 = oreInputs.iterator();
+			                        	while(itr2.hasNext() && !foundMatch)
+			                        	{
+			                        		if(OreDictionary.itemMatches(is, itr2.next(), false))
+			                        		{
+			                        			recipeIngredients.remove(ingredient);
+					                    		foundMatch = true;
+					                            break;
+			                        		}
+			                        	}
+			                        	
+			                        }
+								}
+		                    }
+						}
+						
+						if(!foundMatch)
+	                    {
+	                    	wrongRecipe = true;
+	                    	break;
+	                    }
+					}
+					
+					if (!wrongRecipe && recipeIngredients.isEmpty())
+						recipes.remove(i--);
+				}
+			}
+		}
+	}
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void removeShapelessRecipe(ItemStack output, ItemStack ... inputs)
 	{
@@ -191,10 +284,12 @@ public class CWTFCRecipes
 				if(ItemStack.areItemStacksEqual(recipe.getRecipeOutput(), output))
 				{
 					ArrayList arraylist = new ArrayList(recipe.recipeItems);
+					Boolean wrongRecipe = false;
 					
 					for(ItemStack input : inputs)
 					{
 						Iterator iterator = arraylist.iterator();
+						Boolean foundMatch = false;
 
 	                    while (iterator.hasNext())
 	                    {
@@ -202,12 +297,19 @@ public class CWTFCRecipes
 	                    	if (input.getItem() == itemstack1.getItem() && (itemstack1.getItemDamage() == 32767 || input.getItemDamage() == itemstack1.getItemDamage()))
 	                        {
 	                    		arraylist.remove(itemstack1);
+	                    		foundMatch = true;
 	                            break;
 	                        }
 	                    }
+	                    
+	                    if(!foundMatch)
+	                    {
+	                    	wrongRecipe = true;
+	                    	break;
+	                    }
 					}
 					
-					if (arraylist.isEmpty())
+					if (!wrongRecipe && arraylist.isEmpty())
 						recipes.remove(i--);
 				}
 			}

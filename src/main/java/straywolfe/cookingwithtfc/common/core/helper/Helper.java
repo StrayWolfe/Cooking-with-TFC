@@ -1,7 +1,9 @@
 package straywolfe.cookingwithtfc.common.core.helper;
 
+import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.api.Interfaces.IFood;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,7 +12,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class Helper 
-{
+{	
 	public static void drawCenteredString(FontRenderer fontrenderer, String s, int i, int j, int k)
 	{
 		fontrenderer.drawString(s, i - fontrenderer.getStringWidth(s) / 2, j, k);
@@ -86,5 +88,13 @@ public class Helper
 		nbt.setInteger("tasteSalty", tasteSalty);
 		nbt.setInteger("tasteBitter", tasteBitter);
 		nbt.setInteger("tasteUmami", tasteUmami);
+	}
+	
+	public static boolean isStone(Block is)
+	{
+		return TFC_Core.isSmoothStone(is) || 
+				TFC_Core.isBrickStone(is) || 
+				TFC_Core.isRawStone(is) || 
+				TFC_Core.isCobbleStone(is);
 	}
 }

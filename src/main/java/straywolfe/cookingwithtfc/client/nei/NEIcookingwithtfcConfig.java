@@ -34,11 +34,15 @@ public class NEIcookingwithtfcConfig implements IConfigureNEI
 	public void loadConfig() 
 	{
 		CookingPotRecipeHandler cookingpotRecipeHandler = new CookingPotRecipeHandler();
+		ClayOvenRecipeHandler clayovenRecipeHandler = new ClayOvenRecipeHandler();
 		
 		API.registerNEIGuiHandler(new NEIGUIHandler());
         
         API.registerRecipeHandler(cookingpotRecipeHandler);
         API.registerUsageHandler(cookingpotRecipeHandler);
+        
+        API.registerRecipeHandler(clayovenRecipeHandler);
+        API.registerUsageHandler(clayovenRecipeHandler);
 		
 		API.hideItem(new ItemStack(CWTFCBlocks.GrainsBlock));
 		API.hideItem(new ItemStack(CWTFCBlocks.hopperCWTFC));
@@ -46,6 +50,7 @@ public class NEIcookingwithtfcConfig implements IConfigureNEI
 		API.hideItem(new ItemStack(CWTFCBlocks.meatCWTFC));
 		API.hideItem(new ItemStack(CWTFCBlocks.sandwichCWTFC));
 		API.hideItem(new ItemStack(CWTFCBlocks.bowlCWTFC));
+		API.hideItem(new ItemStack(CWTFCBlocks.clayOven));
 		
 		API.hideItem(new ItemStack(CWTFCBlocks.prepTable2E, 1, OreDictionary.WILDCARD_VALUE));
 		API.hideItem(new ItemStack(CWTFCBlocks.prepTable2S, 1, OreDictionary.WILDCARD_VALUE));

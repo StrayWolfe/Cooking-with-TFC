@@ -190,5 +190,6 @@ public class CWTFCItemSetup extends CWTFCItems
 	public static void RegularItemSetup()
 	{
 		ClayCookingPot = new ItemClayCookingPot();
+		ClayOvenWall = new ItemClayOvenWall();
 	}
 }

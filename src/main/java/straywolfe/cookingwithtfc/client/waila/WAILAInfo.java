@@ -177,12 +177,17 @@ public class WAILAInfo implements IWailaDataProvider
 		if(te.getplacedMeat() != null)
 			return ItemFoodTFC.createTag(new ItemStack(te.getplacedMeat().getItem()), 999, -24);
 		else
-			return null;
+			return ItemFoodTFC.createTag(new ItemStack(TFCItems.beefRaw), 999, -24);
 	}
 	
 	private List<String> meatHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
-		currenttip.set(0, EnumChatFormatting.WHITE.toString() + ((TileMeat)accessor.getTileEntity()).getplacedMeat().getDisplayName());
+		ItemStack meat = ((TileMeat)accessor.getTileEntity()).getplacedMeat();
+		
+		if(meat == null)
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + "Meat");
+		else
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + meat.getDisplayName());
 
 		return currenttip;
 	}
@@ -220,7 +225,12 @@ public class WAILAInfo implements IWailaDataProvider
 	public ItemStack grainStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
 	{
 		NBTTagCompound tag = accessor.getNBTData();
-		return ItemStack.loadItemStackFromNBT(tag.getCompoundTag("placedGrain"));
+		ItemStack grain = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("placedGrain"));
+		
+		if(grain == null)
+			grain = ItemFoodTFC.createTag(new ItemStack(TFCItems.wheatWhole));
+		
+		return grain;
 	}
 
 	public List<String> grainBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)

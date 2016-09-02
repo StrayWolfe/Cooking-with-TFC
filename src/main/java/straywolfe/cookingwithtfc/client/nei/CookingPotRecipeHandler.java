@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.ItemTerra;
 
 import codechicken.lib.gui.GuiDraw;
@@ -27,7 +28,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import straywolfe.cookingwithtfc.api.recipe.CookingPotManager;
 import straywolfe.cookingwithtfc.api.recipe.CookingPotRecipe;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
+
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 import straywolfe.cookingwithtfc.common.lib.Textures;
 import net.minecraft.client.Minecraft;
@@ -120,7 +121,7 @@ public class CookingPotRecipeHandler extends TemplateRecipeHandler
 			{
 				for(ItemStack outputFood : outputFoods)
 				{
-					if(outputFood != null && areItemStacksEqual(result, outputFood))
+					if(outputFood != null && Helper.areItemStacksEqual(result, outputFood))
 					{
 						arecipes.add(crecipe);
 						break;
@@ -275,11 +276,6 @@ public class CookingPotRecipeHandler extends TemplateRecipeHandler
         return super.newInstance();
     }
 	
-	public static boolean areItemStacksEqual(ItemStack input, ItemStack target)
-    {
-        return input == target || OreDictionary.itemMatches(target, input, false);
-    }
-	
 	@Override
     public int recipiesPerPage()
     {
@@ -356,9 +352,9 @@ public class CookingPotRecipeHandler extends TemplateRecipeHandler
 	        					
 	        					for(int meta = 0; meta < ((ItemTerra)inputitem.getItem()).metaNames.length; meta++)
 	        					{
-	        						if(inputitem.getItem() instanceof ItemTFCFoodTransform)
+	        						if(inputitem.getItem() instanceof ItemFoodTFC)
 					        		{
-	        							tfcItems.add(ItemTFCFoodTransform.createTag(new ItemStack(inputitem.getItem(), 1, meta), 2));
+	        							tfcItems.add(ItemFoodTFC.createTag(new ItemStack(inputitem.getItem(), 1, meta), 2));
 					        		}
 					        		else
 					        			tfcItems.add(ItemTFCMealTransform.createTag(new ItemStack(inputitem.getItem(), 1, meta), 2, 0, new ItemStack[]{}, new float[]{}));
@@ -368,9 +364,9 @@ public class CookingPotRecipeHandler extends TemplateRecipeHandler
 	        				}
 	        				else
 	        				{
-				        		if(inputitem.getItem() instanceof ItemTFCFoodTransform)
+				        		if(inputitem.getItem() instanceof ItemFoodTFC)
 				        		{
-				        			Ingredients.add(new PositionedStack(ItemTFCFoodTransform.createTag(new ItemStack(inputitem.getItem(), 
+				        			Ingredients.add(new PositionedStack(ItemFoodTFC.createTag(new ItemStack(inputitem.getItem(), 
 				        					1, inputitem.getItemDamage()), 2), x, y));
 				        		}
 				        		else
@@ -384,8 +380,8 @@ public class CookingPotRecipeHandler extends TemplateRecipeHandler
 	        				
 	        				for(ItemStack oitem : OreDictionary.getOres((String) inputs.get(i)))
 	        				{
-	        					if(oitem.getItem() instanceof ItemTFCFoodTransform)
-	        						tfcItems.add(ItemTFCFoodTransform.createTag(new ItemStack(oitem.getItem(), 1, oitem.getItemDamage()), 2));
+	        					if(oitem.getItem() instanceof ItemFoodTFC)
+	        						tfcItems.add(ItemFoodTFC.createTag(new ItemStack(oitem.getItem(), 1, oitem.getItemDamage()), 2));
 				        		else
 				        			tfcItems.add(ItemTFCMealTransform.createTag(new ItemStack(oitem.getItem(), 1, oitem.getItemDamage()), 2, 0, new ItemStack[]{}, new float[]{}));
 	        				}
@@ -429,8 +425,8 @@ public class CookingPotRecipeHandler extends TemplateRecipeHandler
 	        			y = y + 72;
 	        		}
 	        		
-	        		if(outputItems[i].getItem() instanceof ItemTFCFoodTransform)
-	        			OutputItems.add(new PositionedStack(ItemTFCFoodTransform.createTag(
+	        		if(outputItems[i].getItem() instanceof ItemFoodTFC)
+	        			OutputItems.add(new PositionedStack(ItemFoodTFC.createTag(
 	        				new ItemStack(outputItems[i].getItem(), 1, outputItems[i].getItemDamage()), 2), x, y));
 	        		else
 	        			OutputItems.add(new PositionedStack(ItemTFCMealTransform.createTag(new ItemStack(outputItems[i].getItem(), 1, outputItems[i].getItemDamage()), 

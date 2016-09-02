@@ -3,6 +3,7 @@ package straywolfe.cookingwithtfc.common.tileentity;
 import java.util.Random;
 
 import com.bioxx.tfc.Core.TFC_Core;
+import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.TileEntities.NetworkTileEntity;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCItems;
@@ -11,8 +12,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import straywolfe.cookingwithtfc.api.CWTFCItems;
-import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 
 public class TileGrains extends NetworkTileEntity
 {
@@ -24,8 +23,8 @@ public class TileGrains extends NetworkTileEntity
 	public void setplacedGrains(ItemStack is)
 	{
 		placedGrain = is;
-		if(placedGrain.getItem() instanceof ItemTFCFoodTransform)
-			strawCount = Math.round(Food.getWeight(placedGrain) * 10/((ItemTFCFoodTransform)placedGrain.getItem()).getFoodMaxWeight(placedGrain));
+		if(placedGrain.getItem() instanceof ItemFoodTFC)
+			strawCount = Math.round(Food.getWeight(placedGrain) * 10/((ItemFoodTFC)placedGrain.getItem()).getFoodMaxWeight(placedGrain));
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 	
@@ -64,26 +63,7 @@ public class TileGrains extends NetworkTileEntity
 		{
 			if(placedGrain != null)
 			{
-				Item foodtype = placedGrain.getItem();
-				
-				if(placedGrain.getItem() == CWTFCItems.barleyWholeCWTFC)
-					foodtype = CWTFCItems.barleyGrainCWTFC;
-				else if(placedGrain.getItem() == CWTFCItems.oatWholeCWTFC)
-					foodtype = CWTFCItems.oatGrainCWTFC;
-				else if(placedGrain.getItem() == CWTFCItems.riceWholeCWTFC)
-					foodtype = CWTFCItems.riceGrainCWTFC;
-				else if(placedGrain.getItem() == CWTFCItems.ryeWholeCWTFC)
-					foodtype = CWTFCItems.ryeGrainCWTFC;
-				else if(placedGrain.getItem() == CWTFCItems.wheatWholeCWTFC)
-					foodtype = CWTFCItems.wheatGrainCWTFC;
-					
-				ItemStack food = ItemTFCFoodTransform.createTag(new ItemStack(foodtype), Food.getWeight(placedGrain), Food.getDecay(placedGrain));
-				Food.setSweetMod(food, Food.getSweetMod(placedGrain));
-				Food.setSourMod(food, Food.getSourMod(placedGrain));
-				Food.setSaltyMod(food, Food.getSaltyMod(placedGrain));
-				Food.setBitterMod(food, Food.getBitterMod(placedGrain));
-				Food.setSavoryMod(food, Food.getSavoryMod(placedGrain));
-				placedGrain = food;
+				placedGrain = getGrains();
 				
 				if(strawCount > 0)
 					ejectItem(new ItemStack(TFCItems.straw, strawCount));
@@ -93,9 +73,37 @@ public class TileGrains extends NetworkTileEntity
 		}
 	}
 	
+	public ItemStack getGrains()
+	{
+		Item foodtype = placedGrain.getItem();
+		
+		if(placedGrain.getItem() == TFCItems.barleyWhole)
+			foodtype = TFCItems.barleyGrain;
+		else if(placedGrain.getItem() == TFCItems.oatWhole)
+			foodtype = TFCItems.oatGrain;
+		else if(placedGrain.getItem() == TFCItems.riceWhole)
+			foodtype = TFCItems.riceGrain;
+		else if(placedGrain.getItem() == TFCItems.ryeWhole)
+			foodtype = TFCItems.ryeGrain;
+		else if(placedGrain.getItem() == TFCItems.wheatWhole)
+			foodtype = TFCItems.wheatGrain;
+			
+		ItemStack food = new ItemStack(foodtype);
+		
+		if (placedGrain.stackTagCompound != null)
+			food.stackTagCompound = (NBTTagCompound)placedGrain.stackTagCompound.copy();
+		
+		return food;
+	}
+	
 	public void ejectItem()
 	{
-		ejectItem(placedGrain);
+		if(stage == 0)
+			ejectItem(placedGrain);
+		else
+		{
+			ejectItem(getGrains());
+		}
 	}
 	
 	public void ejectItem(ItemStack is)

@@ -1,6 +1,32 @@
 Changelog
 =================================================
 -------------------------------------------------
+Cooking With TFC 0.0.5.0
+-------------------------------------------------
+New Feature
++ Added Clay Oven Block
++ Added Clay Oven Wall Item
+
+Tweaks
++ Dough can no longer be cooked in a firepit, forge or grill
++ Dough must be baked in the clay oven
++ Whole grains are no longer processed as a crafting recipe
++ Whole grains can be placed in world for processing
++ New renderer for sandwiches, salads, meats and the cooking pot
++ New Custom Renderer
+
+Bug Fixes
++ Fixed cooking pot not dropping when broken
++ Fixed cooking pot crash from logs with meta larger than 16
++ Fixed salted meats recipe removal
++ Fixed sandwich rendering crash
++ Fixed meats snapping back from sides
++ Fixed placed grains' waila when the grain is not registering
++ Fixed meats' waila when the placed meat is not registering
++ Fixed sandwich destruction effect
++ Fixed infinite straw dupe
++ Fixed Cooking Pot NEI Recipes
+-------------------------------------------------
 Cooking With TFC 0.0.4.1
 -------------------------------------------------
 Bug Fixes

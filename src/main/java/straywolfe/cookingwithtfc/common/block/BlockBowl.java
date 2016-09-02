@@ -11,20 +11,29 @@ import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Constant.Global;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
+import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileBowl;
 
 public class BlockBowl extends BlockTerraContainer
 {
+	@SideOnly(Side.CLIENT)
+	private static IIcon[] Salad;
+			
 	public BlockBowl()
 	{
 		super();
@@ -127,10 +136,30 @@ public class BlockBowl extends BlockTerraContainer
 		return true;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerBlockIcons(IIconRegister registerer)
 	{
-		blockIcon = registerer.registerIcon(Reference.MOD_ID + ":" + "clay/Ceramic");
+		blockIcon = registerer.registerIcon(Reference.MOD_ID + ":clay/Ceramic");
+		
+		Salad = new IIcon[3];
+		
+		Salad[0] = registerer.registerIcon(ModInfo.ModID + ":VeggySalad");
+		Salad[1] = registerer.registerIcon(ModInfo.ModID + ":FruitSalad");
+		Salad[2] = registerer.registerIcon(ModInfo.ModID + ":PotatoSalad");
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public IIcon getBowlIcon(String s)
+	{
+		if("VeggySalad".equals(s))
+			return Salad[0];
+		else if("FruitSalad".equals(s))
+			return Salad[1];
+		else if("PotatoSalad".equals(s))
+			return Salad[2];
+		else
+			return null;
 	}
 	
 	@Override
@@ -192,45 +221,60 @@ public class BlockBowl extends BlockTerraContainer
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
     {
-		TileBowl te = (TileBowl)world.getTileEntity(x, y, z);
-		float xCoord = te.getBowlCoord(0);
-		float zCoord = te.getBowlCoord(1);
-		
-		if(xCoord != -1 && zCoord != -1)
+		TileEntity tileentity = world.getTileEntity(x, y, z);
+		if(tileentity != null && tileentity instanceof TileBowl)
 		{
-			float minX = xCoord - 0.13F;
-			float maxX = xCoord + 0.13F;
-			float minY = 0.0F;
-			float maxY = 0.12F;
-			float minZ = zCoord - 0.13F;
-			float maxZ = zCoord + 0.13F;
-
-			setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+			TileBowl te = (TileBowl)tileentity;
+			float xCoord = te.getBowlCoord(0);
+			float zCoord = te.getBowlCoord(1);
+			
+			if(xCoord != -1 && zCoord != -1)
+			{
+				float minX = xCoord - 0.13F;
+				float maxX = xCoord + 0.13F;
+				float minY = 0.0F;
+				float maxY = 0.12F;
+				float minZ = zCoord - 0.13F;
+				float maxZ = zCoord + 0.13F;
+	
+				setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+			}
+			else
+				setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 		}
-		else
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.01F, 1.0F);
     }
     
     @SuppressWarnings("rawtypes")
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity)
 	{
-		TileBowl te = (TileBowl)world.getTileEntity(x, y, z);
-		float xCoord = te.getBowlCoord(0);
-		float zCoord = te.getBowlCoord(1);
-		
-		if(xCoord != -1 && zCoord != -1)
+    	TileEntity tileentity = world.getTileEntity(x, y, z);
+		if(tileentity != null && tileentity instanceof TileBowl)
 		{
-			float minX = xCoord - 0.13F;
-			float maxX = xCoord + 0.13F;
-			float minY = 0.0F;
-			float maxY = 0.12F;
-			float minZ = zCoord - 0.13F;
-			float maxZ = zCoord + 0.13F;
+			TileBowl te = (TileBowl)tileentity;
+			float xCoord = te.getBowlCoord(0);
+			float zCoord = te.getBowlCoord(1);
 			
-			setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-			setBlockBoundsBasedOnState(world, x, y, z);
+			if(xCoord != -1 && zCoord != -1)
+			{
+				float minX = xCoord - 0.13F;
+				float maxX = xCoord + 0.13F;
+				float minY = 0.0F;
+				float maxY = 0.12F;
+				float minZ = zCoord - 0.13F;
+				float maxZ = zCoord + 0.13F;
+				
+				setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+				super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+				setBlockBoundsBasedOnState(world, x, y, z);
+			}
 		}
 	}
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer)
+    {
+        return true;
+    }
 }

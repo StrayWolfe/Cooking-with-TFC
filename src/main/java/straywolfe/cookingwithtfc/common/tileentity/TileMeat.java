@@ -11,8 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 public class TileMeat extends NetworkTileEntity
 {
 	private ItemStack placedMeat;
-	private float meatCoordX = 0;
-	private float meatCoordZ = 0;
+	private float meatCoordX = -1;
+	private float meatCoordZ = -1;
 	private boolean removeFlag = false;
 	
 	@Override

@@ -5,17 +5,6 @@
 #To create the § symbol which is used for assigning a color to the following text press Alt + 21 on Windows. For other OSes, view the above link.
 #This file needs to be UTF-8 encoded to work with MC 1.7+
 
-#==============
-#= Entities = 
-#==============
-entity.cookingwithtfc.bearCWTFC.name=Bear
-entity.cookingwithtfc.chickenCWTFC.name=Chicken
-entity.cookingwithtfc.cowCWTFC.name=Cow
-entity.cookingwithtfc.deerCWTFC.name=Deer
-entity.cookingwithtfc.PheasantCWTFC.name=Pheasant
-entity.cookingwithtfc.pigCWTFC.name=Pig
-entity.cookingwithtfc.wolfCWTFC.name=Wolf
-
 #==========
 #= Blocks =
 #==========
@@ -25,6 +14,7 @@ tile.MixingBowl.Ceramic.name=Ceramic Mixing Bowl
 tile.CookingPot.name=Cooking Pot
 tile.PrepTableBlock.name=Food Table
 tile.MeatsBlock.name=Meat
+tile.ClayOven.name=Clay Oven
 
 #=========
 #= Items =
@@ -82,6 +72,8 @@ item.Salt.Sea.name=Sea Salt
 item.clayCookingPot.Clay.name=Clay Cooking Pot
 item.clayCookingPot.Ceramic.name=Ceramic Cooking Pot
 
+item.clayOvenWall.name=Oven Wall
+
 #=======
 #= GUI =
 #=======
@@ -104,6 +96,13 @@ entity.terrafirmacraft.horseCWTFC.name=Horse
 entity.terrafirmacraft.pigCWTFC.name=Pig
 entity.terrafirmacraft.pheasantCWTFC.name=Pheasant
 entity.terrafirmacraft.wolfCWTFC.name=Wolf
+entity.cookingwithtfc.bearCWTFC.name=Bear
+entity.cookingwithtfc.chickenCWTFC.name=Chicken
+entity.cookingwithtfc.cowCWTFC.name=Cow
+entity.cookingwithtfc.deerCWTFC.name=Deer
+entity.cookingwithtfc.PheasantCWTFC.name=Pheasant
+entity.cookingwithtfc.pigCWTFC.name=Pig
+entity.cookingwithtfc.wolfCWTFC.name=Wolf
 
 #===========
 #= Strings =

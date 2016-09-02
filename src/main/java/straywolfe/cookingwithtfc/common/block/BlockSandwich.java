@@ -4,30 +4,43 @@ import java.util.List;
 
 import com.bioxx.tfc.Blocks.BlockTerraContainer;
 import com.bioxx.tfc.Core.TFC_Core;
-import com.bioxx.tfc.Core.TFC_Textures;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.Items.Tools.ItemKnife;
 import com.bioxx.tfc.api.Food;
+import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Constant.Global;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
+import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileSandwich;
 
 public class BlockSandwich extends BlockTerraContainer
 {
+	@SideOnly(Side.CLIENT)
+	private IIcon[] ToastTop;
+	@SideOnly(Side.CLIENT)
+	private IIcon[] ToastSide;
+	@SideOnly(Side.CLIENT)
+	private IIcon[] FoodGroups;
+	
 	public BlockSandwich()
 	{
 		super(Material.cake);
@@ -178,13 +191,70 @@ public class BlockSandwich extends BlockTerraContainer
 	}
 	
 	@Override
-	public void registerBlockIcons(IIconRegister registerer) {}
-	
-	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta)
+	public void registerBlockIcons(IIconRegister registerer) 
 	{
-		return TFC_Textures.invisibleTexture;
+		ToastTop = new IIcon[6];
+		ToastSide = new IIcon[6];
+		FoodGroups = new IIcon[4];
+		
+		ToastTop[0] = registerer.registerIcon(ModInfo.ModID + ":" + "Barley Toast Top");
+		ToastTop[1] = registerer.registerIcon(ModInfo.ModID + ":" + "Corn Toast Top");
+		ToastTop[2] = registerer.registerIcon(ModInfo.ModID + ":" + "Oat Toast Top");
+		ToastTop[3] = registerer.registerIcon(ModInfo.ModID + ":" + "Rice Toast Top");
+		ToastTop[4] = registerer.registerIcon(ModInfo.ModID + ":" + "Rye Toast Top");
+		ToastTop[5] = registerer.registerIcon(ModInfo.ModID + ":" + "Wheat Toast Top");
+		
+		ToastSide[0] = registerer.registerIcon(ModInfo.ModID + ":" + "Barley Toast Side");
+		ToastSide[1] = registerer.registerIcon(ModInfo.ModID + ":" + "Corn Toast Side");
+		ToastSide[2] = registerer.registerIcon(ModInfo.ModID + ":" + "Oat Toast Side");
+		ToastSide[3] = registerer.registerIcon(ModInfo.ModID + ":" + "Rice Toast Side");
+		ToastSide[4] = registerer.registerIcon(ModInfo.ModID + ":" + "Rye Toast Side");
+		ToastSide[5] = registerer.registerIcon(ModInfo.ModID + ":" + "Wheat Toast Side");
+		
+		FoodGroups[0] = registerer.registerIcon(ModInfo.ModID + ":" + "Dairy");
+		FoodGroups[1] = registerer.registerIcon(ModInfo.ModID + ":" + "Fruit");
+		FoodGroups[2] = registerer.registerIcon(ModInfo.ModID + ":" + "Protein");
+		FoodGroups[3] = registerer.registerIcon(ModInfo.ModID + ":" + "Vegetable");
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public IIcon getSandwichIcon(String s)
+	{
+		if("BarleyTop".equals(s))
+			return ToastTop[0];
+		else if("CornTop".equals(s))
+			return ToastTop[1];
+		else if("OatTop".equals(s))
+			return ToastTop[2];
+		else if("RiceTop".equals(s))
+			return ToastTop[3];
+		else if("RyeTop".equals(s))
+			return ToastTop[4];
+		else if("WheatTop".equals(s))
+			return ToastTop[5];
+		else if("BarleySide".equals(s))
+			return ToastSide[0];
+		else if("CornSide".equals(s))
+			return ToastSide[1];
+		else if("OatSide".equals(s))
+			return ToastSide[2];
+		else if("RiceSide".equals(s))
+			return ToastSide[3];
+		else if("RyeSide".equals(s))
+			return ToastSide[4];
+		else if("WheatSide".equals(s))
+			return ToastSide[5];
+		else if("Dairy".equals(s))
+			return FoodGroups[0];
+		else if("Fruit".equals(s))
+			return FoodGroups[1];
+		else if("Protein".equals(s))
+			return FoodGroups[2];
+		else if("Vegetable".equals(s))
+			return FoodGroups[3];
+		else
+			return null;
 	}
 	
 	@Override
@@ -197,6 +267,12 @@ public class BlockSandwich extends BlockTerraContainer
 	public boolean renderAsNormalBlock()
 	{
 		return false;
+	}
+	
+	@Override
+	public int getRenderType()
+	{
+		return CWTFCBlocks.sandwichRenderID;
 	}
 	
 	@Override
@@ -215,45 +291,107 @@ public class BlockSandwich extends BlockTerraContainer
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z)
     {
-		TileSandwich te = (TileSandwich)world.getTileEntity(x, y, z);
-		float xCoord = te.getSandwichCoord(0);
-		float zCoord = te.getSandwichCoord(1);
-		
-		if(xCoord != -1 && zCoord != -1)
+		TileEntity tileentity = world.getTileEntity(x, y, z);
+		if(tileentity != null && tileentity instanceof TileSandwich)
 		{
-			float minX = xCoord;
-			float maxX = xCoord + 0.4F;
-			float minY = 0.0F;
-			float maxY = 0.215F;
-			float minZ = zCoord;
-			float maxZ = zCoord + 0.4F;
+			TileSandwich te = (TileSandwich)tileentity;
+			float xCoord = te.getSandwichCoord(0);
+			float zCoord = te.getSandwichCoord(1);
 			
-			setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+			if(xCoord != -1 && zCoord != -1)
+			{
+				float minX = xCoord;
+				float maxX = xCoord + 0.4F;
+				float minY = 0.0F;
+				float maxY = 0.215F;
+				float minZ = zCoord;
+				float maxZ = zCoord + 0.4F;
+				
+				setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+			}
+			else
+				setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
 		}
-		else
-			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.01F, 1.0F);
     }
     
     @SuppressWarnings("rawtypes")
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity)
 	{
-    	TileSandwich te = (TileSandwich)world.getTileEntity(x, y, z);
-		float xCoord = te.getSandwichCoord(0);
-		float zCoord = te.getSandwichCoord(1);
-		
-		if(xCoord != -1 && zCoord != -1)
+    	TileEntity tileentity = world.getTileEntity(x, y, z);
+		if(tileentity != null && tileentity instanceof TileSandwich)
 		{
-			float minX = xCoord;
-			float maxX = xCoord + 0.4F;
-			float minY = 0.0F;
-			float maxY = 0.215F;
-			float minZ = zCoord;
-			float maxZ = zCoord + 0.4F;
+			TileSandwich te = (TileSandwich)tileentity;
+			float xCoord = te.getSandwichCoord(0);
+			float zCoord = te.getSandwichCoord(1);
 			
-			setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
-			super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
-			setBlockBoundsBasedOnState(world, x, y, z);
+			if(xCoord != -1 && zCoord != -1)
+			{
+				float minX = xCoord;
+				float maxX = xCoord + 0.4F;
+				float minY = 0.0F;
+				float maxY = 0.215F;
+				float minZ = zCoord;
+				float maxZ = zCoord + 0.4F;
+				
+				setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+				super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+				setBlockBoundsBasedOnState(world, x, y, z);
+			}
 		}
 	}
+    
+    @Override
+	@SideOnly(Side.CLIENT)
+    public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer)
+    {
+    	Block block = world.getBlock(x, y, z);
+		TileEntity tileentity = world.getTileEntity(x, y, z);
+		
+		if (block != null && block == this && tileentity != null && tileentity instanceof TileSandwich)
+		{
+			TileSandwich te = (TileSandwich)tileentity;
+			Item toast = (te.getSandwichContents()[0]).getItem();
+			byte b0 = 2;
+
+            for (int i1 = 0; i1 < b0; ++i1)
+            {
+            	for (int j1 = 0; j1 < b0; ++j1)
+                {
+            		for (int k1 = 0; k1 < b0; ++k1)
+                    {
+            			double d0 = (double)x + ((double)i1 + 0.5D) / (double)b0;
+                        double d1 = (double)y + ((double)j1 + 0.5D) / (double)b0;
+                        double d2 = (double)z + ((double)k1 + 0.5D) / (double)b0;
+                        
+                        EntityDiggingFX digging = new EntityDiggingFX(world, d0, d1, d2, d0 - (double)x - 0.5D, d1 - (double)y - 0.5D, d2 - (double)z - 0.5D, block, meta);
+                        digging.applyColourMultiplier(x, y, z);
+                        
+                        if(toast == TFCItems.barleyBread)
+                        	digging.setParticleIcon(ToastTop[0]);
+        				else if(toast == TFCItems.cornBread)
+        					digging.setParticleIcon(ToastTop[1]);
+        				else if(toast == TFCItems.oatBread)
+        					digging.setParticleIcon(ToastTop[2]);
+        				else if(toast == TFCItems.riceBread)
+        					digging.setParticleIcon(ToastTop[3]);
+        				else if(toast == TFCItems.ryeBread)
+        					digging.setParticleIcon(ToastTop[4]);
+        				else
+        					digging.setParticleIcon(ToastTop[5]);
+                        
+                        effectRenderer.addEffect(digging);
+                    }
+                }
+            }
+		}
+    	return true;
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer)
+    {
+        return true;
+    }
 }

@@ -29,7 +29,9 @@ import straywolfe.cookingwithtfc.common.tileentity.TileMixBowl;
 
 public class BlockMixBowl extends BlockTerraContainer
 {
+	@SideOnly(Side.CLIENT)
 	private IIcon clayIcons;
+	@SideOnly(Side.CLIENT)
 	private IIcon ceramicIcons;
 	
 	public BlockMixBowl()
@@ -101,9 +103,9 @@ public class BlockMixBowl extends BlockTerraContainer
 		return true;
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getSubBlocks(Item item, CreativeTabs tab, List metadata) 
 	{
 		metadata.add(new ItemStack(this, 1, 0));
@@ -111,6 +113,7 @@ public class BlockMixBowl extends BlockTerraContainer
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister registerer)
 	{
 		ceramicIcons = registerer.registerIcon(Reference.MOD_ID + ":" + "clay/Ceramic");
@@ -119,6 +122,7 @@ public class BlockMixBowl extends BlockTerraContainer
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
 	{
 		if(meta == 1)
@@ -128,6 +132,7 @@ public class BlockMixBowl extends BlockTerraContainer
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess access, int x, int y, int z, int side)
 	{
 		int meta= access.getBlockMetadata(x, y, z);
@@ -216,8 +221,8 @@ public class BlockMixBowl extends BlockTerraContainer
 			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.01F, 1.0F);
     }
     
-    @SuppressWarnings("rawtypes")
 	@Override
+	@SuppressWarnings("rawtypes")
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity)
 	{
     	TileMixBowl te = (TileMixBowl)world.getTileEntity(x, y, z);

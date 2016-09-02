@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -40,6 +41,7 @@ import straywolfe.cookingwithtfc.common.item.ItemTFCFoodTransform;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMeatTransform;
 import straywolfe.cookingwithtfc.common.item.ItemTFCSalt;
 import straywolfe.cookingwithtfc.common.lib.Settings;
+import straywolfe.cookingwithtfc.common.tileentity.TileGrains;
 
 public class PlayerHandler 
 {	
@@ -274,32 +276,58 @@ public class PlayerHandler
 			return;
 
 		ItemStack itemInHand = event.entityPlayer.getCurrentEquippedItem();
+		World world = event.world;
+		int x = event.x;
+		int y = event.y;
+		int z = event.z;
+		Block block = world.getBlock(x, y, z);
+		int meta = world.getBlockMetadata(x, y, z);
 		
 		//Remove existing FoodPrep surfaces
-		if(event.action == Action.RIGHT_CLICK_BLOCK && event.world.getBlock(event.x, event.y, event.z) instanceof BlockFoodPrep)
+		if(event.action == Action.RIGHT_CLICK_BLOCK && block instanceof BlockFoodPrep)
 		{
-			Block block = event.world.getBlock(event.x, event.y, event.z);
-			int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-			block.breakBlock(event.world, event.x, event.y, event.z, block, meta);
-			event.world.setBlockToAir(event.x, event.y, event.z);
-			event.setCanceled(true);			
+			block.breakBlock(world, x, y, z, block, meta);
+			world.setBlockToAir(x, y, z);
+			event.setCanceled(true);
+			return;
 		}
 		
 		if(itemInHand == null)
 			return;
 		
+		Item item = itemInHand.getItem();
+		
 		if(event.action == Action.RIGHT_CLICK_BLOCK && event.getResult() != Result.DENY)
 		{
 			//Prevent new Foodprep surfaces from being made
-			if(itemInHand.getItem() instanceof ItemKnife)
+			if(item instanceof ItemKnife)
 			{
-				Block id = event.world.getBlock(event.x, event.y, event.z);
-				if(!event.world.isRemote && id != TFCBlocks.toolRack)
+				if(block != TFCBlocks.toolRack)
 				{
-					Material mat = id.getMaterial();
-					if(event.face == 1 && id.isSideSolid(event.world, event.x, event.y, event.z, ForgeDirection.UP) &&!TFC_Core.isSoil(id) && !TFC_Core.isWater(id) && event.world.isAirBlock(event.x, event.y + 1, event.z) &&
-							(mat == Material.wood || mat == Material.rock || mat == Material.iron))
+					Material mat = block.getMaterial();
+					if(event.face == 1 && block.isSideSolid(world, x, y, z, ForgeDirection.UP) &&!TFC_Core.isSoil(block) && !TFC_Core.isWater(block) 
+						&& world.isAirBlock(x, y + 1, z) && (mat == Material.wood || mat == Material.rock || mat == Material.iron))
+					{	
 						event.setCanceled(true);
+						return;
+					}
+				}
+			}
+			
+			if(item == TFCItems.barleyWhole || item == TFCItems.oatWhole || item == TFCItems.riceWhole || 
+					item == TFCItems.ryeWhole || item == TFCItems.wheatWhole)
+			{
+				Material mat = block.getMaterial();
+
+				if(event.face == 1 && block.isSideSolid(world, x, y, z, ForgeDirection.UP) &&!TFC_Core.isSoil(block) && !TFC_Core.isWater(block) 
+					&& world.isAirBlock(x, y + 1, z) && (mat == Material.wood || mat == Material.rock || mat == Material.iron))
+				{
+					if(world.setBlock(x, y + 1, z, CWTFCBlocks.GrainsBlock))
+					{
+						((TileGrains) world.getTileEntity(x, y + 1, z)).setplacedGrains(itemInHand.copy());
+						event.entityPlayer.setCurrentItemOrArmor(0, null);
+						return;
+					}
 				}
 			}
 			
@@ -309,16 +337,17 @@ public class PlayerHandler
 				event.setCanceled(true);
 				switch(event.face)
 				{
-					case 0: event.world.setBlock(event.x, event.y - 1, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
-					case 1: event.world.setBlock(event.x, event.y + 1, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
-					case 2: event.world.setBlock(event.x, event.y, event.z - 1, CWTFCBlocks.hopperCWTFC, 0, 3); break;
-					case 3: event.world.setBlock(event.x, event.y, event.z + 1, CWTFCBlocks.hopperCWTFC, 0, 3); break;
-					case 4: event.world.setBlock(event.x - 1, event.y, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
-					case 5: event.world.setBlock(event.x + 1, event.y, event.z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+					case 0: world.setBlock(x, y - 1, z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+					case 1: world.setBlock(x, y + 1, z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+					case 2: world.setBlock(x, y, z - 1, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+					case 3: world.setBlock(x, y, z + 1, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+					case 4: world.setBlock(x - 1, y, z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
+					case 5: world.setBlock(x + 1, y, z, CWTFCBlocks.hopperCWTFC, 0, 3); break;
 					default: break;
 				}			
 				
 				event.entityPlayer.setCurrentItemOrArmor(0, null);
+				return;
 			}
 		}
 	}

@@ -18,24 +18,12 @@ import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 
 public class TileSandwich extends NetworkTileEntity
 {
-	private ItemStack sandwichContents[];
-	private int invSize;
-	private int topToast;
-	private String breadType;
-	private String meatType;
-	private float sandwichCoordX;
-	private float sandwichCoordZ;
-	
-	public TileSandwich()
-	{
-		invSize = 6;
-		sandwichContents = new ItemStack[invSize];
-		topToast = 5;
-		breadType = "";
-		meatType = "";
-		sandwichCoordX = 0;
-		sandwichCoordZ = 0;
-	}
+	private ItemStack sandwichContents[] = new ItemStack[6];
+	private int topToast = 5;
+	private String breadType = "";
+	private String meatType = "";
+	private float sandwichCoordX = -1;
+	private float sandwichCoordZ = -1;
 	
 	public ItemStack makeSandwich()
 	{
@@ -140,7 +128,7 @@ public class TileSandwich extends NetworkTileEntity
 	
 	public void setTopSandwichItem(ItemStack is)
 	{
-		for(int i = 0; i < invSize; i++)
+		for(int i = 0; i < sandwichContents.length; i++)
 		{
 			if(sandwichContents[i] == null)
 			{
@@ -165,7 +153,7 @@ public class TileSandwich extends NetworkTileEntity
 	
 	public ItemStack getTopSandwichItem()
 	{
-		for(int i = invSize - 1; i >= 0; i--)
+		for(int i = sandwichContents.length - 1; i >= 0; i--)
 		{
 			if(sandwichContents[i] != null)
 			{				
@@ -213,7 +201,7 @@ public class TileSandwich extends NetworkTileEntity
 	
 	public int getInvSize()
 	{
-		return invSize;
+		return sandwichContents.length;
 	}
 	
 	@Override
@@ -227,7 +215,7 @@ public class TileSandwich extends NetworkTileEntity
 	
 	public void ejectItem()
 	{
-		for(int i = 0; i < invSize; i++)
+		for(int i = 0; i < sandwichContents.length; i++)
 		{
 			ejectItem(sandwichContents[i]);
 		}
@@ -252,7 +240,7 @@ public class TileSandwich extends NetworkTileEntity
 	{
 		super.readFromNBT(nbt);
 		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		sandwichContents = new ItemStack[invSize];
+		sandwichContents = new ItemStack[sandwichContents.length];
 		for(int i = 0; i < nbttaglist.tagCount(); i++)
 		{
 			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
@@ -272,7 +260,7 @@ public class TileSandwich extends NetworkTileEntity
 	{
 		super.writeToNBT(nbt);
 		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < invSize; i++)
+		for(int i = 0; i < sandwichContents.length; i++)
 		{
 			if(sandwichContents[i] != null)
 			{
@@ -294,7 +282,7 @@ public class TileSandwich extends NetworkTileEntity
 	public void handleInitPacket(NBTTagCompound nbt) 
 	{
 		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		sandwichContents = new ItemStack[invSize];
+		sandwichContents = new ItemStack[sandwichContents.length];
 		for(int i = 0; i < nbttaglist.tagCount(); i++)
 		{
 			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
@@ -313,7 +301,7 @@ public class TileSandwich extends NetworkTileEntity
 	public void createInitNBT(NBTTagCompound nbt) 
 	{
 		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < invSize; i++)
+		for(int i = 0; i < sandwichContents.length; i++)
 		{
 			if(sandwichContents[i] != null)
 			{
@@ -335,7 +323,7 @@ public class TileSandwich extends NetworkTileEntity
 	public void handleDataPacket(NBTTagCompound nbt) 
 	{
 		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		sandwichContents = new ItemStack[invSize];
+		sandwichContents = new ItemStack[sandwichContents.length];
 		for(int i = 0; i < nbttaglist.tagCount(); i++)
 		{
 			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
@@ -354,7 +342,7 @@ public class TileSandwich extends NetworkTileEntity
 	public void createDataNBT(NBTTagCompound nbt) 
 	{
 		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < invSize; i++)
+		for(int i = 0; i < sandwichContents.length; i++)
 		{
 			if(sandwichContents[i] != null)
 			{

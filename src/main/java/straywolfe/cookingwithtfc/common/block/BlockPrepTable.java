@@ -260,9 +260,9 @@ public class BlockPrepTable extends BlockTerra
 		}
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getSubBlocks(Item item, CreativeTabs tab, List metadata)
 	{
 		for(int i = 0; i < woodNames.length; i++)
@@ -277,6 +277,7 @@ public class BlockPrepTable extends BlockTerra
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
 	{
 		return TFCBlocks.planks.getIcon(side, meta);

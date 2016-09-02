@@ -15,10 +15,7 @@ public class ClientProxyCWTFC extends CommonProxyCWTFC
 	public void registerTileEntities(boolean value) 
 	{
 		super.registerTileEntities(false);
-		ClientRegistry.registerTileEntity(TileMeat.class, "TEMeat", new TESRMeat());
-		ClientRegistry.registerTileEntity(TileSandwich.class, "TESandwich", new TESRSandwich());
-		ClientRegistry.registerTileEntity(TileBowl.class, "TEBowl", new TESRBowl());
-		ClientRegistry.registerTileEntity(TileCookingPot.class, "TECookingPot", new TESRCookingPot());
+		ClientRegistry.registerTileEntity(TileClayOven.class, "TileClayOven", new TESRClayOven());
 	}
 	
 	@Override
@@ -28,6 +25,9 @@ public class ClientProxyCWTFC extends CommonProxyCWTFC
 		RenderingRegistry.registerBlockHandler(CWTFCBlocks.mixingBowlRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderMixingBowl());
 		RenderingRegistry.registerBlockHandler(CWTFCBlocks.prepTableRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderPrepTable());
 		RenderingRegistry.registerBlockHandler(CWTFCBlocks.cookingPotRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderCookingPot());
+		RenderingRegistry.registerBlockHandler(CWTFCBlocks.meatRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderMeat());
 		RenderingRegistry.registerBlockHandler(CWTFCBlocks.bowlRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderBowl());
+		RenderingRegistry.registerBlockHandler(CWTFCBlocks.clayOvenRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderClayOven());
+		RenderingRegistry.registerBlockHandler(CWTFCBlocks.sandwichRenderID = RenderingRegistry.getNextAvailableRenderId(), new RenderSandwich());
 	}
 }

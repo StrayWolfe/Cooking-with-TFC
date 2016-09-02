@@ -6,6 +6,7 @@ import com.bioxx.tfc.api.TFCBlocks;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import straywolfe.cookingwithtfc.common.block.BlockBowl;
+import straywolfe.cookingwithtfc.common.block.BlockClayOven;
 import straywolfe.cookingwithtfc.common.block.BlockCookingPot;
 import straywolfe.cookingwithtfc.common.block.BlockGrains;
 import straywolfe.cookingwithtfc.common.block.BlockHopperCWTFC;
@@ -27,6 +28,7 @@ public class CWTFCBlocks
 	public static Block meatCWTFC;
 	public static Block sandwichCWTFC;
 	public static Block bowlCWTFC;
+	public static Block clayOven;
 	
 	public static Block prepTableN;
 	public static Block prepTable2N;
@@ -39,8 +41,11 @@ public class CWTFCBlocks
 	
 	public static int mixingBowlRenderID;
 	public static int prepTableRenderID;
+	public static int meatRenderID;
 	public static int cookingPotRenderID;
 	public static int bowlRenderID;
+	public static int clayOvenRenderID;
+	public static int sandwichRenderID;
 	
 	public static void initialise()
 	{
@@ -61,6 +66,7 @@ public class CWTFCBlocks
 		meatCWTFC = new BlockMeat();
 		sandwichCWTFC = new BlockSandwich();
 		bowlCWTFC = new BlockBowl();
+		clayOven = new BlockClayOven();
 		
 		prepTableN = new BlockPrepTable();
 		prepTable2N = new BlockPrepTable2();
@@ -82,6 +88,7 @@ public class CWTFCBlocks
 		GameRegistry.registerBlock(meatCWTFC, "meatCWTFC");
 		GameRegistry.registerBlock(sandwichCWTFC, "sandwichCWTFC");
 		GameRegistry.registerBlock(bowlCWTFC, "bowlCWTFC");
+		GameRegistry.registerBlock(clayOven, "clayOven");
 		
 		GameRegistry.registerBlock(prepTableN, ItemPrepTable.class, "PrepTableN");
 		GameRegistry.registerBlock(prepTable2N, ItemPrepTable2.class, "PrepTable2N");

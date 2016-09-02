@@ -3,7 +3,8 @@ package straywolfe.cookingwithtfc.common.block;
 import com.bioxx.tfc.api.TFCBlocks;
 import com.bioxx.tfc.api.Constant.Global;
 
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.util.IIcon;
 
 public class BlockPrepTable2 extends BlockPrepTable
@@ -18,6 +19,7 @@ public class BlockPrepTable2 extends BlockPrepTable
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta)
 	{
 		return TFCBlocks.planks2.getIcon(side, meta - 16);

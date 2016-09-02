@@ -5,14 +5,11 @@ import com.bioxx.tfc.api.TFCItems;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
-import straywolfe.cookingwithtfc.common.core.helper.LogHelper;
 
 public class CWTFCItemRegistry extends CWTFCItems
 {
 	public static void registerItems()
 	{		
-		LogHelper.info("Registering Items");
-		
 		//Vegetables
 		GameRegistry.registerItem(tomatoCWTFC, tomatoCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(potatoCWTFC, potatoCWTFC.getUnlocalizedName());
@@ -147,8 +144,9 @@ public class CWTFCItemRegistry extends CWTFCItems
 		
 		GameRegistry.registerItem(Salt, Salt.getUnlocalizedName());
 		
-		//Cookware
+		//Clay Items
 		GameRegistry.registerItem(ClayCookingPot, ClayCookingPot.getUnlocalizedName());
+		GameRegistry.registerItem(ClayOvenWall, ClayOvenWall.getUnlocalizedName());
 		
 		//Ore Dictionary
 		OreDictionary.registerOre("itemFlour", TFCItems.barleyGround);
@@ -164,7 +162,5 @@ public class CWTFCItemRegistry extends CWTFCItems
 		OreDictionary.registerOre("itemBread", TFCItems.riceBread);
 		OreDictionary.registerOre("itemBread", TFCItems.ryeBread);
 		OreDictionary.registerOre("itemBread", TFCItems.wheatBread);
-		
-		LogHelper.info("Done Registering Items");
 	}
 }

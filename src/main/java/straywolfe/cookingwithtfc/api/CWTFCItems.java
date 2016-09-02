@@ -143,6 +143,7 @@ public class CWTFCItems
 	public static Item Salt;
 	
 	public static Item ClayCookingPot;
+	public static Item ClayOvenWall;
 	
 	public static void initialise()
 	{		

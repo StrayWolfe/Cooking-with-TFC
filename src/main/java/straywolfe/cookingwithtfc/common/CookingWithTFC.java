@@ -67,7 +67,7 @@ public class CookingWithTFC
 		CWTFCRecipes.registerRecipes();
 		
 		//Setup Item Heating
-		HeatedItemRecipes.setupItemHeat();
+		HeatedItemRecipes.setupHeatedItemRecipes();
 		
 		//Register Renderers
 		proxy.registerRenderInformation();

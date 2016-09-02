@@ -10,4 +10,7 @@ public class Settings
 	public static int PICKINESS = 1;
 	public static int bowlBreakFreq = 50;
 	public static boolean diminishingReturns = true;
+	public static int ovenHardeningTime = 24000;
+	public static int ovenFiringTime = 4000;
+	public static int ClayOvenDurability = 400;
 }

@@ -18,20 +18,19 @@ import straywolfe.cookingwithtfc.common.tileentity.*;
 
 public class CommonProxyCWTFC 
 {
-	public void registerTileEntities(boolean value)
+	public void registerTileEntities(boolean clientReg)
 	{		
 		GameRegistry.registerTileEntity(TileNestBoxCWTFC.class, "TileNestBoxCWTFC");
 		GameRegistry.registerTileEntity(TileGrains.class, "TileGrains");
 		GameRegistry.registerTileEntity(TileMixBowl.class, "TileMixBowl");
 		GameRegistry.registerTileEntity(TileHopperCWTFC.class, "TileHopperCWTFC");
+		GameRegistry.registerTileEntity(TileBowl.class, "TileBowl");
+		GameRegistry.registerTileEntity(TileMeat.class, "TileMeat");
+		GameRegistry.registerTileEntity(TileCookingPot.class, "TileCookingPot");
+		GameRegistry.registerTileEntity(TileSandwich.class, "TileSandwich");
 		
-		if(value)
-		{
-			GameRegistry.registerTileEntity(TileBowl.class, "TileBowl");
-			GameRegistry.registerTileEntity(TileMeat.class, "TileMeat");
-			GameRegistry.registerTileEntity(TileSandwich.class, "TileSandwich");
-			GameRegistry.registerTileEntity(TileCookingPot.class, "TileCookingPot");
-		}
+		if(clientReg)
+			GameRegistry.registerTileEntity(TileClayOven.class, "TileClayOven");
 		
 		EntityRegistry.registerGlobalEntityID(EntityTransformSheepTFC.class, "sheepCWTFC", EntityRegistry.findGlobalUniqueEntityId());
 		EntityRegistry.registerGlobalEntityID(EntityTransformHorseTFC.class, "horseCWTFC", EntityRegistry.findGlobalUniqueEntityId());
