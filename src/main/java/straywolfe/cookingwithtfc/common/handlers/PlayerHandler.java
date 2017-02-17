@@ -33,6 +33,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
@@ -195,7 +196,7 @@ public class PlayerHandler
 					
 					flag = true;
 				}
-				else
+				else if(droppedItem != TFCItems.powder)
 				{
 					food = new ItemStack(droppedItem);
 				
@@ -367,6 +368,16 @@ public class PlayerHandler
 			}
 			fr.FoodListRef = 0;
 			CWTFC_Core.setPlayerFoodRecord((EntityPlayer)entity, fr);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onBlockHarvest(HarvestDropsEvent event)
+	{
+		if(!Settings.disablePumpkins && event.block == TFCBlocks.pumpkin)
+		{
+			event.drops.clear();
+			event.drops.add(new ItemStack(CWTFCItems.seedsPumpkin));
 		}
 	}
 }

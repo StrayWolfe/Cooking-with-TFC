@@ -3,11 +3,12 @@ package straywolfe.cookingwithtfc.client.render;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.obj.Vertex;
 import straywolfe.cookingwithtfc.common.block.BlockClayOven;
-import straywolfe.cookingwithtfc.common.lib.ClayOvenStages;
+import straywolfe.cookingwithtfc.common.lib.Constants;
 import straywolfe.cookingwithtfc.common.tileentity.TileClayOven;
 
 public class RenderClayOven implements ISimpleBlockRenderingHandler
@@ -15,9 +16,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) 
 	{	
-		if(world.getTileEntity(x, y, z) != null && world.getTileEntity(x, y, z) instanceof TileClayOven)
+		TileEntity tileentity = world.getTileEntity(x, y, z);
+		if(tileentity != null && tileentity instanceof TileClayOven)
 		{
-			TileClayOven te = (TileClayOven)world.getTileEntity(x, y, z);
+			TileClayOven te = (TileClayOven)tileentity;
 			int buildStage = te.getBuildStage();
 			
 			if(buildStage != 0)
@@ -28,27 +30,27 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 				IIcon iconChimney;
 				CWTFCRenderer myRenderer = new CWTFCRenderer(x, y, z, block, renderer);
 				
-				if(buildStage <= ClayOvenStages.CHIMNEY && te.getCuringStage() == 2)
+				if(buildStage <= Constants.CHIMNEY && te.getCuringStage() == 2)
 				{
 					iconOven = oven.getOvenIcon("ClayOven2");
 					iconChimney = oven.getOvenIcon("ClayOvenChimney2");
 				}
-				else if(buildStage <= ClayOvenStages.CHIMNEY && te.getCuringStage() >= 3)
+				else if(buildStage <= Constants.CHIMNEY && te.getCuringStage() >= 3)
 				{
 						iconOven = oven.getOvenIcon("ClayOven3");
 						iconChimney = oven.getOvenIcon("ClayOvenChimney3");
 				}
-				else if(buildStage == ClayOvenStages.INTERIOR && (te.getCuringStage() == 1 || te.getCuringStage() == 4))
+				else if(buildStage == Constants.INTERIOR && (te.getCuringStage() == 1 || te.getCuringStage() == 4))
 				{
 						iconOven = oven.getOvenIcon("ClayOven3");
 						iconChimney = oven.getOvenIcon("ClayOvenChimney3");
 				}
-				else if(buildStage == ClayOvenStages.INTERIOR && te.getCuringStage() == 2)
+				else if(buildStage == Constants.INTERIOR && te.getCuringStage() == 2)
 				{
 						iconOven = oven.getOvenIcon("ClayOven4");
 						iconChimney = oven.getOvenIcon("ClayOvenChimney4");
 				}
-				else if(buildStage == ClayOvenStages.CURED)
+				else if(buildStage == Constants.CURED)
 				{
 						iconOven = oven.getOvenIcon("ClayOven5");
 						iconChimney = oven.getOvenIcon("ClayOvenChimney5");
@@ -59,16 +61,16 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 					iconChimney = oven.getOvenIcon("ClayOvenChimney1");
 				}
 	
-				if(buildStage >= ClayOvenStages.PLATFORM)
+				if(buildStage >= Constants.PLATFORM)
 				{
 					myRenderer.icon = iconOven;
 					renderPlatform(myRenderer);
 				}
 				
-				if(buildStage > ClayOvenStages.PLATFORM && te.getStackInSlot(6) != null)
+				if(buildStage > Constants.PLATFORM && te.getStackInSlot(6) != null)
 					renderSand(myRenderer, meta, te);
 				
-				if(buildStage > ClayOvenStages.SAND)
+				if(buildStage > Constants.SAND)
 				{
 					myRenderer.icon = iconOven;
 					renderBack(myRenderer, meta, buildStage);
@@ -77,21 +79,21 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 				myRenderer.icon = iconOven;
 				renderBarrel(myRenderer, meta, buildStage);
 				
-				if(buildStage > ClayOvenStages.ROOF)
+				if(buildStage > Constants.ROOF)
 				{
 					myRenderer.icon = iconOven;
 					renderOpening(myRenderer, meta);
 				}
 				
-				if(buildStage > ClayOvenStages.OPENING)
+				if(buildStage > Constants.OPENING)
 				{
 					myRenderer.icon = iconChimney;
 					renderChimney(myRenderer, meta);
 				}
 				
-				if(buildStage >= ClayOvenStages.INTERIOR)
+				if(buildStage >= Constants.INTERIOR)
 				{
-					if(buildStage == ClayOvenStages.CURED)
+					if(buildStage == Constants.CURED)
 					{
 						myRenderer.icon = oven.getOvenIcon("OvenInterior");
 						renderInterior(myRenderer, meta, oven.getOvenIcon("OvenInterior"));
@@ -134,7 +136,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		
 		if(meta == 0)
 		{
-			if(buildStage < ClayOvenStages.BACKWALL)
+			if(buildStage < Constants.BACKWALL)
 			{
 				//Back Bottom
 				myRenderer.renderSquareZPos(0.1, 0.9, 0.1, 0.25, 0.9, 0F, 1, 0.25F, 0.5F);
@@ -144,29 +146,29 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Bottom
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareXPos(0.9, 0.1, 0.25, 0.2, 0.9, 0F, 1, 0F, 0.25F);
 			
 			//Right Bottom
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareXNeg(0.1, 0.1, 0.25, 0.2, 0.9, 0F, 1, 0F, 0.25F);
 			
 			//Left Top
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.9F, 0.25F, 0.2F), new Vertex(0.9F, 0.25F, 0.9F), 
 						new Vertex(0.7F, 0.5F, 0.2F), new Vertex(0.7F, 0.5F, 0.9F), 0F, 1, 0F, 0.5F);
 			
 			//Right Top
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.1F, 0.25F, 0.9F), new Vertex(0.1F, 0.25F, 0.2F), 
 						new Vertex(0.3F, 0.5F, 0.9F), new Vertex(0.3F, 0.5F, 0.2F), 0F, 1, 0F, 0.5F);
 			
 			//Roof
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 				myRenderer.renderQuadYPos(new Vertex(0.3F, 0.5F, 0.9F), new Vertex(0.3F, 0.5F, 0.2F), 
 						new Vertex(0.7F, 0.5F, 0.9F), new Vertex(0.7F, 0.5F, 0.2F), 0F, 1, 0F, 0.5F);
 			
-			if(buildStage < ClayOvenStages.OPENING)
+			if(buildStage < Constants.OPENING)
 			{
 				//Front Top
 				myRenderer.renderQuadZNeg(new Vertex(0.1F, 0.25F, 0.2F), new Vertex(0.9F, 0.25F, 0.2F), 
@@ -202,7 +204,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		}
 		else if(meta == 1)
 		{
-			if(buildStage < ClayOvenStages.BACKWALL)
+			if(buildStage < Constants.BACKWALL)
 			{
 				//Back Bottom
 				myRenderer.renderSquareXNeg(0.1, 0.1, 0.25, 0.1, 0.9, 0F, 1, 0.25F, 0.5F);
@@ -212,29 +214,29 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Bottom
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareZPos(0.1, 0.8, 0.1, 0.25, 0.9, 0F, 1, 0F, 0.25F);
 			
 			//Right Bottom
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareZNeg(0.1, 0.8, 0.1, 0.25, 0.1, 0F, 1, 0F, 0.25F);
 			
 			//Left Top
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.1F, 0.25F, 0.7F), new Vertex(0.8F, 0.25F, 0.7F), 
 						new Vertex(0.1F, 0.5F, 0.9F), new Vertex(0.8F, 0.5F, 0.9F), 0F, 1, 0F, 0.5F);
 			
 			//Right Top
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.8F, 0.25F, 0.3F), new Vertex(0.1F, 0.25F, 0.3F), 
 						new Vertex(0.8F, 0.5F, 0.1F), new Vertex(0.1F, 0.5F, 0.1F), 0F, 1, 0F, 0.5F);
 			
 			//Roof
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 				myRenderer.renderQuadYPos(new Vertex(0.1F, 0.5F, 0.3F), new Vertex(0.8F, 0.5F, 0.3F), 
 						new Vertex(0.1F, 0.5F, 0.7F), new Vertex(0.8F, 0.5F, 0.7F), 0F, 1, 0F, 0.5F);
 			
-			if(buildStage < ClayOvenStages.OPENING)
+			if(buildStage < Constants.OPENING)
 			{
 				//Front Top
 				myRenderer.renderQuadXPos(new Vertex(0.8F, 0.25F, 0.3F), new Vertex(0.8F, 0.25F, 0.7F), 
@@ -270,7 +272,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		}
 		else if(meta == 2)
 		{
-			if(buildStage < ClayOvenStages.BACKWALL)
+			if(buildStage < Constants.BACKWALL)
 			{
 				//Back Bottom
 				myRenderer.renderSquareZNeg(0.1, 0.9, 0.1, 0.25, 0.1, 0F, 1, 0.25F, 0.5F);
@@ -280,29 +282,29 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Bottom
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareXNeg(0.1, 0.1, 0.25, 0.1, 0.8, 0F, 1, 0F, 0.25F);
 			
 			//Right Bottom
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareXPos(0.9, 0.1, 0.25, 0.1, 0.8, 0F, 1, 0F, 0.25F);
 			
 			//Left Top
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.1F, 0.25F, 0.8F), new Vertex(0.1F, 0.25F, 0.1F), 
 						new Vertex(0.3F, 0.5F, 0.8F), new Vertex(0.3F, 0.5F, 0.1F), 0F, 1, 0F, 0.5F);
 			
 			//Right Top
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.9F, 0.25F, 0.1F), new Vertex(0.9F, 0.25F, 0.8F), 
 						new Vertex(0.7F, 0.5F, 0.1F), new Vertex(0.7F, 0.5F, 0.8F), 0F, 1, 0F, 0.5F);
 			
 			//Roof
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 				myRenderer.renderQuadYPos(new Vertex(0.3F, 0.5F, 0.8F), new Vertex(0.3F, 0.5F, 0.1F), 
 						new Vertex(0.7F, 0.5F, 0.8F), new Vertex(0.7F, 0.5F, 0.1F), 0F, 1, 0F, 0.5F);
 			
-			if(buildStage < ClayOvenStages.OPENING)
+			if(buildStage < Constants.OPENING)
 			{
 				//Front Top
 				myRenderer.renderQuadZPos(new Vertex(0.7F, 0.25F, 0.8F), new Vertex(0.3F, 0.25F, 0.8F), 
@@ -338,7 +340,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		}
 		else if(meta == 3)
 		{
-			if(buildStage < ClayOvenStages.BACKWALL)
+			if(buildStage < Constants.BACKWALL)
 			{
 				//Back Bottom
 				myRenderer.renderSquareXPos(0.9, 0.1, 0.25, 0.1, 0.9, 0F, 1, 0.25F, 0.5F);
@@ -348,29 +350,29 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Bottom
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareZNeg(0.2, 0.9, 0.1, 0.25, 0.1, 0F, 1, 0F, 0.25F);
 			
 			//Right Bottom
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareZPos(0.2, 0.9, 0.1, 0.25, 0.9, 0F, 1, 0F, 0.25F);
 			
 			//Left Top
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.9F, 0.25F, 0.3F), new Vertex(0.2F, 0.25F, 0.3F), 
 						new Vertex(0.9F, 0.5F, 0.1F), new Vertex(0.2F, 0.5F, 0.1F), 0F, 1, 0F, 0.5F);
 			
 			//Right Top
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.2F, 0.25F, 0.7F), new Vertex(0.9F, 0.25F, 0.7F), 
 						new Vertex(0.2F, 0.5F, 0.9F), new Vertex(0.9F, 0.5F, 0.9F), 0F, 1, 0F, 0.5F);
 			
 			//Roof
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 				myRenderer.renderQuadYPos(new Vertex(0.2F, 0.5F, 0.3F), new Vertex(0.9F, 0.5F, 0.3F), 
 						new Vertex(0.2F, 0.5F, 0.7F), new Vertex(0.9F, 0.5F, 0.7F), 0F, 1, 0F, 0.5F);
 			
-			if(buildStage < ClayOvenStages.OPENING)
+			if(buildStage < Constants.OPENING)
 			{
 				//Front Top
 				myRenderer.renderQuadXNeg(new Vertex(0.2F, 0.25F, 0.7F), new Vertex(0.2F, 0.25F, 0.3F), 
@@ -411,24 +413,24 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		if(meta == 0)
 		{
 			//Left Bottom Barrel
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareXPos(1, 0.1, 0.25, 0.9, 1, 0F, 0.125F, 0F, 0.1875F);
 				
 			//Right Bottom Barrel
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareXNeg(0, 0.1, 0.25, 0.9, 1, 0F, 0.125F, 0.1875F, 0.375F);
 			
 			//Left Top Barrel
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(1F, 0.25F, 0.9F), new Vertex(1F, 0.25F, 1F), 
 						new Vertex(0.75F, 0.6F, 0.9F), new Vertex(0.75F, 0.6F, 1F), 0F, 0.125F, 0F, 0.5625F);
 			
 			//Right Top Barrel
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0F, 0.25F, 1F), new Vertex(0F, 0.25F, 0.9F), 
 						new Vertex(0.25F, 0.6F, 1F), new Vertex(0.25F, 0.6F, 0.9F), 0F, 0.125F, 0F, 0.5625F);
 			
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 			{
 				//Top
 				myRenderer.renderSquareYPos(0.25, 0.75, 0.6, 0.9, 1, 0F, 0.5F, 0F, 0.125F);
@@ -451,24 +453,24 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		else if(meta == 1)
 		{
 			//Left Bottom Barrel
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareZPos(0, 0.1, 0.1, 0.25, 1, 0F, 0.125F, 0F, 0.1875F);
 			
 			//Right Bottom Barrel
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareZNeg(0, 0.1, 0.1, 0.25, 0, 0F, 0.125F, 0.1875F, 0.375F);
 			
 			//Left Top Barrel
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0F, 0.25F, 0.75F), new Vertex(0.1F, 0.25F, 0.75F), 
 						new Vertex(0F, 0.6F, 1F), new Vertex(0.1F, 0.6F, 1F), 0F, 0.125F, 0F, 0.5625F);
 			
 			//Right Top Barrel
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.1F, 0.25F, 0.25F), new Vertex(0F, 0.25F, 0.25F), 
 						new Vertex(0.1F, 0.6F, 0F), new Vertex(0F, 0.6F, 0F), 0F, 0.125F, 0F, 0.5625F);
 			
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 			{
 				//Top
 				myRenderer.renderSquareYPos(0, 0.1, 0.6, 0.25, 0.75, 0F, 0.125F, 0F, 0.5F);
@@ -491,24 +493,24 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		else if(meta == 2)
 		{
 			//Left Bottom Barrel
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareXNeg(0, 0.1, 0.25, 0, 0.1, 0F, 0.125F, 0F, 0.1875F);
 			
 			//Right Bottom Barrel
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareXPos(1, 0.1, 0.25, 0, 0.1, 0F, 0.125F, 0.1875F, 0.375F);
 			
 			//Left Top Barrel
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0F, 0.25F, 0.1F), new Vertex(0F, 0.25F, 0F), 
 						new Vertex(0.25F, 0.6F, 0.1F), new Vertex(0.25F, 0.6F, 0F), 0F, 0.125F, 0F, 0.5625F);
 			
 			//Right Top Barrel
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(1F, 0.25F, 0F), new Vertex(1F, 0.25F, 0.1F), 
 						new Vertex(0.75F, 0.6F, 0F), new Vertex(0.75F, 0.6F, 0.1F), 0F, 0.125F, 0F, 0.5625F);
 			
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 			{
 				//Top
 				myRenderer.renderSquareYPos(0.25, 0.75, 0.6, 0, 0.1, 0F, 0.5F, 0F, 0.125F);
@@ -531,24 +533,24 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		else if(meta == 3)
 		{
 			//Left Bottom Barrel
-			if(buildStage < ClayOvenStages.LBWALL)
+			if(buildStage < Constants.LBWALL)
 				myRenderer.renderSquareZNeg(0.9, 1, 0.1, 0.25, 0, 0F, 0.125F, 0F, 0.1875F);
 			
 			//Right Bottom Barrel
-			if(buildStage < ClayOvenStages.RBWALL)
+			if(buildStage < Constants.RBWALL)
 				myRenderer.renderSquareZPos(0.9, 1, 0.1, 0.25, 1, 0F, 0.125F, 0.1875F, 0.375F);
 			
 			//Left Top Barrel
-			if(buildStage < ClayOvenStages.LTWALL)
+			if(buildStage < Constants.LTWALL)
 				myRenderer.renderQuadYPos(new Vertex(1F, 0.25F, 0.25F), new Vertex(0.9F, 0.25F, 0.25F), 
 						new Vertex(1F, 0.6F, 0F), new Vertex(0.9F, 0.6F, 0F), 0F, 0.125F, 0F, 0.5625F);
 			
 			//Right Top Barrel
-			if(buildStage < ClayOvenStages.RTWALL)
+			if(buildStage < Constants.RTWALL)
 				myRenderer.renderQuadYPos(new Vertex(0.9F, 0.25F, 0.75F), new Vertex(1F, 0.25F, 0.75F), 
 						new Vertex(0.9F, 0.6F, 1F), new Vertex(1F, 0.6F, 1F), 0F, 0.125F, 0F, 0.5625F);
 			
-			if(buildStage < ClayOvenStages.ROOF)
+			if(buildStage < Constants.ROOF)
 			{
 				//Top
 				myRenderer.renderSquareYPos(0.9, 1, 0.6, 0.25, 0.75, 0F, 0.125F, 0F, 0.5F);
@@ -575,10 +577,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		if(meta == 0)
 		{
 			//Left Bottom Wall
-			if(buildStage > ClayOvenStages.BACKWALL)
+			if(buildStage > Constants.BACKWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.LTWALL)
+				if(buildStage < Constants.LTWALL)
 					myRenderer.renderSquareYPos(0.9, 1, 0.25, 0.2, 1, 0F, 0.125F, 0F, 1F);
 				
 				//Front
@@ -589,10 +591,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Bottom Wall
-			if(buildStage > ClayOvenStages.LBWALL)
+			if(buildStage > Constants.LBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.RTWALL)
+				if(buildStage < Constants.RTWALL)
 					myRenderer.renderSquareYPos(0, 0.1, 0.25, 0.2, 1, 0F, 0.125F, 0F, 1F);
 				
 				//Front
@@ -603,10 +605,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Top Wall
-			if(buildStage > ClayOvenStages.RBWALL)
+			if(buildStage > Constants.RBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.7F, 0.5F, 0.9F), new Vertex(0.7F, 0.5F, 0.2F),
 							new Vertex(0.75F, 0.6F, 0.9F), new Vertex(0.75F, 0.6F, 0.2F), 0F, 1F, 0F, 0.125F);
 				
@@ -620,10 +622,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Top Wall
-			if(buildStage > ClayOvenStages.LTWALL)
+			if(buildStage > Constants.LTWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.3F, 0.5F, 0.2F), new Vertex(0.3F, 0.5F, 1F),
 							new Vertex(0.25F, 0.6F, 0.2F), new Vertex(0.25F, 0.6F, 1F), 0F, 1F, 0F, 0.125F);
 				
@@ -637,7 +639,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Top Wall
-			if(buildStage > ClayOvenStages.RTWALL)
+			if(buildStage > Constants.RTWALL)
 			{
 				//Front
 				myRenderer.renderQuadZNeg(new Vertex(0.3F, 0.5F, 0.2F), new Vertex(0.7F, 0.5F, 0.2F),
@@ -650,10 +652,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		else if(meta == 1)
 		{
 			//Left Bottom Wall
-			if(buildStage > ClayOvenStages.BACKWALL)
+			if(buildStage > Constants.BACKWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.LTWALL)
+				if(buildStage < Constants.LTWALL)
 					myRenderer.renderSquareYPos(0, 0.8, 0.25, 0.9, 1, 0F, 1F, 0F, 0.125F);
 				
 				//Front
@@ -664,10 +666,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Bottom Wall
-			if(buildStage > ClayOvenStages.LBWALL)
+			if(buildStage > Constants.LBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.RTWALL)
+				if(buildStage < Constants.RTWALL)
 					myRenderer.renderSquareYPos(0, 0.8, 0.25, 0, 0.1, 0F, 1F, 0F, 0.125F);
 				
 				//Front
@@ -678,10 +680,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Top Wall
-			if(buildStage > ClayOvenStages.RBWALL)
+			if(buildStage > Constants.RBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.8F, 0.5F, 0.75F), new Vertex(0.1F, 0.5F, 0.75F),
 							new Vertex(0.8F, 0.6F, 0.7F), new Vertex(0.1F, 0.6F, 0.7F), 0F, 1F, 0F, 0.125F);
 				
@@ -695,10 +697,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Top Wall
-			if(buildStage > ClayOvenStages.LTWALL)
+			if(buildStage > Constants.LTWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.1F, 0.5F, 0.25F), new Vertex(0.8F, 0.5F, 0.25F),
 							new Vertex(0.1F, 0.6F, 0.3F), new Vertex(0.8F, 0.6F, 0.3F), 0F, 1F, 0F, 0.125F);
 				
@@ -712,7 +714,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Top Wall
-			if(buildStage > ClayOvenStages.RTWALL)
+			if(buildStage > Constants.RTWALL)
 			{
 				//Front
 				myRenderer.renderQuadXPos(new Vertex(0.8F, 0.5F, 0.25F), new Vertex(0.8F, 0.5F, 0.75F),
@@ -725,10 +727,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		else if(meta == 2)
 		{
 			//Left Bottom Wall
-			if(buildStage > ClayOvenStages.BACKWALL)
+			if(buildStage > Constants.BACKWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.LTWALL)
+				if(buildStage < Constants.LTWALL)
 					myRenderer.renderSquareYPos(0, 0.1, 0.25, 0, 0.8, 0F, 0.125F, 0F, 1F);
 				
 				//Front
@@ -739,10 +741,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Bottom Wall
-			if(buildStage > ClayOvenStages.LBWALL)
+			if(buildStage > Constants.LBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.RTWALL)
+				if(buildStage < Constants.RTWALL)
 					myRenderer.renderSquareYPos(0.9, 1, 0.25, 0, 0.8, 0F, 0.125F, 0F, 1F);
 				
 				//Front
@@ -753,10 +755,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Top Wall
-			if(buildStage > ClayOvenStages.RBWALL)
+			if(buildStage > Constants.RBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.3F, 0.5F, 0.1F), new Vertex(0.3F, 0.5F, 0.8F),
 							new Vertex(0.25F, 0.6F, 0.1F), new Vertex(0.25F, 0.6F, 0.8F), 0F, 1F, 0F, 0.125F);
 				
@@ -770,10 +772,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Top Wall
-			if(buildStage > ClayOvenStages.LTWALL)
+			if(buildStage > Constants.LTWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.7F, 0.5F, 0.8F), new Vertex(0.7F, 0.5F, 0.1F),
 							new Vertex(0.75F, 0.6F, 0.8F), new Vertex(0.75F, 0.6F, 0.1F), 0F, 1F, 0F, 0.125F);
 				
@@ -787,7 +789,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Top Wall
-			if(buildStage > ClayOvenStages.RTWALL)
+			if(buildStage > Constants.RTWALL)
 			{
 				//Front
 				myRenderer.renderQuadZPos(new Vertex(0.75F, 0.5F, 0.8F), new Vertex(0.25F, 0.5F, 0.8F),
@@ -800,10 +802,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 		else if(meta == 3)
 		{
 			//Left Bottom Wall
-			if(buildStage > ClayOvenStages.BACKWALL)
+			if(buildStage > Constants.BACKWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.LTWALL)
+				if(buildStage < Constants.LTWALL)
 					myRenderer.renderSquareYPos(0.2, 1, 0.25, 0, 0.1, 0F, 1F, 0F, 0.125F);
 				
 				//Front
@@ -814,10 +816,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Bottom Wall
-			if(buildStage > ClayOvenStages.LBWALL)
+			if(buildStage > Constants.LBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.RTWALL)
+				if(buildStage < Constants.RTWALL)
 					myRenderer.renderSquareYPos(0.2, 1, 0.25, 0.9, 1, 0F, 1F, 0F, 0.125F);
 				
 				//Front
@@ -828,10 +830,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Left Top Wall
-			if(buildStage > ClayOvenStages.RBWALL)
+			if(buildStage > Constants.RBWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.2F, 0.5F, 0.25F), new Vertex(0.9F, 0.5F, 0.25F),
 							new Vertex(0.2F, 0.6F, 0.3F), new Vertex(0.9F, 0.6F, 0.3F), 0F, 1F, 0F, 0.125F);
 				
@@ -845,10 +847,10 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Right Top Wall
-			if(buildStage > ClayOvenStages.LTWALL)
+			if(buildStage > Constants.LTWALL)
 			{
 				//Top
-				if(buildStage < ClayOvenStages.ROOF)
+				if(buildStage < Constants.ROOF)
 					myRenderer.renderQuadYPos(new Vertex(0.9F, 0.5F, 0.75F), new Vertex(0.2F, 0.5F, 0.75F),
 							new Vertex(0.9F, 0.6F, 0.7F), new Vertex(0.2F, 0.6F, 0.7F), 0F, 1F, 0F, 0.125F);
 				
@@ -862,7 +864,7 @@ public class RenderClayOven implements ISimpleBlockRenderingHandler
 			}
 			
 			//Top Wall
-			if(buildStage > ClayOvenStages.RTWALL)
+			if(buildStage > Constants.RTWALL)
 			{
 				//Front
 				myRenderer.renderQuadXNeg(new Vertex(0.2F, 0.5F, 0.75F), new Vertex(0.2F, 0.5F, 0.25F),

@@ -19,9 +19,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
+import straywolfe.cookingwithtfc.api.managers.CWTFCCropIndex;
+import straywolfe.cookingwithtfc.api.managers.CropManager;
 import straywolfe.cookingwithtfc.common.block.*;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 import straywolfe.cookingwithtfc.common.tileentity.*;
@@ -58,6 +61,13 @@ public class WAILAInfo implements IWailaDataProvider
 		
 		reg.registerStackProvider(new WAILAInfo(), BlockBowl.class);
 		reg.registerHeadProvider(new WAILAInfo(), BlockBowl.class);
+		
+		reg.registerStackProvider(new WAILAInfo(), TileGourd.class);
+		reg.registerHeadProvider(new WAILAInfo(), TileGourd.class);
+		
+		reg.registerStackProvider(new WAILAInfo(), TileCrop.class);
+		reg.registerHeadProvider(new WAILAInfo(), TileCrop.class);
+		reg.registerBodyProvider(new WAILAInfo(), TileCrop.class);
 	}
 	
 	@Override
@@ -80,6 +90,10 @@ public class WAILAInfo implements IWailaDataProvider
 			return sandwichStack(accessor, config);
 		else if(block instanceof BlockBowl)
 			return bowlStack(accessor, config);
+		else if(tileEntity instanceof TileGourd)
+			return gourdStack(accessor, config);
+		else if(tileEntity instanceof TileCrop)
+			return cropStack(accessor, config);
 			
 		return accessor.getStack();
 	}
@@ -88,6 +102,7 @@ public class WAILAInfo implements IWailaDataProvider
 	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor,	IWailaConfigHandler config) 
 	{
 		Block block = accessor.getBlock();
+		TileEntity tileEntity = accessor.getTileEntity();
 		
 		if(block instanceof BlockMixBowl)
 			currenttip = mixBowlHead(itemStack, currenttip, accessor, config);
@@ -101,6 +116,10 @@ public class WAILAInfo implements IWailaDataProvider
 			currenttip = sandwichHead(itemStack, currenttip, accessor, config);
 		else if(block instanceof BlockBowl)
 			currenttip = bowlHead(itemStack, currenttip, accessor, config);
+		else if(tileEntity instanceof TileGourd)
+			currenttip = gourdHead(itemStack, currenttip, accessor, config);
+		else if(tileEntity instanceof TileCrop)
+			currenttip = cropHead(itemStack, currenttip, accessor, config);
 		
 		return currenttip;
 	}
@@ -116,6 +135,8 @@ public class WAILAInfo implements IWailaDataProvider
 			currenttip = nestBoxBody(itemStack, currenttip, accessor, config);
 		else if(tileEntity instanceof TileCookingPot)
 			currenttip = cookingPotBody(itemStack, currenttip, accessor, config);
+		else if(tileEntity instanceof TileCrop)
+			currenttip = cropBody(itemStack, currenttip, accessor, config);
 		
 		return currenttip;
 	}
@@ -139,7 +160,7 @@ public class WAILAInfo implements IWailaDataProvider
 		return new ItemStack(CWTFCBlocks.mixingBowl, 1, 1);
 	}
 	
-	private List<String> mixBowlHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	public List<String> mixBowlHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
 		currenttip.set(0, EnumChatFormatting.WHITE.toString() + itemStack.getDisplayName());
 
@@ -151,7 +172,7 @@ public class WAILAInfo implements IWailaDataProvider
 		return new ItemStack(accessor.getBlock(), 1, accessor.getMetadata());
 	}
 	
-	private List<String> prepTableHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	public List<String> prepTableHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
 		currenttip.set(0, EnumChatFormatting.WHITE.toString() + itemStack.getDisplayName());
 
@@ -163,7 +184,7 @@ public class WAILAInfo implements IWailaDataProvider
 		return new ItemStack(accessor.getBlock(), 1, accessor.getMetadata());
 	}
 	
-	private List<String> prepTable2Head(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	public List<String> prepTable2Head(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
 		currenttip.set(0, EnumChatFormatting.WHITE.toString() + itemStack.getDisplayName());
 
@@ -180,7 +201,7 @@ public class WAILAInfo implements IWailaDataProvider
 			return ItemFoodTFC.createTag(new ItemStack(TFCItems.beefRaw), 999, -24);
 	}
 	
-	private List<String> meatHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	public List<String> meatHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
 		ItemStack meat = ((TileMeat)accessor.getTileEntity()).getplacedMeat();
 		
@@ -206,7 +227,7 @@ public class WAILAInfo implements IWailaDataProvider
 			return ItemFoodTFC.createTag(new ItemStack(CWTFCItems.VeggySalad), 999, -24);
 	}
 	
-	private List<String> bowlHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	public List<String> bowlHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
 		TileBowl te = (TileBowl)accessor.getTileEntity();
 		
@@ -266,7 +287,7 @@ public class WAILAInfo implements IWailaDataProvider
 		return stack;
 	}
 	
-	private List<String> sandwichHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	public List<String> sandwichHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
 		NBTTagCompound tag = accessor.getNBTData();
 		String breadType = tag.getString("breadType");
@@ -365,6 +386,83 @@ public class WAILAInfo implements IWailaDataProvider
 		if(time > 0)
 			currenttip.add(TFC_Core.translate("gui.cookingTime") + ": " + time + " minutes");
 
+		return currenttip;
+	}
+	
+	public ItemStack gourdStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		NBTTagCompound tag = accessor.getNBTData();
+		int type = tag.getInteger("type");
+		
+		switch(type)
+		{
+			case 0: return new ItemStack(CWTFCItems.pumpkinBlock);
+			case 1: return new ItemStack(CWTFCItems.melonBlock);
+			case 2: return new ItemStack(CWTFCItems.jackolanternBlock);
+			default: return new ItemStack(CWTFCItems.pumpkinBlock);
+		}
+	}
+	
+	public List<String> gourdHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	{
+		NBTTagCompound tag = accessor.getNBTData();
+		
+		int type = tag.getInteger("type");
+		String gourdName = "";
+		
+		switch(type)
+		{
+			case 1: gourdName = StatCollector.translateToLocal("item.Watermelon.name"); break;
+			case 2: gourdName = StatCollector.translateToLocal("item.JackOLantern.name"); break;
+			default: gourdName = StatCollector.translateToLocal("item.Pumpkin.name"); break;
+		}
+		
+		currenttip.set(0, EnumChatFormatting.WHITE.toString() + gourdName);
+
+		return currenttip;
+	}
+	
+	public ItemStack cropStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		NBTTagCompound tag = accessor.getNBTData();
+		int cropID = tag.getInteger("cropID");
+		CWTFCCropIndex crop = CropManager.getInstance().getCropFromId(cropID);
+		
+		if(crop != null)
+			return ItemFoodTFC.createTag(new ItemStack(crop.output1));
+		else
+			return ItemFoodTFC.createTag(new ItemStack(CWTFCItems.watermelon));
+	}
+	
+	public List<String> cropHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
+	{
+		NBTTagCompound tag = accessor.getNBTData();
+		
+		int cropID = tag.getInteger("cropID");		
+		CWTFCCropIndex crop = CropManager.getInstance().getCropFromId(cropID);
+		if(crop != null)
+		{
+			String cropName = StatCollector.translateToLocal("item." + crop.cropName + ".name");
+		
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + cropName);
+		}
+
+		return currenttip;
+	}
+	
+	public List<String> cropBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		NBTTagCompound tag = accessor.getNBTData();
+		float growth = tag.getFloat("growth");
+		int cropID = tag.getInteger("cropID");
+		CWTFCCropIndex crop = CropManager.getInstance().getCropFromId(cropID);
+		int percentGrowth = (int) Math.min((growth / (crop.numGrowthStages - 1)) * 100, 100);
+		
+		if (percentGrowth < 100)
+			currenttip.add(TFC_Core.translate("gui.growth") + " : " + percentGrowth + "%");
+		else
+			currenttip.add(TFC_Core.translate("gui.growth") + " : " + TFC_Core.translate("gui.mature"));
+		
 		return currenttip;
 	}
 }

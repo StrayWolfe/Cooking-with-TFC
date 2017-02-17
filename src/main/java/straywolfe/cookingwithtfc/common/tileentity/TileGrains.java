@@ -40,7 +40,10 @@ public class TileGrains extends NetworkTileEntity
 		{
 			placedGrain = TFC_Core.tickDecay(placedGrain, worldObj,  xCoord, yCoord, zCoord, 1f, 1f);
 			if(placedGrain == null)
+			{
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+				worldObj.removeTileEntity(xCoord, yCoord, zCoord);
+			}
 		}
 	}
 	

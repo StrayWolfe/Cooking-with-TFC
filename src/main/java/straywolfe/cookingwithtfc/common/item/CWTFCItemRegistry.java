@@ -111,7 +111,25 @@ public class CWTFCItemRegistry extends CWTFCItems
 		GameRegistry.registerItem(sugarcaneCWTFC, sugarcaneCWTFC.getUnlocalizedName());
 		GameRegistry.registerItem(sugarCWTFC, sugarCWTFC.getUnlocalizedName());
 		
+		//Seeds
+		GameRegistry.registerItem(seedsCelery, seedsCelery.getUnlocalizedName());
+		GameRegistry.registerItem(seedsLettuce, seedsLettuce.getUnlocalizedName());
+		GameRegistry.registerItem(seedsPumpkin, seedsPumpkin.getUnlocalizedName());
+		GameRegistry.registerItem(seedsMelon, seedsMelon.getUnlocalizedName());
+		GameRegistry.registerItem(sporesBrownMushroom, sporesBrownMushroom.getUnlocalizedName());
+		GameRegistry.registerItem(sporesRedMushroom, sporesRedMushroom.getUnlocalizedName());
+		
+		//Fruits
+		GameRegistry.registerItem(watermelon, watermelon.getUnlocalizedName());
+		GameRegistry.registerItem(brownMushroom, brownMushroom.getUnlocalizedName());
+		GameRegistry.registerItem(redMushroom, redMushroom.getUnlocalizedName());
+		GameRegistry.registerItem(pumpkinBlock, pumpkinBlock.getUnlocalizedName());
+		GameRegistry.registerItem(melonBlock, melonBlock.getUnlocalizedName());
+		GameRegistry.registerItem(jackolanternBlock, jackolanternBlock.getUnlocalizedName());
+		
 		//Salads
+		GameRegistry.registerItem(lettuce, lettuce.getUnlocalizedName());
+		GameRegistry.registerItem(celery, celery.getUnlocalizedName());
 		GameRegistry.registerItem(VeggySalad, VeggySalad.getUnlocalizedName());
 		GameRegistry.registerItem(PotatoSalad, PotatoSalad.getUnlocalizedName());
 		GameRegistry.registerItem(FruitSalad, FruitSalad.getUnlocalizedName());

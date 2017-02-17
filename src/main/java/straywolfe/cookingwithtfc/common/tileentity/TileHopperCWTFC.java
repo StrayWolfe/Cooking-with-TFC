@@ -15,8 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.FluidStack;
-import straywolfe.cookingwithtfc.api.recipe.PressManager;
-import straywolfe.cookingwithtfc.api.recipe.PressRecipe;
+import straywolfe.cookingwithtfc.api.managers.PressManager;
+import straywolfe.cookingwithtfc.api.managers.PressRecipe;
 
 public class TileHopperCWTFC extends TEHopper
 {	

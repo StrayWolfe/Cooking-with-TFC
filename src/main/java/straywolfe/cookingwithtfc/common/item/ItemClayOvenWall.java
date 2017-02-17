@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
-import straywolfe.cookingwithtfc.common.lib.ClayOvenStages;
+import straywolfe.cookingwithtfc.common.lib.Constants;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileClayOven;
 
@@ -73,7 +73,7 @@ public class ItemClayOvenWall extends ItemTerra implements ISize
 	            	if(tileentity != null && tileentity instanceof TileClayOven)
 	            	{
 	            		TileClayOven te = (TileClayOven)world.getTileEntity(x, y, z);
-	            		te.setBuildStage(ClayOvenStages.PLATFORM);
+	            		te.setBuildStage(Constants.PLATFORM);
 	            		te.setCuringTime(TFC_Time.getTotalTicks());
 	            	}
 	            		

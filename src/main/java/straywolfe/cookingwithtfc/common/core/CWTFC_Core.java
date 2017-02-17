@@ -1,6 +1,8 @@
 package straywolfe.cookingwithtfc.common.core;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFC_Core;
@@ -15,12 +17,35 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+import straywolfe.cookingwithtfc.api.managers.ChunkDataManager;
 import straywolfe.cookingwithtfc.common.handlers.MessageFoodRecord;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 
 public class CWTFC_Core 
 {	
+	private static Map<Integer, ChunkDataManager> CDMMap = new HashMap<Integer, ChunkDataManager>();
+	
+	public static ChunkDataManager getCDM(World world)
+	{
+		int key = world.isRemote ? 128 | world.provider.dimensionId : world.provider.dimensionId;
+		return CDMMap.get(key);
+	}
+	
+	public static ChunkDataManager addCDM(World world)
+	{
+		int key = world.isRemote ? 128 | world.provider.dimensionId : world.provider.dimensionId;
+		if(!CDMMap.containsKey(key))
+			return CDMMap.put(key, new ChunkDataManager(world));
+		else return CDMMap.get(key);
+	}
+
+	public static ChunkDataManager removeCDM(World world)
+	{
+		int key = world.isRemote ? 128 | world.provider.dimensionId : world.provider.dimensionId;
+		return CDMMap.remove(key);
+	}
+	
 	public static FoodRecord getPlayerFoodRecord(EntityPlayer player)
 	{
 		FoodRecord foodrecord = new FoodRecord(player);
@@ -42,7 +67,7 @@ public class CWTFC_Core
 				repeatFoods++;
 		}
 		
-		float recordSizeMod = foodrecord.RecordSize/Settings.PICKINESS;
+		float recordSizeMod = foodrecord.RecordSize/Settings.pickiness;
 		return Math.max(recordSizeMod - repeatFoods, 0)/recordSizeMod;
 	}
 	

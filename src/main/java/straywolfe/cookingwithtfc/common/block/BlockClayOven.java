@@ -28,9 +28,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
-import straywolfe.cookingwithtfc.api.recipe.OvenManager;
+import straywolfe.cookingwithtfc.api.managers.OvenManager;
+import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.item.ItemClayOvenWall;
-import straywolfe.cookingwithtfc.common.lib.ClayOvenStages;
+import straywolfe.cookingwithtfc.common.lib.Constants;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileClayOven;
 
@@ -68,7 +69,7 @@ public class BlockClayOven extends BlockTerraContainer
 			{
 				int buildStage = te.getBuildStage();
 				
-				if(buildStage > ClayOvenStages.PLATFORM && buildStage < ClayOvenStages.CHIMNEY && te.getCuringStage() < 3)
+				if(buildStage > Constants.PLATFORM && buildStage < Constants.CHIMNEY && te.getCuringStage() < 3)
 				{
 					te.setBuildStage(buildStage + 1);
 					
@@ -79,7 +80,7 @@ public class BlockClayOven extends BlockTerraContainer
 			else if(equippedItem != null && TFC_Core.isSand(Block.getBlockFromItem(equippedItem.getItem())))
 			{
 				int buildStage = te.getBuildStage();
-				if(buildStage == ClayOvenStages.PLATFORM)
+				if(buildStage == Constants.PLATFORM)
 				{
 					if(te.getStackInSlot(6) == null)
 					{
@@ -99,14 +100,14 @@ public class BlockClayOven extends BlockTerraContainer
 				{
 					if (entityplayer.isSneaking())
 					{
-						if(buildStage == ClayOvenStages.CHIMNEY && te.getCuringStage() >= 3)
+						if(buildStage == Constants.CHIMNEY && te.getCuringStage() >= 3)
 						{
 							entityplayer.setCurrentItemOrArmor(0, te.getStackInSlot(6).copy());
 							te.setInventorySlotContents(6, null);
 							te.setBuildStage(buildStage + 1);
 							te.setCuringTime(0);
 						}
-						else if(buildStage >= ClayOvenStages.INTERIOR)
+						else if(buildStage >= Constants.INTERIOR)
 						{
 							for(int i = 0; i < 4; i++)
 							{
@@ -121,7 +122,7 @@ public class BlockClayOven extends BlockTerraContainer
 					}
 					else
 					{
-						if(buildStage == ClayOvenStages.CURED)
+						if(buildStage == Constants.CURED)
 						{
 							int slot = getSlotFromHit(meta, hitX, hitZ);
 							
@@ -136,7 +137,7 @@ public class BlockClayOven extends BlockTerraContainer
 				else
 				{
 					Item item = equippedItem.getItem();
-					if((item instanceof ItemFirestarter || item instanceof ItemFlintAndSteel) && buildStage >= ClayOvenStages.INTERIOR)
+					if((item instanceof ItemFirestarter || item instanceof ItemFlintAndSteel) && buildStage >= Constants.INTERIOR)
 					{
 						if(te.getFireState() == false && te.hasFuel())
 						{
@@ -146,7 +147,7 @@ public class BlockClayOven extends BlockTerraContainer
 								world.playSoundEffect(x + 0.5D, y + 0.5D, z + 0.5D, "fire.ignite", 1.0F, rand.nextFloat() * 0.4F + 0.8F);
 							}
 							
-							if(buildStage != ClayOvenStages.CURED)
+							if(buildStage != Constants.CURED)
 								te.setCuringTime(TFC_Time.getTotalTicks());
 								
 							te.fireTemp = 300;
@@ -168,7 +169,7 @@ public class BlockClayOven extends BlockTerraContainer
 								te.setDurability(durability - 1);
 						}
 					}
-					else if((item instanceof ItemLogs || item instanceof ItemCoal) && buildStage >= ClayOvenStages.INTERIOR)
+					else if((item instanceof ItemLogs || item instanceof ItemCoal) && buildStage >= Constants.INTERIOR)
 					{
 						if(te.getStackInSlot(0) == null)
 						{
@@ -178,7 +179,7 @@ public class BlockClayOven extends BlockTerraContainer
 								equippedItem.stackSize--;
 						}
 					}
-					else if(OvenManager.getInstance().findMatchingRecipe(equippedItem) != null && buildStage == ClayOvenStages.CURED)
+					else if(OvenManager.getInstance().findMatchingRecipe(equippedItem) != null && buildStage == Constants.CURED)
 					{
 						ItemStack food = equippedItem.copy();
 						
@@ -251,7 +252,7 @@ public class BlockClayOven extends BlockTerraContainer
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
 	{
-		if (!(TFC_Core.isStoneIgEx(world.getBlock(x, y - 1, z)) || TFC_Core.isStoneIgIn(world.getBlock(x, y - 1, z))))
+		if (!(Helper.isStone(world.getBlock(x, y - 1, z))))
 		{
 			world.setBlockToAir(x, y, z);
 		}
@@ -449,15 +450,15 @@ public class BlockClayOven extends BlockTerraContainer
                         EntityDiggingFX digging = new EntityDiggingFX(world, d0, d1, d2, d0 - (double)x - 0.5D, d1 - (double)y - 0.5D, d2 - (double)z - 0.5D, block, meta);
                         digging.applyColourMultiplier(x, y, z);
                         
-                        if(buildStage <= ClayOvenStages.CHIMNEY && curingStage == 2)
+                        if(buildStage <= Constants.CHIMNEY && curingStage == 2)
                         	digging.setParticleIcon(ClayOven[1]);
-        				else if(buildStage <= ClayOvenStages.CHIMNEY && curingStage >= 3)
+        				else if(buildStage <= Constants.CHIMNEY && curingStage >= 3)
         					digging.setParticleIcon(ClayOven[2]);
-        				else if(buildStage == ClayOvenStages.INTERIOR && (curingStage == 1 || curingStage == 4))
+        				else if(buildStage == Constants.INTERIOR && (curingStage == 1 || curingStage == 4))
         					digging.setParticleIcon(ClayOven[2]);
-        				else if(buildStage == ClayOvenStages.INTERIOR && curingStage == 2)
+        				else if(buildStage == Constants.INTERIOR && curingStage == 2)
         					digging.setParticleIcon(ClayOven[3]);
-        				else if(buildStage == ClayOvenStages.CURED)
+        				else if(buildStage == Constants.CURED)
         					digging.setParticleIcon(ClayOven[4]);
         				else
         					digging.setParticleIcon(ClayOven[0]);

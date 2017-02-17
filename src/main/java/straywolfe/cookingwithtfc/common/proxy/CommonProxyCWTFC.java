@@ -28,9 +28,14 @@ public class CommonProxyCWTFC
 		GameRegistry.registerTileEntity(TileMeat.class, "TileMeat");
 		GameRegistry.registerTileEntity(TileCookingPot.class, "TileCookingPot");
 		GameRegistry.registerTileEntity(TileSandwich.class, "TileSandwich");
+		GameRegistry.registerTileEntity(TileTableStorage.class, "TileTableStorage");
+		GameRegistry.registerTileEntity(TileCrop.class, "TileCrop");
 		
 		if(clientReg)
+		{
 			GameRegistry.registerTileEntity(TileClayOven.class, "TileClayOven");
+			GameRegistry.registerTileEntity(TileGourd.class, "TilePumpkin");
+		}
 		
 		EntityRegistry.registerGlobalEntityID(EntityTransformSheepTFC.class, "sheepCWTFC", EntityRegistry.findGlobalUniqueEntityId());
 		EntityRegistry.registerGlobalEntityID(EntityTransformHorseTFC.class, "horseCWTFC", EntityRegistry.findGlobalUniqueEntityId());
@@ -47,6 +52,11 @@ public class CommonProxyCWTFC
 	public void registerRenderInformation()
 	{
 		//Client-side only
+	}
+	
+	public void registerHandlers()
+	{
+		
 	}
 	
 	public void registerFluids()

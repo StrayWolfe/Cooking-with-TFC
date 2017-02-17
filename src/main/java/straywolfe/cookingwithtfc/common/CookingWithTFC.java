@@ -3,11 +3,12 @@ package straywolfe.cookingwithtfc.common;
 import net.minecraftforge.common.MinecraftForge;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
-import straywolfe.cookingwithtfc.common.crafting.CWTFCRecipes;
-import straywolfe.cookingwithtfc.common.crafting.HeatedItemRecipes;
 import straywolfe.cookingwithtfc.common.handlers.*;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.proxy.CommonProxyCWTFC;
+import straywolfe.cookingwithtfc.common.registries.CWTFCRecipes;
+import straywolfe.cookingwithtfc.common.registries.HeatedItemRecipes;
+import straywolfe.cookingwithtfc.common.worldgen.WorldGenCrops;
 
 import com.bioxx.tfc.TerraFirmaCraft;
 
@@ -18,6 +19,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = ModInfo.ModID, name = ModInfo.ModName, version = ModInfo.ModVersion, dependencies = ModInfo.ModDependencies)
 public class CookingWithTFC
@@ -46,6 +48,11 @@ public class CookingWithTFC
 		
 		//Register Tile Entities
 		proxy.registerTileEntities(true);
+		
+		//Register Farmland Highlighter
+		proxy.registerHandlers();
+		
+		GameRegistry.registerWorldGenerator(new WorldGenCrops(), 9);
 	}
 
 	@EventHandler
@@ -59,6 +66,9 @@ public class CookingWithTFC
 		
 		//Handle Entity Spawns
 		MinecraftForge.EVENT_BUS.register(new EntitySpawnHandler());
+		
+		//Handle Chunk Loading
+		MinecraftForge.EVENT_BUS.register(new ChunkHandler());
 		
 		//Setup Fluids
 		proxy.setupFluids();

@@ -3,6 +3,7 @@ package straywolfe.cookingwithtfc.client.render;
 import org.lwjgl.opengl.GL11;
 
 import com.bioxx.tfc.Food.ItemFoodTFC;
+import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCItems;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
 
@@ -113,28 +114,16 @@ public class RenderSandwich implements ISimpleBlockRenderingHandler
 					setTop(0F, 0.05F, 0.4F, 0, xCoord, zCoord, bottomBreadVert, bottomBreadHorz, myRenderer);
 				
 				if(contents[1] != null && !Helper.isOre("itemBread", contents[1]))
-				{
-					myRenderer.icon = contents[1].getIconIndex();
-					myRenderer.draw3DItem(0.4F, 0.02875F, xCoord, 0.05F, zCoord);
-				}
+					setup3dRendering(contents[1], myRenderer, 0.4F, 0.02875F, xCoord, 0.05F, zCoord);
 				
 				if(contents[2] != null && !Helper.isOre("itemBread", contents[2]))
-				{
-					myRenderer.icon = contents[2].getIconIndex();
-					myRenderer.draw3DItem(0.4F, 0.02875F, xCoord, 0.02875F + 0.05F, zCoord);
-				}
+					setup3dRendering(contents[2], myRenderer, 0.4F, 0.02875F, xCoord, 0.02875F + 0.05F, zCoord);
 				
 				if(contents[3] != null && !Helper.isOre("itemBread", contents[3]))
-				{
-					myRenderer.icon = contents[3].getIconIndex();
-					myRenderer.draw3DItem(0.4F, 0.02875F, xCoord, (0.02875F * 2) + 0.05F, zCoord);
-				}
+					setup3dRendering(contents[3], myRenderer, 0.4F, 0.02875F, xCoord, (0.02875F * 2) + 0.05F, zCoord);
 				
 				if(contents[4] != null && !Helper.isOre("itemBread", contents[4]))
-				{
-					myRenderer.icon = contents[4].getIconIndex();
-					myRenderer.draw3DItem(0.4F, 0.02875F, xCoord, (0.02875F * 3) + 0.05F, zCoord);
-				}
+					setup3dRendering(contents[4], myRenderer, 0.4F, 0.02875F, xCoord, (0.02875F * 3) + 0.05F, zCoord);
 				
 				if(contents[topToastLevel] != null)
 					setTop(topToastLevel * 0.0329F, 0.05F, 0.4F, 0, xCoord, zCoord, topBreadVert, topBreadHorz, myRenderer);
@@ -203,6 +192,25 @@ public class RenderSandwich implements ISimpleBlockRenderingHandler
 			GL11.glPopMatrix();
 		}
 		return false;
+	}
+	
+	private void setup3dRendering(ItemStack is, CWTFCRenderer myRenderer, float scale, float depth, float xAdj, float yAdj, float zAdj)
+	{
+		if(is.getItem() instanceof ItemFoodTFC)
+		{
+			ItemFoodTFC food = (ItemFoodTFC)is.getItem();
+			
+			if(Food.isCooked(is))
+			{
+				int color = Food.getCookedColorMultiplier(is);
+				GL11.glColor4f(((color & 0xFF0000)>>16)/255f, ((color & 0x00ff00)>>8)/255f, (color & 0x0000ff)/255f, 1);				
+			}
+			
+			myRenderer.icon = food.getIcon(is, 0);
+			myRenderer.draw3DItem(scale, depth, xAdj, yAdj, zAdj);
+			
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		}
 	}
 	
 	private void setTop(float level, float height, float size, float shrink, float xAdj, float zAdj, IIcon texSide, IIcon texTop, CWTFCRenderer myRenderer)

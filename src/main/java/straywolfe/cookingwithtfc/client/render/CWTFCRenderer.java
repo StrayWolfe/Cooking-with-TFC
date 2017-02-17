@@ -18,6 +18,7 @@ public class CWTFCRenderer
 	public Block block;
 	public RenderBlocks renderer;
 	public IIcon icon;
+	public int uvRotate;
 	
 	public CWTFCRenderer(int x, int y, int z, Block block, RenderBlocks renderer)
 	{
@@ -59,6 +60,44 @@ public class CWTFCRenderer
             vMin = (double)icon.getMinV();
             vMax = (double)icon.getMaxV();
         }
+        
+        if (uvRotate == 2)
+        {
+        	uMin = (double)icon.getInterpolatedU(vmin * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(16.0D - umax * 16.0D);
+            uMax = (double)icon.getInterpolatedU(vmax * 16.0D);
+            vMax = (double)icon.getInterpolatedV(16.0D - umin * 16.0D);
+            viMin = vMin;
+            viMax = vMax;
+            uiMin = uMin;
+            uiMax = uMax;
+            vMin = vMax;
+            vMax = viMin;
+        }
+        else if (uvRotate == 1)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - vmax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(umin * 16.0D);
+            uMax = (double)icon.getInterpolatedU(16.0D - vmin * 16.0D);
+            vMax = (double)icon.getInterpolatedV(umax * 16.0D);
+            uiMin = uMax;
+            uiMax = uMin;
+            uMin = uMax;
+            uMax = uiMax;
+            viMin = vMax;
+            viMax = vMin;
+        }
+        else if (uvRotate == 3)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - umin * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(16.0D - umax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(16.0D - vmin * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(16.0D - vmax * 16.0D);
+        	uiMin = uMax;
+        	uiMax = uMin;
+            viMin = vMin;
+            viMax = vMax;
+        }
 
     	int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         float f = (float)(l >> 16 & 255) / 255.0F;
@@ -80,7 +119,7 @@ public class CWTFCRenderer
         f2 = 0.5F * f2;
         
         int m = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z);
-        float n = (topRight.y + topLeft.y + bottomRight.y + bottomLeft.y) / 4;
+        float n = ((topRight.y + topLeft.y + bottomRight.y + bottomLeft.y) - (y * 4)) / 4;
     	tessellator.setBrightness(n > 0.0D ? m : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y - 1, z));
         tessellator.setColorOpaque_F(f, f1, f2);
         
@@ -173,6 +212,44 @@ public class CWTFCRenderer
             vMin = (double)icon.getMinV();
             vMax = (double)icon.getMaxV();
         }
+        
+        if (uvRotate == 1)
+        {            
+            uMin = (double)icon.getInterpolatedU(vmin * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(16.0D - umax * 16.0D);
+            uMax = (double)icon.getInterpolatedU(vmax * 16.0D);
+            vMax = (double)icon.getInterpolatedV(16.0D - umin * 16.0D);
+            viMin = vMin;
+            viMax = vMax;
+            uiMax = uMin;
+            uiMin = uMax;
+            vMin = vMax;
+            vMax = viMin;
+        }
+        else if (uvRotate == 2)
+        {            
+            uMin = (double)icon.getInterpolatedU(16.0D - vmax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(umin * 16.0D);
+            uMax = (double)icon.getInterpolatedU(16.0D - vmin * 16.0D);
+            vMax = (double)icon.getInterpolatedV(umax * 16.0D);
+            uiMax = uMax;
+            uiMin = uMin;
+            uMin = uMax;
+            uMax = uiMin;
+            viMin = vMax;
+            viMax = vMin;
+        }
+        else if (uvRotate == 3)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - umin * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(16.0D - umax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(16.0D - vmin * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(16.0D - vmax * 16.0D);
+        	uiMin = uMax;
+        	uiMax = uMin;
+        	viMax = vMin;
+        	viMin = vMax;
+        }
 
     	int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         float f = (float)(l >> 16 & 255) / 255.0F;
@@ -190,7 +267,7 @@ public class CWTFCRenderer
         }
         
     	int m = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z);
-    	float n = (topRight.y + topLeft.y + bottomRight.y + bottomLeft.y) / 4;
+    	float n = ((topRight.y + topLeft.y + bottomRight.y + bottomLeft.y) - (y * 4))/4;
     	tessellator.setBrightness(n < 1.0D ? m : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y + 1, z));
         tessellator.setColorOpaque_F(f, f1, f2);
         
@@ -294,6 +371,44 @@ public class CWTFCRenderer
             vMin = (double)icon.getMinV();
             vMax = (double)icon.getMaxV();
         }
+        
+        if (uvRotate == 2)
+        {
+        	uMin = (double)icon.getInterpolatedU(vmin * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(vmax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(16.0D - umin * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(16.0D - umax * 16.0D);
+        	viMin = vMin;
+        	viMax = vMax;
+            uiMax = uMin;
+            uiMin = uMax;
+            vMin = vMax;
+            vMax = viMin;
+        }
+        else if (uvRotate == 1)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - vmax * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(16.0D - vmin * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(umax * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(umin * 16.0D);
+        	uiMax = uMax;
+        	uiMin = uMin;
+            uMin = uMax;
+            uMax = uiMin;
+            viMin = vMax;
+            viMax = vMin;
+        }
+        else if (uvRotate == 3)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - umin * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(16.0D - umax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(vmax * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(vmin * 16.0D);
+        	uiMax = uMax;
+        	uiMin = uMin;
+        	viMin = vMin;
+        	viMax = vMax;
+        }
 
     	int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         float f = (float)(l >> 16 & 255) / 255.0F;
@@ -315,7 +430,7 @@ public class CWTFCRenderer
         f2 = 0.8F * f2;
         
     	int m = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z);
-    	float n = (topRight.z + topLeft.z + bottomRight.z + bottomLeft.z) / 4;
+    	float n = ((topRight.z + topLeft.z + bottomRight.z + bottomLeft.z) - (z * 4)) / 4;
     	tessellator.setBrightness(n > 0.0D ? m : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z - 1));
         tessellator.setColorOpaque_F(f, f1, f2);
         
@@ -410,6 +525,44 @@ public class CWTFCRenderer
             vMin = (double)icon.getMinV();
             vMax = (double)icon.getMaxV();
         }
+        
+        if (uvRotate == 1)
+        {
+        	uMin = (double)icon.getInterpolatedU(vmax * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(16.0D - umin * 16.0D);
+            uMax = (double)icon.getInterpolatedU(vmin * 16.0D);
+            vMin = (double)icon.getInterpolatedV(16.0D - umax * 16.0D);
+            viMin = vMin;
+            viMax = vMax;
+            uiMax = uMin;
+            uiMin = uMax;
+            vMin = vMax;
+            vMax = viMin;
+        }
+        else if (uvRotate == 2)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - vmin * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(umin * 16.0D);
+            uMax = (double)icon.getInterpolatedU(16.0D - vmax * 16.0D);
+            vMax = (double)icon.getInterpolatedV(umax * 16.0D);
+            uiMax = uMax;
+            uiMin = uMin;
+            uMin = uMax;
+            uMax = uiMin;
+            viMin = vMax;
+            viMax = vMin;
+        }
+        else if (uvRotate == 3)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - umin * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(16.0D - umax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(vmin * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(vmax * 16.0D);
+        	uiMax = uMax;
+        	uiMin = uMin;
+        	viMin = vMin;
+        	viMax = vMax;
+        }
 
     	int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         float f = (float)(l >> 16 & 255) / 255.0F;
@@ -431,7 +584,7 @@ public class CWTFCRenderer
         f2 = 0.8F * f2;
         
     	int m = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z);
-    	float n = (topRight.z + topLeft.z + bottomRight.z + bottomLeft.z) / 4;
+    	float n = ((topRight.z + topLeft.z + bottomRight.z + bottomLeft.z) - (z * 4)) / 4;
     	tessellator.setBrightness(n < 1.0D ? m : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z + 1));
         tessellator.setColorOpaque_F(f, f1, f2);
         
@@ -526,7 +679,45 @@ public class CWTFCRenderer
             vMin = (double)icon.getMinV();
             vMax = (double)icon.getMaxV();
         }
-
+        
+        if (uvRotate == 1)
+        {
+        	uMin = (double)icon.getInterpolatedU(vmax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(16.0D - umax * 16.0D);
+            uMax = (double)icon.getInterpolatedU(vmin * 16.0D);
+            vMax = (double)icon.getInterpolatedV(16.0D - umin * 16.0D);
+            viMin = vMin;
+            viMax = vMax;
+            uiMax = uMin;
+            uiMin = uMax;
+            vMin = vMax;
+            vMax = viMin;
+        }
+        else if (uvRotate == 2)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - vmin * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(umin * 16.0D);
+            uMax = (double)icon.getInterpolatedU(16.0D - vmax * 16.0D);
+            vMax = (double)icon.getInterpolatedV(umax * 16.0D);
+            uiMax = uMax;
+            uiMin = uMin;
+            uMin = uMax;
+            uMax = uiMin;
+            viMin = vMax;
+            viMax = vMin;
+        }
+        else if (uvRotate == 3)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - umin * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(16.0D - umax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(vmin * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(vmax * 16.0D);
+        	uiMax = uMax;
+        	uiMin = uMin;
+        	viMin = vMin;
+        	viMax = vMax;
+        }
+        
     	int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         float f = (float)(l >> 16 & 255) / 255.0F;
         float f1 = (float)(l >> 8 & 255) / 255.0F;
@@ -547,7 +738,7 @@ public class CWTFCRenderer
         f2 = 0.6F * f2;
         
     	int m = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z);
-    	float n = (topRight.x + topLeft.x + bottomRight.x + bottomLeft.x) / 4;
+    	float n = ((topRight.x + topLeft.x + bottomRight.x + bottomLeft.x) - (x * 4)) / 4;
     	tessellator.setBrightness(n > 0.0D ? m : block.getMixedBrightnessForBlock(renderer.blockAccess, x - 1, y, z));
         tessellator.setColorOpaque_F(f, f1, f2);
         
@@ -650,6 +841,44 @@ public class CWTFCRenderer
             vMin = (double)icon.getMinV();
             vMax = (double)icon.getMaxV();
         }
+        
+        if (uvRotate == 2)
+        {
+        	uMin = (double)icon.getInterpolatedU(vmax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(16.0D - umin * 16.0D);
+            uMax = (double)icon.getInterpolatedU(vmin * 16.0D);
+            vMax = (double)icon.getInterpolatedV(16.0D - umax * 16.0D);
+            viMin = vMin;
+            viMax = vMax;
+            uiMax = uMin;
+            uiMin = uMax;
+            vMin = vMax;
+            vMax = viMin;
+        }
+        else if (uvRotate == 1)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - vmin * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(umax * 16.0D);
+            uMax = (double)icon.getInterpolatedU(16.0D - vmax * 16.0D);
+            vMax = (double)icon.getInterpolatedV(umin * 16.0D);
+            uiMax = uMax;
+            uiMin = uMin;
+            uMin = uMax;
+            uMax = uiMin;
+            viMin = vMax;
+            viMax = vMin;
+        }
+        else if (uvRotate == 3)
+        {
+        	uMin = (double)icon.getInterpolatedU(16.0D - umin * 16.0D);
+        	uMax = (double)icon.getInterpolatedU(16.0D - umax * 16.0D);
+        	vMin = (double)icon.getInterpolatedV(vmin * 16.0D);
+        	vMax = (double)icon.getInterpolatedV(vmax * 16.0D);
+        	uiMax = uMax;
+        	uiMin = uMin;
+            viMin = vMin;
+            viMax = vMax;
+        }
 
     	int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         float f = (float)(l >> 16 & 255) / 255.0F;
@@ -671,7 +900,7 @@ public class CWTFCRenderer
         f2 = 0.6F * f2;
         
     	int m = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z);
-    	float n = (topRight.x + topLeft.x + bottomRight.x + bottomLeft.x) / 4;
+    	float n = ((topRight.x + topLeft.x + bottomRight.x + bottomLeft.x) - (x * 4)) / 4;
     	tessellator.setBrightness(n < 1.0D ? m : block.getMixedBrightnessForBlock(renderer.blockAccess, x + 1, y, z));
     	tessellator.setColorOpaque_F(f, f1, f2);
     	
@@ -887,4 +1116,69 @@ public class CWTFCRenderer
         tessellator.setColorOpaque_F(red, green, blue);
     	tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
 	}
+    
+    public void renderSquareInvYNeg(double xmin, double xmax, double ymin, double zmin, double zmax, float umin, float umax, float vmin, float vmax)
+    {
+    	Tessellator tessellator = Tessellator.instance;
+
+        if (renderer.hasOverrideBlockTexture())
+        	icon = renderer.overrideBlockTexture;
+
+        double uMin = (double)icon.getInterpolatedU(umin * 16.0D);
+        double uMax = (double)icon.getInterpolatedU(umax * 16.0D);
+        double vMin = (double)icon.getInterpolatedV(vmin * 16.0D);
+        double vMax = (double)icon.getInterpolatedV(vmax * 16.0D);
+        
+        double uiMax = (double)icon.getInterpolatedU(umax * 16.0D);
+        double uiMin = (double)icon.getInterpolatedU(umin * 16.0D);
+        double viMin = (double)icon.getInterpolatedV(vmin * 16.0D);
+        double viMax = (double)icon.getInterpolatedV(vmax * 16.0D);
+
+        if (umin < 0.0D || umax > 1.0D)
+        {
+            uMin = (double)icon.getMinU();
+            uMax = (double)icon.getMaxU();
+        }
+
+        if (vmin < 0.0D || vmax > 1.0D)
+        {
+            vMin = (double)icon.getMinV();
+            vMax = (double)icon.getMaxV();
+        }    
+        
+        tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, -1.0F, 0.0F);
+        tessellator.addVertexWithUV(xmin, ymin, zmax, uiMin, viMax);
+        tessellator.addVertexWithUV(xmin, ymin, zmin, uMin, vMin);
+        tessellator.addVertexWithUV(xmax, ymin, zmin, uiMax, viMin);
+        tessellator.addVertexWithUV(xmax, ymin, zmax, uMax, vMax);
+        tessellator.draw();
+        
+        renderer.clearOverrideBlockTexture();
+    }
+    
+    public void renderSquareInvYPos(double xmin, double xmax, double ymax, double zmin, double zmax, float umin, float umax, float vmin, float vmax)
+    {
+    	
+    }
+    
+    public void renderSquareInvZNeg(double xmin, double xmax, double ymin, double ymax, double zmin, float umin, float umax, float vmin, float vmax)
+    {
+    	
+    }
+    
+    public void renderSquareInvZPos(double xmin, double xmax, double ymin, double ymax, double zmax, float umin, float umax, float vmin, float vmax)
+    {
+    	
+    }
+    
+    public void renderSquareInvXNeg(double xmin, double ymin, double ymax, double zmin, double zmax, float umin, float umax, float vmin, float vmax)
+    {
+    	
+    }
+    
+    public void renderSquareInvXPos(double xmax, double ymin, double ymax, double zmin, double zmax, float umin, float umax, float vmin, float vmax)
+    {
+    	
+    }
 }

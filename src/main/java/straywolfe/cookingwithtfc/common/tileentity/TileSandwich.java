@@ -210,6 +210,27 @@ public class TileSandwich extends NetworkTileEntity
 		if(!worldObj.isRemote)
 		{			
 			TFC_Core.handleItemTicking(sandwichContents, worldObj,  xCoord, yCoord, zCoord, 1.1f);
+			
+			boolean destroyBlock = true;
+			
+			for(int i = 0; i < sandwichContents.length; i++)
+			{
+				if(sandwichContents[i] != null)
+					destroyBlock = false;
+				else if(i + 1 < sandwichContents.length && sandwichContents[i + 1] != null)
+				{
+					ejectItem();
+					worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+					worldObj.removeTileEntity(xCoord, yCoord, zCoord);
+					return;
+				}
+			}
+			
+			if(destroyBlock)
+			{
+				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+				worldObj.removeTileEntity(xCoord, yCoord, zCoord);
+			}
 		}
 	}
 	

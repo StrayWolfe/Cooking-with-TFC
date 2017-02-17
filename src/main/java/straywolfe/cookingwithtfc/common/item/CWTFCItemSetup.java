@@ -15,7 +15,9 @@ import com.bioxx.tfc.api.Enums.EnumSize;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
+import straywolfe.cookingwithtfc.common.item.itemblock.ItemGourdBlock;
 import straywolfe.cookingwithtfc.common.lib.Settings;
+import straywolfe.cookingwithtfc.common.registries.CropRegistry;
 
 public class CWTFCItemSetup extends CWTFCItems
 {
@@ -91,6 +93,8 @@ public class CWTFCItemSetup extends CWTFCItems
 		redBellPepperCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Vegetable, 20, 0, 0, 0, 20, snackSize).setUnlocalizedName(TFCItems.redBellPepper.getUnlocalizedName().substring(5)).setCreativeTab(null);
 		squashCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Vegetable, 20, 0, 0, 0, 20, snackSize).setUnlocalizedName(TFCItems.squash.getUnlocalizedName().substring(5)).setCreativeTab(null);
 		seaWeedCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Vegetable, 0, 0, 10, 10, 10, snackSize).setUnlocalizedName(TFCItems.seaWeed.getUnlocalizedName().substring(5)).setCreativeTab(null);
+		lettuce = new ItemTFCFoodTransform(EnumFoodGroup.Vegetable, 0, 0, 0, 10, 30, snackSize).setCustomIcon(true).setUnlocalizedName("Lettuce");
+		celery = new ItemTFCFoodTransform(EnumFoodGroup.Vegetable, 20, 0, 0, 0, 20, snackSize).setCustomIcon(true).setUnlocalizedName("Celery");
 		
 		//Fruit
 		redAppleCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 25, 5, 0, 10, 0, snackSize).setDecayRate(2.0f).setUnlocalizedName(TFCItems.redApple.getUnlocalizedName().substring(5)).setCreativeTab(null);
@@ -152,6 +156,23 @@ public class CWTFCItemSetup extends CWTFCItems
 		
 		sugarcaneCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.None, 30, 0, 0, 0, 0, snackSize, 0.01F, false, false).setFolder("plants/").setUnlocalizedName("Sugarcane").setCreativeTab(null);
 		sugarCWTFC = new ItemTFCFoodTransform(EnumFoodGroup.None, 30, 0, 0, 0, 0, snackSize, 0.01F, false, false).setUnlocalizedName("Sugar").setCreativeTab(null);
+		
+		//Seeds
+		seedsPumpkin = new ItemCustomSeeds(CropRegistry.PUMPKIN).setUnlocalizedName("PumpkinSeeds");
+		seedsMelon = new ItemCustomSeeds(CropRegistry.WATERMELON).setUnlocalizedName("MelonSeeds");
+		seedsCelery = new ItemCustomSeeds(CropRegistry.CELERY).setUnlocalizedName("CelerySeeds");
+		seedsLettuce = new ItemCustomSeeds(CropRegistry.LETTUCE).setUnlocalizedName("LettuceSeeds");
+		sporesBrownMushroom = new ItemCustomSeeds(CropRegistry.BROWNMUSHROOM).setUnlocalizedName("BrownMushroomSpores");
+		sporesRedMushroom = new ItemCustomSeeds(CropRegistry.REDMUSHROOM).setUnlocalizedName("RedMushroomSpores");
+		
+		
+		//Fruits
+		watermelon = new ItemTFCFoodTransform(EnumFoodGroup.Fruit, 30, 5, 0, 0, 0, snackSize).setCustomIcon(true).setDecayRate(2.0f).setUnlocalizedName("SlicedWatermelon");
+		brownMushroom = new ItemTFCFoodTransform(EnumFoodGroup.Vegetable, 0, 0, 0, 0, 50, snackSize).setCustomIcon(true).setDecayRate(2.0f).setUnlocalizedName("BrownMushroom");
+		redMushroom = new ItemTFCFoodTransform(EnumFoodGroup.Vegetable, 0, 0, 0, 0, 50, snackSize).setCustomIcon(true).setDecayRate(2.0f).setUnlocalizedName("RedMushroom");
+		pumpkinBlock = new ItemGourdBlock(0).setUnlocalizedName("Pumpkin");
+		melonBlock = new ItemGourdBlock(1).setUnlocalizedName("Watermelon");
+		jackolanternBlock = new ItemGourdBlock(2).setUnlocalizedName("JackOLantern");
 		
 		//Salads
 		VeggySalad = new ItemTFCMealTransform(17, 5, 0, 0, 34, mealSize, 20, SkillRank.Novice, "VeggySalad").setIconPath("Salad0");

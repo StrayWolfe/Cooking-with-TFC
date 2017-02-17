@@ -25,8 +25,8 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
-import straywolfe.cookingwithtfc.api.recipe.CookingPotManager;
-import straywolfe.cookingwithtfc.api.recipe.CookingPotRecipe;
+import straywolfe.cookingwithtfc.api.managers.CookingPotManager;
+import straywolfe.cookingwithtfc.api.managers.CookingPotRecipe;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
 
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;

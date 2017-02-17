@@ -112,6 +112,24 @@ public class CWTFCItems
 	public static Item sugarcaneCWTFC;
 	public static Item sugarCWTFC;
 	
+	//Seeds
+	public static Item seedsCelery;
+	public static Item seedsLettuce;
+	public static Item seedsPumpkin;
+	public static Item seedsMelon;
+	public static Item sporesBrownMushroom;
+	public static Item sporesRedMushroom;
+	
+	public static Item watermelon;
+	public static Item brownMushroom;
+	public static Item redMushroom;
+	public static Item lettuce;
+	public static Item celery;
+	
+	public static Item pumpkinBlock;
+	public static Item melonBlock;
+	public static Item jackolanternBlock;
+	
 	public static Item VeggySalad;
 	public static Item PotatoSalad;
 	public static Item FruitSalad;

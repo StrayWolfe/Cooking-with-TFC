@@ -17,9 +17,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import straywolfe.cookingwithtfc.api.recipe.OvenManager;
-import straywolfe.cookingwithtfc.api.recipe.OvenRecipe;
-import straywolfe.cookingwithtfc.common.lib.ClayOvenStages;
+import straywolfe.cookingwithtfc.api.managers.OvenManager;
+import straywolfe.cookingwithtfc.api.managers.OvenRecipe;
+import straywolfe.cookingwithtfc.common.lib.Constants;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 
 public class TileClayOven extends NetworkTileEntity implements IInventory
@@ -98,13 +98,13 @@ public class TileClayOven extends NetworkTileEntity implements IInventory
 
 			if(curingTime > 0)
 			{
-				if(buildStage <= ClayOvenStages.CHIMNEY && TFC_Core.isExposedToRain(worldObj, xCoord, yCoord, zCoord))
+				if(buildStage <= Constants.CHIMNEY && TFC_Core.isExposedToRain(worldObj, xCoord, yCoord, zCoord))
 				{
 					curingTime = TFC_Time.getTotalTicks();
 					update = true;
 				}
 
-				if(buildStage >= ClayOvenStages.INTERIOR && fireTemp < 300)
+				if(buildStage >= Constants.INTERIOR && fireTemp < 300)
 					curingTime++;
 				
 				if(getCuringStage() > curingFlag)
@@ -113,7 +113,7 @@ public class TileClayOven extends NetworkTileEntity implements IInventory
 					
 					if(getCuringStage() == 3)
 					{
-						if(buildStage == ClayOvenStages.INTERIOR)
+						if(buildStage == Constants.INTERIOR)
 							buildStage++;
 						
 						setCuringTime(0);
@@ -280,7 +280,7 @@ public class TileClayOven extends NetworkTileEntity implements IInventory
 	{		
 		float time;
 		
-		if(buildStage == ClayOvenStages.INTERIOR)
+		if(buildStage == Constants.INTERIOR)
 			time = (float)(TFC_Time.getTotalTicks() - curingTime) / Settings.ovenFiringTime;
 		else
 			time = (float)(TFC_Time.getTotalTicks() - curingTime) / Settings.ovenHardeningTime;
@@ -330,11 +330,11 @@ public class TileClayOven extends NetworkTileEntity implements IInventory
 			}
 		}
 		
-		if(buildStage <= ClayOvenStages.CHIMNEY && getCuringStage() < 3)
+		if(buildStage <= Constants.CHIMNEY && getCuringStage() < 3)
 		{
 			int clayBalls = 5;
 			
-			if(buildStage > ClayOvenStages.PLATFORM)
+			if(buildStage > Constants.PLATFORM)
 				clayBalls = clayBalls * (buildStage - 1);
 			
 			ItemStack clay = new ItemStack(TFCItems.clayBall, clayBalls);

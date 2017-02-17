@@ -15,6 +15,7 @@ tile.CookingPot.name=Cooking Pot
 tile.PrepTableBlock.name=Food Table
 tile.MeatsBlock.name=Meat
 tile.ClayOven.name=Clay Oven
+tile.TableStorage.name=Food Table Items
 
 #=========
 #= Items =
@@ -37,6 +38,18 @@ item.Venison Raw.name=Raw Venison
 item.Venison Cooked.name=Cooked Venison
 item.HorseMeat Raw.name=Raw Horse Meat
 item.HorseMeat Cooked.name=Cooked Horse Meat
+
+item.PumpkinSeeds.name=Pumpkin Seeds
+item.MelonSeeds.name=Watermelon Seeds
+item.BrownMushroomSpores.name=Brown Mushroom Spores
+item.RedMushroomSpores.name=Red Mushroom Spores
+item.LettuceSeeds.name=Lettuce Seeds
+item.CelerySeeds.name=Celery Seeds
+
+item.BrownMushroom.name=Brown Mushroom
+item.RedMushroom.name=Red Mushroom
+item.Lettuce.name=Lettuce
+item.Celery.name=Celery
 
 item.VeggySalad.name=Vegetable Salad
 item.PotatoSalad.name=Potato Salad
@@ -73,6 +86,10 @@ item.clayCookingPot.Clay.name=Clay Cooking Pot
 item.clayCookingPot.Ceramic.name=Ceramic Cooking Pot
 
 item.clayOvenWall.name=Oven Wall
+item.SlicedWatermelon.name=Sliced Watermelon
+item.Pumpkin.name=Pumpkin
+item.Watermelon.name=Watermelon
+item.JackOLantern.name=Jack O' Lantern
 
 #=======
 #= GUI =

@@ -22,7 +22,10 @@ public class TileMeat extends NetworkTileEntity
 		{
 			placedMeat = TFC_Core.tickDecay(placedMeat, worldObj,  xCoord, yCoord, zCoord, 1.1f, 1f);
 			if(placedMeat == null)
+			{
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+				worldObj.removeTileEntity(xCoord, yCoord, zCoord);
+			}
 		}
 	}
 	

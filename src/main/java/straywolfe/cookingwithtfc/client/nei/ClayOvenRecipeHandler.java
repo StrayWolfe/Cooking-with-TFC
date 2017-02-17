@@ -14,8 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
-import straywolfe.cookingwithtfc.api.recipe.OvenManager;
-import straywolfe.cookingwithtfc.api.recipe.OvenRecipe;
+import straywolfe.cookingwithtfc.api.managers.OvenManager;
+import straywolfe.cookingwithtfc.api.managers.OvenRecipe;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.lib.Textures;
 

@@ -5,17 +5,7 @@ import com.bioxx.tfc.api.TFCBlocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import straywolfe.cookingwithtfc.common.block.BlockBowl;
-import straywolfe.cookingwithtfc.common.block.BlockClayOven;
-import straywolfe.cookingwithtfc.common.block.BlockCookingPot;
-import straywolfe.cookingwithtfc.common.block.BlockGrains;
-import straywolfe.cookingwithtfc.common.block.BlockHopperCWTFC;
-import straywolfe.cookingwithtfc.common.block.BlockMeat;
-import straywolfe.cookingwithtfc.common.block.BlockMixBowl;
-import straywolfe.cookingwithtfc.common.block.BlockNestBoxCWTFC;
-import straywolfe.cookingwithtfc.common.block.BlockPrepTable;
-import straywolfe.cookingwithtfc.common.block.BlockPrepTable2;
-import straywolfe.cookingwithtfc.common.block.BlockSandwich;
+import straywolfe.cookingwithtfc.common.block.*;
 import straywolfe.cookingwithtfc.common.item.itemblock.*;
 
 public class CWTFCBlocks 
@@ -29,6 +19,7 @@ public class CWTFCBlocks
 	public static Block sandwichCWTFC;
 	public static Block bowlCWTFC;
 	public static Block clayOven;
+	public static Block tableStorage;
 	
 	public static Block prepTableN;
 	public static Block prepTable2N;
@@ -39,6 +30,9 @@ public class CWTFCBlocks
 	public static Block prepTableW;
 	public static Block prepTable2W;
 	
+	public static Block customGourd;
+	public static Block customCrop;
+	
 	public static int mixingBowlRenderID;
 	public static int prepTableRenderID;
 	public static int meatRenderID;
@@ -46,6 +40,10 @@ public class CWTFCBlocks
 	public static int bowlRenderID;
 	public static int clayOvenRenderID;
 	public static int sandwichRenderID;
+	public static int tableStorageRenderID;
+	public static int gourdRenderID;
+	public static int gourdCropRenderID;
+	public static int customCropRenderID;
 	
 	public static void initialise()
 	{
@@ -67,6 +65,7 @@ public class CWTFCBlocks
 		sandwichCWTFC = new BlockSandwich();
 		bowlCWTFC = new BlockBowl();
 		clayOven = new BlockClayOven();
+		tableStorage = new BlockTableStorage();
 		
 		prepTableN = new BlockPrepTable();
 		prepTable2N = new BlockPrepTable2();
@@ -76,6 +75,9 @@ public class CWTFCBlocks
 		prepTable2E = new BlockPrepTable2();
 		prepTableW = new BlockPrepTable();
 		prepTable2W = new BlockPrepTable2();
+		
+		customGourd = new BlockGourd();
+		customCrop = new BlockCrop();
 	}
 	
 	public static void registerBlocks()
@@ -89,6 +91,9 @@ public class CWTFCBlocks
 		GameRegistry.registerBlock(sandwichCWTFC, "sandwichCWTFC");
 		GameRegistry.registerBlock(bowlCWTFC, "bowlCWTFC");
 		GameRegistry.registerBlock(clayOven, "clayOven");
+		GameRegistry.registerBlock(tableStorage, "tableStorage");
+		GameRegistry.registerBlock(customGourd, "customGourd");
+		GameRegistry.registerBlock(customCrop, "customCrop");
 		
 		GameRegistry.registerBlock(prepTableN, ItemPrepTable.class, "PrepTableN");
 		GameRegistry.registerBlock(prepTable2N, ItemPrepTable2.class, "PrepTable2N");

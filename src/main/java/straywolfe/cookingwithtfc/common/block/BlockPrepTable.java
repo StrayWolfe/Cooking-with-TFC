@@ -20,6 +20,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -30,6 +31,7 @@ import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.tileentity.TileBowl;
 import straywolfe.cookingwithtfc.common.tileentity.TileMeat;
 import straywolfe.cookingwithtfc.common.tileentity.TileSandwich;
+import straywolfe.cookingwithtfc.common.tileentity.TileTableStorage;
 
 public class BlockPrepTable extends BlockTerra
 {		
@@ -143,62 +145,73 @@ public class BlockPrepTable extends BlockTerra
 						}
 					}
 					
-					if(knife != null || knifeNotNeeded)
+					if((knife != null || knifeNotNeeded) && world.setBlock(x, y + 1, z, CWTFCBlocks.sandwichCWTFC))
 					{
-						Block block = world.getBlock(x, y, z);
-						if(block != null && (block instanceof BlockPrepTable || block instanceof BlockPrepTable2))
+						TileSandwich te = (TileSandwich)world.getTileEntity(x, y + 1, z);
+						
+						float size = 0.2F;
+						float xMin = hitX - size;
+						float xMax = hitX + size;
+						float zMin = hitZ - size;
+						float zMax = hitZ + size;
+						
+						if(!(xMin >= 0 && xMax <= 1 && zMin >= 0 && zMax <= 1))
 						{
-							if(world.setBlock(x, y + 1, z, CWTFCBlocks.sandwichCWTFC))
-							{
-								TileSandwich te = (TileSandwich)world.getTileEntity(x, y + 1, z);
-								
-								float size = 0.2F;
-								float xMin = hitX - size;
-								float xMax = hitX + size;
-								float zMin = hitZ - size;
-								float zMax = hitZ + size;
-								
-								if(!(xMin >= 0 && xMax <= 1 && zMin >= 0 && zMax <= 1))
-								{
-									if(xMin < 0)
-										xMin = 0;
-									
-									if(xMax > 1)
-										xMin = 1 - (size * 2);
-									
-									if(zMin < 0)
-										zMin = 0;
-									
-									if(zMax > 1)
-										zMin = 1 - (size * 2);
-								}
-								
-								ItemStack bread = equipped.copy();
-								
-								if(Food.getDecay(equipped) > 0)
-								{
-									Food.setWeight(equipped, Food.getWeight(equipped) - Food.getDecay(equipped) - 1);
-									Food.setDecay(equipped, 0);
-								}
-								else
-									Food.setWeight(equipped, Food.getWeight(equipped) - 1);
-								
-								Food.setWeight(bread, 1);
-								te.setTopSandwichItem(bread);
-								te.setSandwichCoord(xMin, 0);
-								te.setSandwichCoord(zMin, 1);
-								
-								if(!knifeNotNeeded)
-								{
-									knife.setItemDamage(knife.getItemDamage() + 1);
-									if(knife.getItemDamage() > knife.getMaxDamage())
-										player.inventory.setInventorySlotContents(slot, null);
-								}
-								
-								return true;
-							}
+							if(xMin < 0)
+								xMin = 0;
+							
+							if(xMax > 1)
+								xMin = 1 - (size * 2);
+							
+							if(zMin < 0)
+								zMin = 0;
+							
+							if(zMax > 1)
+								zMin = 1 - (size * 2);
 						}
+						
+						ItemStack bread = equipped.copy();
+						
+						if(Food.getDecay(equipped) > 0)
+						{
+							Food.setWeight(equipped, Food.getWeight(equipped) - Food.getDecay(equipped) - 1);
+							Food.setDecay(equipped, 0);
+						}
+						else
+							Food.setWeight(equipped, Food.getWeight(equipped) - 1);
+						
+						Food.setWeight(bread, 1);
+						te.setTopSandwichItem(bread);
+						te.setSandwichCoord(xMin, 0);
+						te.setSandwichCoord(zMin, 1);
+						
+						if(!knifeNotNeeded)
+						{
+							knife.setItemDamage(knife.getItemDamage() + 1);
+							if(knife.getItemDamage() > knife.getMaxDamage())
+								player.inventory.setInventorySlotContents(slot, null);
+						}
+						
+						return true;
 					}
+				}
+				else if(!(equipped.getItem() instanceof ItemBlock) && world.setBlock(x, y + 1, z, CWTFCBlocks.tableStorage))
+				{
+					TileTableStorage te = (TileTableStorage)world.getTileEntity(x, y + 1, z);
+					
+					int slot = 0;
+					
+					if(hitX > 0.5 && hitZ > 0.5)
+						slot = 3;
+					else if(hitX <= 0.5 && hitZ > 0.5)
+						slot = 2;
+					else if(hitX > 0.5 && hitZ <= 0.5)
+						slot = 1;
+					
+					te.setInventorySlotContents(slot, equipped);
+					player.setCurrentItemOrArmor(0, null);
+					
+					return true;
 				}
 			}
 		}
