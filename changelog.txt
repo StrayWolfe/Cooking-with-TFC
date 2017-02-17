@@ -1,6 +1,21 @@
 Changelog
 =================================================
 -------------------------------------------------
+Cooking With TFC 0.0.6.0
+-------------------------------------------------
+New Feature
++ Added New Crops: pumpkin, watermelon, mushrooms, celery and lettuce
++ Added ability to store items on top of the prep table
+
+Tweaks
++ Pumpkins now drop pumpkin seeds rather than the pumpkin. Configs can change this behavior.
+
+Bug Fixes
++ Fixed sandwich meats not showing correct cooked icon and shading
++ Fixed oven breaking if made on any other block than igneous intrusive or extrusive stone
++ Fixed sandwich food ticking to drop items if nothing is beneath it
++ Fixed TFC powders turning into flux on pickup
+-------------------------------------------------
 Cooking With TFC 0.0.5.0
 -------------------------------------------------
 New Feature
