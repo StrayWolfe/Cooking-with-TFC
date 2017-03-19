@@ -49,6 +49,8 @@ public class ConfigHandler
 		
 		Settings.disableLettuce = config.getBoolean("disableLettuce", "Crops", false, "Disable Lettuce world generation: ");
 		
+		Settings.disablePeanut = config.getBoolean("disablePeanut", "Crops", false, "Disable Peanut world generation: ");
+		
 		Settings.tfcJackOLantern = config.getBoolean("tfcJackOLantern", "Crops", false, "Enable TFC Jack O' Lantern drop from carving a pumpkin: ");
 		
 		Settings.vanillaMelons = config.getBoolean("vanillaMelons", "Crops", false, "Enable vanilla melon drops from watermelon crops: ");

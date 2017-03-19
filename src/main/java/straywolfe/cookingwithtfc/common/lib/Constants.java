@@ -15,4 +15,10 @@ public class Constants
 	public static int CHIMNEY = 10;
 	public static int INTERIOR = 11;
 	public static int CURED = 12;
+	
+	//Wood Types
+	public static String[] WOODTYPES = new String[]{"Walnut"};
+	
+	//Fruit Tree Types
+	public static String[] NUTTREETYPES = new String[]{"Almond", "Cashew", "Coconut", "Hazelnut", "Macadamia", "Pistachio"};
 }

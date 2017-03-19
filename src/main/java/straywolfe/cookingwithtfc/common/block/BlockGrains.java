@@ -79,11 +79,11 @@ public class BlockGrains extends BlockTerraContainer
 		
 		for(int i = 1; i < 5; i++)
 		{
-			barleyIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":" + "Barley (" + i + ")");
-			oatIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":" + "Oat (" + i + ")");
-			riceIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":" + "Rice (" + i + ")");
-			ryeIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":" + "Rye (" + i + ")");
-			wheatIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":" + "Wheat (" + i + ")");
+			barleyIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":Grains/Barley (" + i + ")");
+			oatIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":Grains/Oat (" + i + ")");
+			riceIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":Grains/Rice (" + i + ")");
+			ryeIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":Grains/Rye (" + i + ")");
+			wheatIcon[i - 1] = iconRegisterer.registerIcon(ModInfo.ModID + ":Grains/Wheat (" + i + ")");
 		}
 	}
 	

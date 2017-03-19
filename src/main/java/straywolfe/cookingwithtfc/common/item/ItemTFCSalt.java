@@ -43,7 +43,7 @@ public class ItemTFCSalt extends ItemTFCFoodTransform
 	{	
 		metaIcons = new IIcon[2];
 		metaIcons[0] = registerer.registerIcon(Reference.MOD_ID + ":Salt");
-		metaIcons[1] = registerer.registerIcon(ModInfo.ModID + ":SeaSalt");
+		metaIcons[1] = registerer.registerIcon(ModInfo.ModID + ":Foods/SeaSalt");
 		
 		MinecraftForgeClient.registerItemRenderer(this, new FoodItemRenderer());
 	}

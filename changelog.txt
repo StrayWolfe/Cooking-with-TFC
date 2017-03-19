@@ -1,6 +1,31 @@
 Changelog
 =================================================
 -------------------------------------------------
+Cooking With TFC 0.0.7.0
+-------------------------------------------------
+New Features:
++ Added Almond Fruit Tree with sapling and almonds
++ Added Cashew Fruit Tree with sapling and cashews
++ Added Coconut Fruit Tree with sapling and coconuts
++ Added Hazelnut Fruit Tree with sapling and hazelnuts
++ Added Macadamia Fruit Tree with sapling and macadamia nuts
++ Added Pistachio Fruit Tree with sapling and pistachios
++ Added Peanut Crop with peanut and seeds
++ Added Chestnut drop for Chestnut Leaves
++ Added Pecan drop for Hickory Leaves
++ Added Acorn drop for Oak Leaves
++ Added Pine nut drop for Pine Leaves
++ Added Walnut Tree with walnut, sapling, log, lumber and plank
+
+Tweaks:
++ Removed unused code for converting TFC foods
+
+Bug Fixes:
++ Fixed salads not returning a bowl after consumption
++ Fixed melon not retaining NBT data when the block is broken
++ Fixed deminishing returns config option not working
++ Fixed sandwich localization and NBT data sync issue
+-------------------------------------------------
 Cooking With TFC 0.0.6.0
 -------------------------------------------------
 New Feature

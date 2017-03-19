@@ -16,40 +16,50 @@ tile.PrepTableBlock.name=Food Table
 tile.MeatsBlock.name=Meat
 tile.ClayOven.name=Clay Oven
 tile.TableStorage.name=Food Table Items
+tile.Sapling.Walnut.name=Walnut Sapling
+tile.Leaves.Walnut.name=Walnut Leaves
+tile.Log.Walnut.name=Walnut Log
+tile.WoodVert.Walnut.name=Walnut Log
+tile.NutTreeLog.Almond.name=Almond Sapling
+tile.NutTreeLog.Cashew.name=Cashew Sapling
+tile.NutTreeLog.Coconut.name=Coconut Sapling
+tile.NutTreeLog.Hazelnut.name=Hazelnut Sapling
+tile.NutTreeLog.Macadamia.name=Macadamia Nut Sapling
+tile.NutTreeLog.Pistachio.name=Pistachio Sapling
+tile.woodPlank.Walnut.name=Walnut Planks
+tile.LumberConstruct.name=Lumber
+
 
 #=========
 #= Items =
 #=========
-item.Rutabaga.name=Rutabaga
-
-item.Porkchop Raw.name=Raw Pork
-item.Porkchop Cooked.name=Cooked Pork
-item.Fish Raw.name=Raw Fish
-item.Fish Cooked.name=Cooked Fish
-item.Beef Raw.name=Raw Beef
-item.Beef Cooked.name=Cooked Beef
-item.Chicken Raw.name=Raw Chicken
-item.Chicken Cooked.name=Cooked Chicken
-item.Calamari Raw.name=Raw Calamari
-item.Calamari Cooked.name=Cooked Calamari
-item.Mutton Raw.name=Raw Mutton
-item.Mutton Cooked.name=Cooked Mutton
-item.Venison Raw.name=Raw Venison
-item.Venison Cooked.name=Cooked Venison
-item.HorseMeat Raw.name=Raw Horse Meat
-item.HorseMeat Cooked.name=Cooked Horse Meat
-
-item.PumpkinSeeds.name=Pumpkin Seeds
-item.MelonSeeds.name=Watermelon Seeds
-item.BrownMushroomSpores.name=Brown Mushroom Spores
-item.RedMushroomSpores.name=Red Mushroom Spores
-item.LettuceSeeds.name=Lettuce Seeds
-item.CelerySeeds.name=Celery Seeds
+item.SlicedWatermelon.name=Sliced Watermelon
+item.Pumpkin.name=Pumpkin
+item.Watermelon.name=Watermelon
 
 item.BrownMushroom.name=Brown Mushroom
 item.RedMushroom.name=Red Mushroom
 item.Lettuce.name=Lettuce
 item.Celery.name=Celery
+
+item.Broth.name=Broth
+item.BoiledChicken.name=Boiled Chicken
+item.BoiledBeef.name=Boiled Beef
+item.BoiledFish.name=Boiled Fish
+item.BoiledPork.name=Boiled Pork
+item.BoiledVenison.name=Boiled Venison
+item.Peanut.name=Peanut
+item.Chestnut.name=Chestnut
+item.Pecan.name=Pecan
+item.Acorn.name=Acorn
+item.PineNut.name=Pine nut
+item.Walnut.name=Walnut
+item.Almond.name=Almond
+item.Cashew.name=Cashew
+item.Coconut.name=Coconut
+item.Hazelnut.name=Hazelnut
+item.Macadamia Nut.name=Macadamia Nut
+item.Pistachio.name=Pistachio
 
 item.VeggySalad.name=Vegetable Salad
 item.PotatoSalad.name=Potato Salad
@@ -72,12 +82,13 @@ item.VenisonSteakSandwich.name=Steak Sandwich
 item.VegetarianSandwich.name=Vegetarian Sandwich
 item.ToastSandwich.name=Bread Sandwich
 
-item.Broth.name=Broth
-item.BoiledChicken.name=Boiled Chicken
-item.BoiledBeef.name=Boiled Beef
-item.BoiledFish.name=Boiled Fish
-item.BoiledPork.name=Boiled Pork
-item.BoiledVenison.name=Boiled Venison
+item.PumpkinSeeds.name=Pumpkin Seeds
+item.MelonSeeds.name=Watermelon Seeds
+item.BrownMushroomSpores.name=Brown Mushroom Spores
+item.RedMushroomSpores.name=Red Mushroom Spores
+item.LettuceSeeds.name=Lettuce Seeds
+item.CelerySeeds.name=Celery Seeds
+item.PeanutSeeds.name=Peanut Seeds
 
 item.Salt.Rock.name=Rock Salt
 item.Salt.Sea.name=Sea Salt
@@ -86,10 +97,9 @@ item.clayCookingPot.Clay.name=Clay Cooking Pot
 item.clayCookingPot.Ceramic.name=Ceramic Cooking Pot
 
 item.clayOvenWall.name=Oven Wall
-item.SlicedWatermelon.name=Sliced Watermelon
-item.Pumpkin.name=Pumpkin
-item.Watermelon.name=Watermelon
 item.JackOLantern.name=Jack O' Lantern
+item.Log.Walnut.name=Walnut Log
+item.SinglePlank.Walnut.name=Walnut Lumber
 
 #=======
 #= GUI =
@@ -100,26 +110,16 @@ gui.PrepTable.Recipes=Recipe
 gui.PotContents=§8Contents: (Hold §fCtrl§8)
 gui.ShowContents=§8Contents:
 gui.cookingTime=Time Remaining
+gui.Almond=Almond Tree
+gui.Cashew=Cashew Tree
+gui.Coconut=Coconut Palm
+gui.Hazelnut=Hazelnut Tree
+gui.Macadamia=Macadamia Tree
+gui.Pistachio=Pistachio Tree
 
 #==============
 #= Entities = 
 #==============
-entity.sheepCWTFC.name=Sheep
-entity.terrafirmacraft.bearCWTFC.name=Bear
-entity.terrafirmacraft.chickenCWTFC.name=Chicken
-entity.terrafirmacraft.cowCWTFC.name=Cow
-entity.terrafirmacraft.deerCWTFC.name=Deer
-entity.terrafirmacraft.horseCWTFC.name=Horse
-entity.terrafirmacraft.pigCWTFC.name=Pig
-entity.terrafirmacraft.pheasantCWTFC.name=Pheasant
-entity.terrafirmacraft.wolfCWTFC.name=Wolf
-entity.cookingwithtfc.bearCWTFC.name=Bear
-entity.cookingwithtfc.chickenCWTFC.name=Chicken
-entity.cookingwithtfc.cowCWTFC.name=Cow
-entity.cookingwithtfc.deerCWTFC.name=Deer
-entity.cookingwithtfc.PheasantCWTFC.name=Pheasant
-entity.cookingwithtfc.pigCWTFC.name=Pig
-entity.cookingwithtfc.wolfCWTFC.name=Wolf
 
 #===========
 #= Strings =
@@ -153,9 +153,6 @@ wood.Acacia=Acacia
 #==========
 #= Fluids =
 #==========
-fluid.milkCWTFC=Milk
-fluid.milkvinegarCWTFC=Milk + Vinegar Mix
-fluid.milkcurdledCWTFC=Curdled Milk
 fluid.broth=Broth
 fluid.vegetableSoup=Vegetable Soup
 fluid.tomatoSoup=Tomato Soup
@@ -169,7 +166,7 @@ fluid.fishChowder=Fish Chowder
 #========
 
 #== Creative Tabs ==
-
+itemGroup.CWTFCMain=Cooking with TFC
 
 #=========
 #= WAILA =

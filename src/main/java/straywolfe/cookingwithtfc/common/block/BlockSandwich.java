@@ -157,6 +157,7 @@ public class BlockSandwich extends BlockTerraContainer
 			}
 			
 			world.markBlockForUpdate(x, y, z);
+			te.markDirty();
 		}
 		
 		return true;
@@ -198,24 +199,24 @@ public class BlockSandwich extends BlockTerraContainer
 		ToastSide = new IIcon[6];
 		FoodGroups = new IIcon[4];
 		
-		ToastTop[0] = registerer.registerIcon(ModInfo.ModID + ":" + "Barley Toast Top");
-		ToastTop[1] = registerer.registerIcon(ModInfo.ModID + ":" + "Corn Toast Top");
-		ToastTop[2] = registerer.registerIcon(ModInfo.ModID + ":" + "Oat Toast Top");
-		ToastTop[3] = registerer.registerIcon(ModInfo.ModID + ":" + "Rice Toast Top");
-		ToastTop[4] = registerer.registerIcon(ModInfo.ModID + ":" + "Rye Toast Top");
-		ToastTop[5] = registerer.registerIcon(ModInfo.ModID + ":" + "Wheat Toast Top");
+		ToastTop[0] = registerer.registerIcon(ModInfo.ModID + ":Meals/Barley Toast Top");
+		ToastTop[1] = registerer.registerIcon(ModInfo.ModID + ":Meals/Corn Toast Top");
+		ToastTop[2] = registerer.registerIcon(ModInfo.ModID + ":Meals/Oat Toast Top");
+		ToastTop[3] = registerer.registerIcon(ModInfo.ModID + ":Meals/Rice Toast Top");
+		ToastTop[4] = registerer.registerIcon(ModInfo.ModID + ":Meals/Rye Toast Top");
+		ToastTop[5] = registerer.registerIcon(ModInfo.ModID + ":Meals/Wheat Toast Top");
 		
-		ToastSide[0] = registerer.registerIcon(ModInfo.ModID + ":" + "Barley Toast Side");
-		ToastSide[1] = registerer.registerIcon(ModInfo.ModID + ":" + "Corn Toast Side");
-		ToastSide[2] = registerer.registerIcon(ModInfo.ModID + ":" + "Oat Toast Side");
-		ToastSide[3] = registerer.registerIcon(ModInfo.ModID + ":" + "Rice Toast Side");
-		ToastSide[4] = registerer.registerIcon(ModInfo.ModID + ":" + "Rye Toast Side");
-		ToastSide[5] = registerer.registerIcon(ModInfo.ModID + ":" + "Wheat Toast Side");
+		ToastSide[0] = registerer.registerIcon(ModInfo.ModID + ":Meals/Barley Toast Side");
+		ToastSide[1] = registerer.registerIcon(ModInfo.ModID + ":Meals/Corn Toast Side");
+		ToastSide[2] = registerer.registerIcon(ModInfo.ModID + ":Meals/Oat Toast Side");
+		ToastSide[3] = registerer.registerIcon(ModInfo.ModID + ":Meals/Rice Toast Side");
+		ToastSide[4] = registerer.registerIcon(ModInfo.ModID + ":Meals/Rye Toast Side");
+		ToastSide[5] = registerer.registerIcon(ModInfo.ModID + ":Meals/Wheat Toast Side");
 		
-		FoodGroups[0] = registerer.registerIcon(ModInfo.ModID + ":" + "Dairy");
-		FoodGroups[1] = registerer.registerIcon(ModInfo.ModID + ":" + "Fruit");
-		FoodGroups[2] = registerer.registerIcon(ModInfo.ModID + ":" + "Protein");
-		FoodGroups[3] = registerer.registerIcon(ModInfo.ModID + ":" + "Vegetable");
+		FoodGroups[0] = registerer.registerIcon(ModInfo.ModID + ":Meals/Dairy");
+		FoodGroups[1] = registerer.registerIcon(ModInfo.ModID + ":Meals/Fruit");
+		FoodGroups[2] = registerer.registerIcon(ModInfo.ModID + ":Meals/Protein");
+		FoodGroups[3] = registerer.registerIcon(ModInfo.ModID + ":Meals/Vegetable");
 	}
 	
 	@SideOnly(Side.CLIENT)

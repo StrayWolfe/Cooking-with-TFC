@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import straywolfe.cookingwithtfc.common.block.BlockCrop;
-import straywolfe.cookingwithtfc.common.registries.CropRegistry;
+import straywolfe.cookingwithtfc.common.registries.PlantRegistry;
 import straywolfe.cookingwithtfc.common.tileentity.TileCrop;
 
 public class RenderCrop implements ISimpleBlockRenderingHandler
@@ -29,11 +29,12 @@ public class RenderCrop implements ISimpleBlockRenderingHandler
 				
 				switch(cropID)
 				{
-					case CropRegistry.WATERMELON:
-					case CropRegistry.PUMPKIN:
+					case PlantRegistry.WATERMELON:
+					case PlantRegistry.PUMPKIN:
 						renderGourd(blockCrop, meta, te, myRenderer); break;
-					case CropRegistry.CELERY:
-					case CropRegistry.LETTUCE:
+					case PlantRegistry.CELERY:
+					case PlantRegistry.LETTUCE:
+					case PlantRegistry.PEANUT:
 						renderCrop(renderer, blockCrop, world, x, y, z); break;
 					default: renderCrops(renderer, blockCrop, world, x, y, z); break;
 				}
@@ -146,7 +147,7 @@ public class RenderCrop implements ISimpleBlockRenderingHandler
 		iconsGourd[0] = blockCrop.getCropIcon("Plant_Top");
 		iconsGourd[1] = blockCrop.getCropIcon("Plant_Bottom");
 		
-		if(te.getCropID() == CropRegistry.WATERMELON)
+		if(te.getCropID() == PlantRegistry.WATERMELON)
 		{
 			iconsGourd[2] = blockCrop.getCropIcon("Melon_Top");
 			iconsGourd[3] = blockCrop.getCropIcon("Melon_Side");

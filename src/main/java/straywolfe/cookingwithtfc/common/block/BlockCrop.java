@@ -28,7 +28,7 @@ import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.managers.CWTFCCropIndex;
 import straywolfe.cookingwithtfc.api.managers.CropManager;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
-import straywolfe.cookingwithtfc.common.registries.CropRegistry;
+import straywolfe.cookingwithtfc.common.registries.PlantRegistry;
 import straywolfe.cookingwithtfc.common.tileentity.TileCrop;
 
 public class BlockCrop extends BlockContainer
@@ -38,6 +38,7 @@ public class BlockCrop extends BlockContainer
 	private IIcon[] iconsRedMushroom = new IIcon[4];
 	private IIcon[] iconCelery = new IIcon[7];
 	private IIcon[] iconLettuce = new IIcon[6];
+	private IIcon[] iconPeanut = new IIcon[6];
 	
 	
 	public BlockCrop() 
@@ -48,27 +49,29 @@ public class BlockCrop extends BlockContainer
 	}	
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register)
 	{
 		for(int i = 1; i <= 4; i++)
 		{
-			iconsGourds[i - 1] = register.registerIcon(ModInfo.ModID + ":Pumpkin_" + i);
-			iconsBrownMushroom[i - 1] = register.registerIcon(ModInfo.ModID + ":BrownMushroom_" + i);
-			iconsRedMushroom[i - 1] = register.registerIcon(ModInfo.ModID + ":RedMushroom_" + i);
+			iconsGourds[i - 1] = register.registerIcon(ModInfo.ModID + ":Crops/Pumpkin_" + i);
+			iconsBrownMushroom[i - 1] = register.registerIcon(ModInfo.ModID + ":Crops/BrownMushroom_" + i);
+			iconsRedMushroom[i - 1] = register.registerIcon(ModInfo.ModID + ":Crops/RedMushroom_" + i);
 		}
 		
 		for(int i = 1; i <= 6; i++)
 		{
-			iconLettuce[i - 1] = register.registerIcon(ModInfo.ModID + ":Lettuce_" + i);
+			iconLettuce[i - 1] = register.registerIcon(ModInfo.ModID + ":Crops/Lettuce_" + i);
+			iconPeanut[i - 1] = register.registerIcon(ModInfo.ModID + ":Crops/Peanut_" + i);
 		}
 		
 		for(int i = 1; i <= 7; i++)
 		{
-			iconCelery[i - 1] = register.registerIcon(ModInfo.ModID + ":Celery_" + i);
+			iconCelery[i - 1] = register.registerIcon(ModInfo.ModID + ":Crops/Celery_" + i);
 		}
 		
-		iconsGourds[4] = register.registerIcon(ModInfo.ModID + ":Watermelon_1");
-		iconsGourds[5] = register.registerIcon(ModInfo.ModID + ":Watermelon_2");
+		iconsGourds[4] = register.registerIcon(ModInfo.ModID + ":Crops/Watermelon_1");
+		iconsGourds[5] = register.registerIcon(ModInfo.ModID + ":Crops/Watermelon_2");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -106,18 +109,20 @@ public class BlockCrop extends BlockContainer
 			
 			switch(cropID)
 			{
-				case CropRegistry.WATERMELON: 
+				case PlantRegistry.WATERMELON: 
 					return iconsGourds[4];
-				case CropRegistry.PUMPKIN: 
+				case PlantRegistry.PUMPKIN: 
 					return iconsGourds[0];
-				case CropRegistry.BROWNMUSHROOM:
+				case PlantRegistry.BROWNMUSHROOM:
 					return iconsBrownMushroom[stage];
-				case CropRegistry.REDMUSHROOM:
+				case PlantRegistry.REDMUSHROOM:
 					return iconsRedMushroom[stage];
-				case CropRegistry.CELERY:
+				case PlantRegistry.CELERY:
 					return iconCelery[stage];
-				case CropRegistry.LETTUCE:
+				case PlantRegistry.LETTUCE:
 					return iconLettuce[stage];
+				case PlantRegistry.PEANUT:
+					return iconPeanut[stage];
 				default: 
 					return iconsGourds[2];
 			}
@@ -224,8 +229,8 @@ public class BlockCrop extends BlockContainer
 		
 		switch(te.getCropID())
 		{
-			case CropRegistry.WATERMELON: 
-			case CropRegistry.PUMPKIN:
+			case PlantRegistry.WATERMELON: 
+			case PlantRegistry.PUMPKIN:
 			{
 				if(stage > 4)
 					stage = 4;
@@ -263,8 +268,8 @@ public class BlockCrop extends BlockContainer
 		
 		switch(((TileCrop)world.getTileEntity(x, y, z)).getCropID())
 		{
-			case CropRegistry.WATERMELON: 
-			case CropRegistry.PUMPKIN:
+			case PlantRegistry.WATERMELON: 
+			case PlantRegistry.PUMPKIN:
 				return AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 0.3, z + 1);
 			default:
 				return AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 0.2, z + 1);
@@ -278,8 +283,8 @@ public class BlockCrop extends BlockContainer
 		{
 			switch(((TileCrop)world.getTileEntity(x, y, z)).getCropID())
 			{
-				case CropRegistry.WATERMELON: 
-				case CropRegistry.PUMPKIN:
+				case PlantRegistry.WATERMELON: 
+				case PlantRegistry.PUMPKIN:
 					setBlockBounds(0, 0, 0, 1, 0.3f, 1); break;
 				default:
 					setBlockBounds(0, 0, 0, 1, 0.2f, 1); break;

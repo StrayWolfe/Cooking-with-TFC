@@ -5,10 +5,8 @@ import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.handlers.*;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
-import straywolfe.cookingwithtfc.common.proxy.CommonProxyCWTFC;
-import straywolfe.cookingwithtfc.common.registries.CWTFCRecipes;
+import straywolfe.cookingwithtfc.common.registries.CWTFCRegistries;
 import straywolfe.cookingwithtfc.common.registries.HeatedItemRecipes;
-import straywolfe.cookingwithtfc.common.worldgen.WorldGenCrops;
 
 import com.bioxx.tfc.TerraFirmaCraft;
 
@@ -19,7 +17,6 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = ModInfo.ModID, name = ModInfo.ModName, version = ModInfo.ModVersion, dependencies = ModInfo.ModDependencies)
 public class CookingWithTFC
@@ -41,18 +38,22 @@ public class CookingWithTFC
 		proxy.registerFluids();
 		
 		//Initialize Items
-		CWTFCItems.initialise();
+		CWTFCItems.setup();
 		
 		//Initialize Blocks
-		CWTFCBlocks.initialise();
+		CWTFCBlocks.setup();
 		
 		//Register Tile Entities
 		proxy.registerTileEntities(true);
 		
-		//Register Farmland Highlighter
-		proxy.registerHandlers();
+		//Setup Fluids
+		proxy.setupFluids();
 		
-		GameRegistry.registerWorldGenerator(new WorldGenCrops(), 9);
+		//Register Client Handlers
+		proxy.registerClientHandlers();
+		
+		//Register World Generators
+		proxy.registerWorldGen();
 	}
 
 	@EventHandler
@@ -70,11 +71,11 @@ public class CookingWithTFC
 		//Handle Chunk Loading
 		MinecraftForge.EVENT_BUS.register(new ChunkHandler());
 		
-		//Setup Fluids
-		proxy.setupFluids();
+		//Handle Crafting
+		FMLCommonHandler.instance().bus().register(new CraftingMatrixHandler());
 		
 		//Register Crafting Recipes
-		CWTFCRecipes.registerRecipes();
+		CWTFCRegistries.setupRegistries();
 		
 		//Setup Item Heating
 		HeatedItemRecipes.setupHeatedItemRecipes();

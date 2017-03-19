@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.managers.CWTFCCropIndex;
 import straywolfe.cookingwithtfc.api.managers.CropManager;
+import straywolfe.cookingwithtfc.common.core.Tabs;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileCrop;
 
@@ -36,6 +37,7 @@ public class ItemCustomSeeds extends ItemTerra
 		this.cropId = cropId;
 		setWeight(EnumWeight.LIGHT);
 		setSize(EnumSize.TINY);
+		setCreativeTab(Tabs.MAINTAB);
 	}
 	
 	@Override
@@ -81,7 +83,7 @@ public class ItemCustomSeeds extends ItemTerra
 	@Override
 	public void registerIcons(IIconRegister registerer)
 	{
-		this.itemIcon = registerer.registerIcon(ModInfo.ModID + ":" + getUnlocalizedName().replace("item.", ""));
+		itemIcon = registerer.registerIcon(ModInfo.ModID + ":Seeds/" + getUnlocalizedName().replace("item.", ""));
 	}
 	
 	@Override

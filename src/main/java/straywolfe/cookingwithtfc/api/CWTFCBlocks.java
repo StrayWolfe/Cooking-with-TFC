@@ -1,16 +1,13 @@
 package straywolfe.cookingwithtfc.api;
 
-import com.bioxx.tfc.Items.ItemBlocks.ItemTerraBlock;
-import com.bioxx.tfc.api.TFCBlocks;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import straywolfe.cookingwithtfc.common.block.*;
 import straywolfe.cookingwithtfc.common.item.itemblock.*;
 
 public class CWTFCBlocks 
 {
-	public static Block nestBoxCWTFC;
 	public static Block GrainsBlock;
 	public static Block mixingBowl;
 	public static Block hopperCWTFC;
@@ -32,6 +29,16 @@ public class CWTFCBlocks
 	
 	public static Block customGourd;
 	public static Block customCrop;
+	public static Block customLeaves;
+	public static Block naturalLog;
+	public static Block customSapling;
+	public static Block woodVert;
+	public static Block woodHorizNS;
+	public static Block woodHorizEW;
+	public static Block nutTreeLog;
+	public static Block nutTreeLeaves;
+	public static Block woodPlank;
+	public static Block lumberConstruct;
 	
 	public static int mixingBowlRenderID;
 	public static int prepTableRenderID;
@@ -44,19 +51,21 @@ public class CWTFCBlocks
 	public static int gourdRenderID;
 	public static int gourdCropRenderID;
 	public static int customCropRenderID;
+	public static int fruitTreeRenderID;
+	public static int nutLeavesRenderID;
+	public static int lumberConstructRenderID;
 	
-	public static void initialise()
+	public static void setup()
 	{
 		loadBlocks();
 		
 		registerBlocks();
+		
+		setupFire();
 	}
 	
 	public static void loadBlocks()
 	{
-		TFCBlocks.nestBox.setCreativeTab(null);
-		
-		nestBoxCWTFC = new BlockNestBoxCWTFC();
 		GrainsBlock = new BlockGrains();
 		mixingBowl = new BlockMixBowl();
 		hopperCWTFC = new BlockHopperCWTFC();
@@ -78,11 +87,21 @@ public class CWTFCBlocks
 		
 		customGourd = new BlockGourd();
 		customCrop = new BlockCrop();
+
+		customLeaves = new BlockLeaves();
+		naturalLog = new BlockNaturalLog();
+		customSapling = new BlockCustomSapling();
+		woodVert = new BlockVertLog();
+		woodHorizNS = new BlockHorzNS();
+		woodHorizEW = new BlockHorzEW();
+		nutTreeLog = new BlockNutTree();
+		nutTreeLeaves = new BlockNutLeaves();
+		woodPlank = new BlockPlank();
+		lumberConstruct = new BlockLumberConstruct();
 	}
 	
 	public static void registerBlocks()
 	{
-		GameRegistry.registerBlock(nestBoxCWTFC, ItemTerraBlock.class, "NestBox");
 		GameRegistry.registerBlock(GrainsBlock, "GrainsBlock");
 		GameRegistry.registerBlock(mixingBowl, ItemMixingBowl.class, "MixingBowl");
 		GameRegistry.registerBlock(hopperCWTFC, "Hopper");
@@ -94,6 +113,16 @@ public class CWTFCBlocks
 		GameRegistry.registerBlock(tableStorage, "tableStorage");
 		GameRegistry.registerBlock(customGourd, "customGourd");
 		GameRegistry.registerBlock(customCrop, "customCrop");
+		GameRegistry.registerBlock(customLeaves, ItemCustomWood.class, "customLeaves");
+		GameRegistry.registerBlock(naturalLog, ItemCustomWood.class, "naturalLog");
+		GameRegistry.registerBlock(woodVert, ItemCustomWood.class, "WoodVert");
+		GameRegistry.registerBlock(woodHorizNS, ItemCustomWood.class, "woodHorizNS");
+		GameRegistry.registerBlock(woodHorizEW, ItemCustomWood.class, "woodHorizEW");
+		GameRegistry.registerBlock(customSapling, ItemSapling.class, "customSapling");
+		GameRegistry.registerBlock(nutTreeLog, ItemNutTreeSapling.class, "nutTreeLog");
+		GameRegistry.registerBlock(nutTreeLeaves, "nutTreeLeaves");
+		GameRegistry.registerBlock(woodPlank, ItemCustomWood.class, "woodPlank");
+		GameRegistry.registerBlock(lumberConstruct, "lumberConstruct");
 		
 		GameRegistry.registerBlock(prepTableN, ItemPrepTable.class, "PrepTableN");
 		GameRegistry.registerBlock(prepTable2N, ItemPrepTable2.class, "PrepTable2N");
@@ -103,5 +132,33 @@ public class CWTFCBlocks
 		GameRegistry.registerBlock(prepTable2E, ItemPrepTable2.class, "PrepTable2E");
 		GameRegistry.registerBlock(prepTableW, ItemPrepTable.class, "PrepTableW");
 		GameRegistry.registerBlock(prepTable2W, ItemPrepTable2.class, "PrepTable2W");
+	}
+	
+	public static void setupFire()
+	{
+		//Organic blocks
+		Blocks.fire.setFireInfo(customLeaves, 20, 20);
+		Blocks.fire.setFireInfo(GrainsBlock, 20, 20);
+		Blocks.fire.setFireInfo(customCrop, 20, 20);
+		Blocks.fire.setFireInfo(customGourd, 20, 20);
+		Blocks.fire.setFireInfo(customSapling, 20, 20);
+		Blocks.fire.setFireInfo(nutTreeLeaves, 20, 20);
+		
+		//Wood blocks
+		Blocks.fire.setFireInfo(woodPlank, 5, 5);
+		Blocks.fire.setFireInfo(lumberConstruct, 5, 5);
+		Blocks.fire.setFireInfo(naturalLog, 5, 5);
+		Blocks.fire.setFireInfo(woodVert, 5, 5);
+		Blocks.fire.setFireInfo(woodHorizNS, 5, 5);
+		Blocks.fire.setFireInfo(woodHorizEW, 5, 5);
+		Blocks.fire.setFireInfo(nutTreeLog, 5, 5);
+		Blocks.fire.setFireInfo(prepTableN, 5, 5);
+		Blocks.fire.setFireInfo(prepTable2N, 5, 5);
+		Blocks.fire.setFireInfo(prepTableS, 5, 5);
+		Blocks.fire.setFireInfo(prepTable2S, 5, 5);
+		Blocks.fire.setFireInfo(prepTableE, 5, 5);
+		Blocks.fire.setFireInfo(prepTable2E, 5, 5);
+		Blocks.fire.setFireInfo(prepTableW, 5, 5);
+		Blocks.fire.setFireInfo(prepTable2W, 5, 5);
 	}
 }

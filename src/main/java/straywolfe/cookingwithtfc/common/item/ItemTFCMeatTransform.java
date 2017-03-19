@@ -1,12 +1,7 @@
 package straywolfe.cookingwithtfc.common.item;
 
-import java.util.List;
-
 import com.bioxx.tfc.Reference;
 import com.bioxx.tfc.Core.TFC_Core;
-import com.bioxx.tfc.Core.Player.FoodStatsTFC;
-import com.bioxx.tfc.Food.ItemFoodTFC;
-import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.Render.Item.FoodItemRenderer;
 import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
@@ -15,24 +10,21 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.common.block.BlockPrepTable;
 import straywolfe.cookingwithtfc.common.block.BlockPrepTable2;
-import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
-import straywolfe.cookingwithtfc.common.lib.Settings;
+import straywolfe.cookingwithtfc.common.core.Tabs;
 import straywolfe.cookingwithtfc.common.tileentity.TileMeat;
 
 public class ItemTFCMeatTransform extends ItemTFCFoodTransform
-{
-	private float consumeSize = 5F;
-		
+{		
 	public ItemTFCMeatTransform(EnumFoodGroup fg, int sw, int so, int sa, int bi, int um, boolean edible, boolean usable, float size) 
 	{
 		super(fg, sw, so, sa, bi, um, size, 2.0F, edible, usable);
 		
+		setCreativeTab(Tabs.MAINTAB);
 		consumeSize = size;
 	}
 	
@@ -49,27 +41,6 @@ public class ItemTFCMeatTransform extends ItemTFCFoodTransform
 		}
 		
 		MinecraftForgeClient.registerItemRenderer(this, new FoodItemRenderer());
-	}
-
-	@Override
-	public ItemStack onItemRightClick(ItemStack is, World world, EntityPlayer player)
-	{
-		if(Settings.diminishingReturns)
-			return CWTFC_Core.processRightClick(is, player, consumeSize, isEdible(is));
-		else
-		{
-			FoodStatsTFC foodstats = TFC_Core.getPlayerFoodStats(player);
-			if (foodstats.needFood() && this.isEdible(is))
-				player.setItemInUse(is, 32);
-
-			return is;
-		}
-	}
-	
-	@Override
-	public ItemStack onEaten(ItemStack is, World world, EntityPlayer player)
-	{
-		return CWTFC_Core.processEating(is, world, player, consumeSize, false);
 	}
 	
 	@Override
@@ -113,29 +84,6 @@ public class ItemTFCMeatTransform extends ItemTFCFoodTransform
 			}
 		}
 		return false;
-	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void addInformation(ItemStack is, EntityPlayer player, List arraylist, boolean flag)
-	{		
-		ItemTerra.addSizeInformation(is, arraylist);
-		arraylist.add(ItemFoodTFC.getFoodGroupName(getFoodGroup()));
-		
-
-		if (is.hasTagCompound())
-		{
-			ItemFoodTFC.addFoodHeatInformation(is, arraylist);
-			addFoodInformation(is, player, arraylist);
-			
-			if(Settings.diminishingReturns)
-			{
-				if(isEdible(is))
-					CWTFC_Core.getFoodUse(is, player, arraylist);
-				else
-					arraylist.add(EnumChatFormatting.DARK_GRAY + "Not currently edible");
-			}
-		}
 	}
 	
 	@Override

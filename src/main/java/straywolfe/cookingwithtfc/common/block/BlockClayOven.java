@@ -262,18 +262,18 @@ public class BlockClayOven extends BlockTerraContainer
 	@Override
 	public void registerBlockIcons(IIconRegister iconRegisterer)
 	{
-		blockIcon = iconRegisterer.registerIcon(ModInfo.ModID + ":ClayOvenIcon");
+		blockIcon = iconRegisterer.registerIcon(ModInfo.ModID + ":Oven/ClayOvenIcon");
 		
 		ClayOven = new IIcon[5];
 		ClayOvenChimney = new IIcon[5];
 		
 		for(int i = 0; i < 5; i++)
 		{
-			ClayOven[i] = iconRegisterer.registerIcon(ModInfo.ModID + ":ClayOvenWall_" + (i + 1));
-			ClayOvenChimney[i] = iconRegisterer.registerIcon(ModInfo.ModID + ":ClayOven_Chimney_" + (i + 1));
+			ClayOven[i] = iconRegisterer.registerIcon(ModInfo.ModID + ":Oven/ClayOvenWall_" + (i + 1));
+			ClayOvenChimney[i] = iconRegisterer.registerIcon(ModInfo.ModID + ":Oven/ClayOven_Chimney_" + (i + 1));
 		}
 		
-		OvenInterior = iconRegisterer.registerIcon(ModInfo.ModID + ":ClayOven_Interior");
+		OvenInterior = iconRegisterer.registerIcon(ModInfo.ModID + ":Oven/ClayOven_Interior");
 		OvenFireOn = iconRegisterer.registerIcon(Reference.MOD_ID + ":devices/Forge On");
 		OvenFireOff = iconRegisterer.registerIcon(Reference.MOD_ID + ":devices/Forge Off");
 	}

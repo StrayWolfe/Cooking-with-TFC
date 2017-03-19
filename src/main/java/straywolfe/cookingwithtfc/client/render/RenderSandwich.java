@@ -126,7 +126,12 @@ public class RenderSandwich implements ISimpleBlockRenderingHandler
 					setup3dRendering(contents[4], myRenderer, 0.4F, 0.02875F, xCoord, (0.02875F * 3) + 0.05F, zCoord);
 				
 				if(contents[topToastLevel] != null)
-					setTop(topToastLevel * 0.0329F, 0.05F, 0.4F, 0, xCoord, zCoord, topBreadVert, topBreadHorz, myRenderer);
+				{
+					if(topToastLevel == 1)
+						setTop(0.05F, 0.05F, 0.4F, 0, xCoord, zCoord, topBreadVert, topBreadHorz, myRenderer);
+					else
+						setTop(topToastLevel * 0.0329F, 0.05F, 0.4F, 0, xCoord, zCoord, topBreadVert, topBreadHorz, myRenderer);
+				}
 			}
 			else
 			{

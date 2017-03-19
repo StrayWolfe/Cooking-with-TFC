@@ -2,7 +2,6 @@ package straywolfe.cookingwithtfc.common.item;
 
 import java.util.List;
 
-import com.bioxx.tfc.Core.TFCTabs;
 import com.bioxx.tfc.Items.ItemTerra;
 import com.bioxx.tfc.Items.Pottery.ItemPotteryBase;
 import com.bioxx.tfc.TileEntities.TEFirepit;
@@ -16,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
+import straywolfe.cookingwithtfc.common.core.Tabs;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileCookingPot;
 
@@ -26,7 +26,7 @@ public class ItemClayCookingPot extends ItemPotteryBase
 		super();
 		this.hasSubtypes = true;
 		this.metaNames = new String[]{"Clay", "Ceramic"};
-		setCreativeTab(TFCTabs.TFC_POTTERY);
+		setCreativeTab(Tabs.MAINTAB);
 		this.setFolder("pottery/");
 		this.setUnlocalizedName("clayCookingPot");
 	}

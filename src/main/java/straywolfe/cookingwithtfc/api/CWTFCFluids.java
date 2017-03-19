@@ -6,9 +6,6 @@ import net.minecraftforge.fluids.Fluid;
 
 public class CWTFCFluids 
 {
-	public static final Fluid MILKCWTFC = new FluidBaseTFC("milkCWTFC").setBaseColor(0xffffff);
-	public static final Fluid MILKCURDLEDCWTFC = new FluidBaseTFC("milkcurdledCWTFC").setBaseColor(0xfffbe8);
-	public static final Fluid MILKVINEGARCWTFC = new FluidBaseTFC("milkvinegarCWTFC").setBaseColor(0xfffbe8);
 	public static final Fluid BROTH = new FluidBaseTFC("broth").setBaseColor(0xe9b12a);
 	public static final Fluid VEGETABLESOUP = new FluidBaseTFC("vegetableSoup").setBaseColor(0x83421C);
 	public static final Fluid TOMATOSOUP = new FluidBaseTFC("tomatoSoup").setBaseColor(0xF06C48);

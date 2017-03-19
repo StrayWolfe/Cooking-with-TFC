@@ -142,8 +142,7 @@ public class TileSandwich extends NetworkTileEntity
 						breadType = is.getItem().getUnlocalizedName();						
 				}
 				
-				
-				if(((ItemFoodTFC)is.getItem()).getFoodGroup() == EnumFoodGroup.Protein && meatType == "")
+				if(((ItemFoodTFC)is.getItem()).getFoodGroup() == EnumFoodGroup.Protein && meatType.length() == 0)
 					meatType = is.getItem().getUnlocalizedName();
 					
 				return;
@@ -167,6 +166,7 @@ public class TileSandwich extends NetworkTileEntity
 				
 				sandwichContents[i] = null;
 				item.stackSize = 1;
+				
 				return item;
 			}
 		}
@@ -302,82 +302,24 @@ public class TileSandwich extends NetworkTileEntity
 	@Override
 	public void handleInitPacket(NBTTagCompound nbt) 
 	{
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		sandwichContents = new ItemStack[sandwichContents.length];
-		for(int i = 0; i < nbttaglist.tagCount(); i++)
-		{
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte itemslot = nbttagcompound1.getByte("Slot");
-			if(itemslot >= 0 && itemslot < nbttaglist.tagCount())
-				sandwichContents[itemslot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-		}
-		topToast = nbt.getInteger("topToast");
-		breadType = nbt.getString("breadType");
-		meatType = nbt.getString("meatType");
-		sandwichCoordX = nbt.getFloat("sandwichCoordX");
-		sandwichCoordZ = nbt.getFloat("sandwichCoordZ");
+		readFromNBT(nbt);
 	}
 
 	@Override
 	public void createInitNBT(NBTTagCompound nbt) 
 	{
-		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < sandwichContents.length; i++)
-		{
-			if(sandwichContents[i] != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte)i);
-				sandwichContents[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
-		nbt.setTag("Items", nbttaglist);
-		nbt.setInteger("topToast", topToast);
-		nbt.setString("breadType", breadType);
-		nbt.setString("meatType", meatType);
-		nbt.setFloat("sandwichCoordX", sandwichCoordX);
-		nbt.setFloat("sandwichCoordZ", sandwichCoordZ);
+		writeToNBT(nbt);
 	}
 	
 	@Override
 	public void handleDataPacket(NBTTagCompound nbt) 
 	{
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		sandwichContents = new ItemStack[sandwichContents.length];
-		for(int i = 0; i < nbttaglist.tagCount(); i++)
-		{
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte itemslot = nbttagcompound1.getByte("Slot");
-			if(itemslot >= 0 && itemslot < nbttaglist.tagCount())
-				sandwichContents[itemslot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-		}
-		topToast = nbt.getInteger("topToast");
-		breadType = nbt.getString("breadType");
-		meatType = nbt.getString("meatType");
-		sandwichCoordX = nbt.getFloat("sandwichCoordX");
-		sandwichCoordZ = nbt.getFloat("sandwichCoordZ");
+		readFromNBT(nbt);
 	}
 	
 	@Override
 	public void createDataNBT(NBTTagCompound nbt) 
 	{
-		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < sandwichContents.length; i++)
-		{
-			if(sandwichContents[i] != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte)i);
-				sandwichContents[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
-		nbt.setTag("Items", nbttaglist);
-		nbt.setInteger("topToast", topToast);
-		nbt.setString("breadType", breadType);
-		nbt.setString("meatType", meatType);
-		nbt.setFloat("sandwichCoordX", sandwichCoordX);
-		nbt.setFloat("sandwichCoordZ", sandwichCoordZ);
+		writeToNBT(nbt);
 	}
 }

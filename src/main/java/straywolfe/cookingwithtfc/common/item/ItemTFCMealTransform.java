@@ -34,6 +34,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
+import straywolfe.cookingwithtfc.common.core.Tabs;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 
@@ -50,7 +51,7 @@ public class ItemTFCMealTransform extends ItemTerra implements ICookableFood
 	public boolean edible = true;
 	public boolean canBeUsedRaw = true;
 	private boolean hasBowl = false;
-	private boolean customIcon = false;
+	private boolean customIcon = true;
 	SkillRank rank;
 	String iconFile;
 	
@@ -62,7 +63,7 @@ public class ItemTFCMealTransform extends ItemTerra implements ICookableFood
 		metaIcons = null;
 		setFolder("food/");
 		stackable = false;
-		setCreativeTab(null);
+		setCreativeTab(Tabs.MAINTAB);
 		
 		maxFoodWt = maxWt;
 		consumeSize = size;
@@ -75,7 +76,7 @@ public class ItemTFCMealTransform extends ItemTerra implements ICookableFood
 	public void registerIcons(IIconRegister registerer)
 	{
 		if(customIcon)
-			itemIcon = registerer.registerIcon(ModInfo.ModID + ":" + iconFile);
+			itemIcon = registerer.registerIcon(ModInfo.ModID + ":Foods/" + iconFile);
 		else
 			itemIcon = registerer.registerIcon(Reference.MOD_ID + ":" + textureFolder + iconFile);
 		
@@ -183,13 +184,9 @@ public class ItemTFCMealTransform extends ItemTerra implements ICookableFood
 		if (hasBowl && is.stackSize == 0)
 		{
 			if (Settings.bowlBreakFreq != -1 && world.rand.nextInt(Settings.bowlBreakFreq) == 0)
-			{
 				world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
-			}
-			else if (!player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryBowl, 1, 1)))
-			{
+			else
 				return new ItemStack(TFCItems.potteryBowl, 1, 1);
-			}
 		}
 		
 		return is;

@@ -144,9 +144,9 @@ public class BlockBowl extends BlockTerraContainer
 		
 		Salad = new IIcon[3];
 		
-		Salad[0] = registerer.registerIcon(ModInfo.ModID + ":VeggySalad");
-		Salad[1] = registerer.registerIcon(ModInfo.ModID + ":FruitSalad");
-		Salad[2] = registerer.registerIcon(ModInfo.ModID + ":PotatoSalad");
+		Salad[0] = registerer.registerIcon(ModInfo.ModID + ":Meals/VeggySalad");
+		Salad[1] = registerer.registerIcon(ModInfo.ModID + ":Meals/FruitSalad");
+		Salad[2] = registerer.registerIcon(ModInfo.ModID + ":Meals/PotatoSalad");
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -35,7 +35,7 @@ public class WorldGenCrops implements IWorldGenerator
 		if(spawnSize > 0 && rand.nextInt(Math.max((19/spawnSize) * 20, 20)) == 0)
 		{
 			BiomeGenBase biome = world.getBiomeGenForCoords(chunkX, chunkZ);
-			if(biome != TFCBiome.OCEAN && biome != TFCBiome.DEEP_OCEAN)
+			if(biome instanceof TFCBiome && biome != TFCBiome.OCEAN && biome != TFCBiome.DEEP_OCEAN)
 			{
 				CWTFCCropIndex crop = manager.wildcrops.get((rand.nextInt(spawnSize)));
 				if(crop != null)

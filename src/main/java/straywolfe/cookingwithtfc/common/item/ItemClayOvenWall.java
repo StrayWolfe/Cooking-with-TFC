@@ -20,6 +20,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
+import straywolfe.cookingwithtfc.common.core.Tabs;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.lib.Constants;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
@@ -30,6 +31,7 @@ public class ItemClayOvenWall extends ItemTerra implements ISize
 	public ItemClayOvenWall()
 	{
 		super();
+		setCreativeTab(Tabs.MAINTAB);
 		setUnlocalizedName("clayOvenWall");
 	}
 	

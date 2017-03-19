@@ -18,6 +18,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
@@ -194,7 +195,7 @@ public class BlockGourd extends BlockTerraContainer
 	}
 	
 	@Override
-	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, int metadata) 
+	public void onBlockHarvested(World world, int x, int y, int z, int metadata, EntityPlayer player)
 	{
 		dropItem(world, x, y, z, metadata);
 	}
@@ -226,7 +227,24 @@ public class BlockGourd extends BlockTerraContainer
 			switch(metadata)
 			{
 				case 0: gourd = new ItemStack(CWTFCItems.pumpkinBlock); break;
-				case 1: gourd = new ItemStack(CWTFCItems.melonBlock); break;
+				case 1: 
+					{
+						gourd = new ItemStack(CWTFCItems.melonBlock); 
+						
+						if(world.getTileEntity(x, y, z) instanceof TileGourd)
+						{
+							ItemStack product = ((TileGourd)world.getTileEntity(x, y, z)).getFruit();
+							
+							if(product != null)
+							{
+								TFC_Core.tickDecay(product, world, x, y, z, 1.1f, 1f);
+								
+								if(product.hasTagCompound())
+									gourd.setTagCompound((NBTTagCompound)product.getTagCompound().copy()); 
+							}
+						}
+						break;
+					}
 				case 2: gourd = new ItemStack(CWTFCItems.jackolanternBlock); break;
 				default: gourd = new ItemStack(CWTFCItems.pumpkinBlock); break;
 			}

@@ -20,6 +20,7 @@ public class Settings
 	public static boolean disableMushrooms = false;
 	public static boolean disableCelery = false;
 	public static boolean disableLettuce = false;
+	public static boolean disablePeanut = false;
 	
 	public static int lanternLifespan = 72;
 	public static boolean tfcJackOLantern = false;

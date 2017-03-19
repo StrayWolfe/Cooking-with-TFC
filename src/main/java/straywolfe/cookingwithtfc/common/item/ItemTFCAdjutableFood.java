@@ -35,6 +35,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import straywolfe.cookingwithtfc.common.core.CWTFC_Core;
+import straywolfe.cookingwithtfc.common.core.Tabs;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 import straywolfe.cookingwithtfc.common.lib.ModInfo;
 
@@ -66,6 +67,7 @@ public class ItemTFCAdjutableFood extends ItemMeal implements ICookableFood
 		consumeSize = size;
 		maxFoodWt = maxWt;
 		foodID = FoodRegistry.getInstance().registerFood(fg, this);
+		setCreativeTab(Tabs.MAINTAB);
 	}
 	
 	public ItemTFCAdjutableFood(EnumFoodGroup fg, int sw, int so, int sa, int bi, int um, float size, float maxWt, float decay)

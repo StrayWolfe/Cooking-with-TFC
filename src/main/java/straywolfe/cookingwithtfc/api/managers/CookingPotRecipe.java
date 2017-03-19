@@ -21,6 +21,14 @@ public class CookingPotRecipe
 		this.outputItems = outputItems;
 	}
 	
+	/**
+	 * Cooking Pot Recipe
+	 * 
+	 * @param cookTime Time in TFC minutes
+	 * @param outputFluid Fluid made after cooking
+	 * @param inputFluid Required fluid
+	 * @param inputIngreds Required solid ingredients
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public CookingPotRecipe(int cookTime, FluidStack outputFluid, FluidStack inputFluid, ItemStack[] inputIngreds)
 	{

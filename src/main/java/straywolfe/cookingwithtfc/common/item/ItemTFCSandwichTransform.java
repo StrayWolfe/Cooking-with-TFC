@@ -3,7 +3,6 @@ package straywolfe.cookingwithtfc.common.item;
 import java.util.List;
 
 import com.bioxx.tfc.Reference;
-import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.Player.SkillStats.SkillRank;
 import com.bioxx.tfc.Render.Item.FoodItemRenderer;
 
@@ -29,10 +28,8 @@ public class ItemTFCSandwichTransform extends ItemTFCMealTransform
 	@Override
 	public void getSubItems(Item item, CreativeTabs tabs, List list)
 	{
-		for(int i = 0; i < metaNames.length; i++)
-		{
-			list.add(createTag(new ItemStack(this, 1, i), this.getFoodMaxWeight(new ItemStack(this, 1)), 0, new ItemStack[]{}, new float[]{}));
-		}
+
+		list.add(createTag(new ItemStack(this), getFoodMaxWeight(new ItemStack(this)), 0, new ItemStack[]{}, new float[]{}));
 	}
 	
 	@Override
@@ -46,23 +43,5 @@ public class ItemTFCSandwichTransform extends ItemTFCMealTransform
 		
 		this.itemIcon = metaIcons[0];
 		MinecraftForgeClient.registerItemRenderer(this, new FoodItemRenderer());
-	}
-	
-	@Override
-	public String getItemStackDisplayName(ItemStack is)
-	{
-		String s = "";
-		switch(is.getItemDamage())
-		{
-			case 0: s += TFC_Core.translate("word.Barley") + " "; break;
-			case 1: s += TFC_Core.translate("word.Corn") + " "; break;
-			case 2: s += TFC_Core.translate("word.Oat") + " "; break;
-			case 3: s += TFC_Core.translate("word.Rice") + " "; break;
-			case 4: s += TFC_Core.translate("word.Rye") + " "; break;
-			case 5: s += TFC_Core.translate("word.Wheat") + " "; break;
-			default: break;
-		}		
-		s += TFC_Core.translate(this.getUnlocalizedNameInefficiently(is) + ".name");
-		return s.trim();
 	}
 }

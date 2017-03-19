@@ -2,8 +2,9 @@ package straywolfe.cookingwithtfc.client.waila;
 
 import java.util.List;
 
-import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.TFC_Time;
+import com.bioxx.tfc.Food.FloraIndex;
+import com.bioxx.tfc.Food.FloraManager;
 import com.bioxx.tfc.Food.ItemFoodTFC;
 import com.bioxx.tfc.api.TFCItems;
 
@@ -13,10 +14,8 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -47,9 +46,6 @@ public class WAILAInfo implements IWailaDataProvider
 		reg.registerStackProvider(new WAILAInfo(), BlockPrepTable2.class);
 		reg.registerHeadProvider(new WAILAInfo(), BlockPrepTable2.class);
 		
-		reg.registerBodyProvider(new WAILAInfo(), TileNestBoxCWTFC.class);
-		reg.registerNBTProvider(new WAILAInfo(), TileNestBoxCWTFC.class);
-		
 		reg.registerBodyProvider(new WAILAInfo(), TileCookingPot.class);
 		reg.registerNBTProvider(new WAILAInfo(), TileCookingPot.class);
 		
@@ -68,6 +64,13 @@ public class WAILAInfo implements IWailaDataProvider
 		reg.registerStackProvider(new WAILAInfo(), TileCrop.class);
 		reg.registerHeadProvider(new WAILAInfo(), TileCrop.class);
 		reg.registerBodyProvider(new WAILAInfo(), TileCrop.class);
+		
+		reg.registerStackProvider(new WAILAInfo(), BlockNutLeaves.class);
+		reg.registerHeadProvider(new WAILAInfo(), BlockNutLeaves.class);
+		reg.registerBodyProvider(new WAILAInfo(), BlockNutLeaves.class);
+		
+		reg.registerStackProvider(new WAILAInfo(), BlockNutTree.class);
+		reg.registerHeadProvider(new WAILAInfo(), BlockNutTree.class);
 	}
 	
 	@Override
@@ -90,6 +93,10 @@ public class WAILAInfo implements IWailaDataProvider
 			return sandwichStack(accessor, config);
 		else if(block instanceof BlockBowl)
 			return bowlStack(accessor, config);
+		else if(block instanceof BlockNutLeaves)
+			return nutLeavesStack(accessor, config);
+		else if(block instanceof BlockNutTree)
+			return nutTreeStack(accessor, config);
 		else if(tileEntity instanceof TileGourd)
 			return gourdStack(accessor, config);
 		else if(tileEntity instanceof TileCrop)
@@ -116,6 +123,10 @@ public class WAILAInfo implements IWailaDataProvider
 			currenttip = sandwichHead(itemStack, currenttip, accessor, config);
 		else if(block instanceof BlockBowl)
 			currenttip = bowlHead(itemStack, currenttip, accessor, config);
+		else if(block instanceof BlockNutLeaves)
+			currenttip = nutLeavesHead(itemStack, currenttip, accessor, config);
+		else if(block instanceof BlockNutTree)
+			currenttip = fruitTreeHead(itemStack, currenttip, accessor, config);
 		else if(tileEntity instanceof TileGourd)
 			currenttip = gourdHead(itemStack, currenttip, accessor, config);
 		else if(tileEntity instanceof TileCrop)
@@ -127,16 +138,17 @@ public class WAILAInfo implements IWailaDataProvider
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
+		Block block = accessor.getBlock();
 		TileEntity tileEntity = accessor.getTileEntity();
 		
 		if (tileEntity instanceof TileGrains)
 			currenttip = grainBody(itemStack, currenttip, accessor, config);
-		else if (tileEntity instanceof TileNestBoxCWTFC)
-			currenttip = nestBoxBody(itemStack, currenttip, accessor, config);
 		else if(tileEntity instanceof TileCookingPot)
 			currenttip = cookingPotBody(itemStack, currenttip, accessor, config);
 		else if(tileEntity instanceof TileCrop)
 			currenttip = cropBody(itemStack, currenttip, accessor, config);
+		else if(block instanceof BlockNutLeaves)
+			currenttip = nutLeavesBody(itemStack, currenttip, accessor, config);
 		
 		return currenttip;
 	}
@@ -153,6 +165,11 @@ public class WAILAInfo implements IWailaDataProvider
 		if (te != null)
 			te.writeToNBT(tag);
 		return tag;
+	}
+	
+	public String translate(String s)
+	{
+		return StatCollector.translateToLocal(s);
 	}
 	
 	public ItemStack mixBowlStack(IWailaDataAccessor accessor, IWailaConfigHandler config) 
@@ -208,7 +225,7 @@ public class WAILAInfo implements IWailaDataProvider
 		if(meat == null)
 			currenttip.set(0, EnumChatFormatting.WHITE.toString() + "Meat");
 		else
-			currenttip.set(0, EnumChatFormatting.WHITE.toString() + meat.getDisplayName());
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + translate(meat.getUnlocalizedName() + ".name"));
 
 		return currenttip;
 	}
@@ -232,13 +249,13 @@ public class WAILAInfo implements IWailaDataProvider
 		TileBowl te = (TileBowl)accessor.getTileEntity();
 		
 		if(te.getSaladContents()[0] == null)
-			currenttip.set(0, EnumChatFormatting.WHITE.toString() + TFC_Core.translate(TFCItems.potteryBowl.getUnlocalizedName() + ".Ceramic Bowl.name"));
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + translate(TFCItems.potteryBowl.getUnlocalizedName() + ".Ceramic Bowl.name"));
 		else if(te.getSaladType() == 2)
-			currenttip.set(0, EnumChatFormatting.WHITE.toString() + TFC_Core.translate(CWTFCItems.PotatoSalad.getUnlocalizedName() + ".name"));
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + translate(CWTFCItems.PotatoSalad.getUnlocalizedName() + ".name"));
 		else if(te.getSaladType() == 1)
-			currenttip.set(0, EnumChatFormatting.WHITE.toString() + TFC_Core.translate(CWTFCItems.FruitSalad.getUnlocalizedName() + ".name"));
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + translate(CWTFCItems.FruitSalad.getUnlocalizedName() + ".name"));
 		else
-			currenttip.set(0, EnumChatFormatting.WHITE.toString() + TFC_Core.translate(CWTFCItems.VeggySalad.getUnlocalizedName() + ".name"));
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + translate(CWTFCItems.VeggySalad.getUnlocalizedName() + ".name"));
 
 		return currenttip;
 	}
@@ -260,7 +277,7 @@ public class WAILAInfo implements IWailaDataProvider
 		float progressCount = tag.getInteger("WorkCounter");
 		
 		int progress = (int) Math.min((progressCount / 20) * 100, 100);
-		currenttip.add(TFC_Core.translate("gui.progress") + ": " + progress + "%");
+		currenttip.add(translate("gui.progress") + ": " + progress + "%");
 
 		return currenttip;
 	}
@@ -290,91 +307,34 @@ public class WAILAInfo implements IWailaDataProvider
 	public List<String> sandwichHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) 
 	{
 		NBTTagCompound tag = accessor.getNBTData();
-		String breadType = tag.getString("breadType");
 		String meatType = tag.getString("meatType");
-		String breadName = TFC_Core.translate("word.Barley");
-		String sandwichName = TFC_Core.translate("word.Sandwich");
+		String sandwichName = translate("word.Sandwich");
 		int topToast = tag.getInteger("topToast");
 		
-		if(TFCItems.cornBread.getUnlocalizedName().equals(breadType))
-			breadName = TFC_Core.translate("word.Corn");
-		else if(TFCItems.oatBread.getUnlocalizedName().equals(breadType))
-			breadName = TFC_Core.translate("word.Oat");
-		else if(TFCItems.riceBread.getUnlocalizedName().equals(breadType))
-			breadName = TFC_Core.translate("word.Rice");
-		else if(TFCItems.ryeBread.getUnlocalizedName().equals(breadType))
-			breadName = TFC_Core.translate("word.Rye");
-		else if(TFCItems.wheatBread.getUnlocalizedName().equals(breadType))
-			breadName = TFC_Core.translate("word.Wheat");
+		//LogHelper.info(meatType == null);
 		
 		if(TFCItems.chickenRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledChicken.getUnlocalizedName().equals(meatType))
-			sandwichName = TFC_Core.translate(CWTFCItems.ChickenSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.ChickenSandwich.getUnlocalizedName() + ".name");
 		else if(TFCItems.porkchopRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledPork.getUnlocalizedName().equals(meatType))
-			sandwichName = TFC_Core.translate(CWTFCItems.HamSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.HamSandwich.getUnlocalizedName() + ".name");
 		else if(TFCItems.eggCooked.getUnlocalizedName().equals(meatType))
-			sandwichName = TFC_Core.translate(CWTFCItems.FriedEggSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.FriedEggSandwich.getUnlocalizedName() + ".name");
 		else if(TFCItems.muttonRaw.getUnlocalizedName().equals(meatType))
-			sandwichName = TFC_Core.translate(CWTFCItems.MuttonSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.MuttonSandwich.getUnlocalizedName() + ".name");
 		else if(TFCItems.beefRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledBeef.getUnlocalizedName().equals(meatType))
-			sandwichName = TFC_Core.translate(CWTFCItems.RoastBeefSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.RoastBeefSandwich.getUnlocalizedName() + ".name");
 		else if(TFCItems.fishRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledFish.getUnlocalizedName().equals(meatType) ||
 				TFCItems.calamariRaw.getUnlocalizedName().equals(meatType))
-			sandwichName = TFC_Core.translate(CWTFCItems.SalmonSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.SalmonSandwich.getUnlocalizedName() + ".name");
 		else if(TFCItems.venisonRaw.getUnlocalizedName().equals(meatType) || CWTFCItems.BoiledVenison.getUnlocalizedName().equals(meatType) ||
 				TFCItems.horseMeatRaw.getUnlocalizedName().equals(meatType))
-			sandwichName = TFC_Core.translate(CWTFCItems.VenisonSteakSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.VenisonSteakSandwich.getUnlocalizedName() + ".name");
 		else if(topToast == 1)
-			sandwichName = TFC_Core.translate(CWTFCItems.ToastSandwich.getUnlocalizedName() + ".name");
+			sandwichName = translate(CWTFCItems.ToastSandwich.getUnlocalizedName() + ".name");
 		
-		currenttip.set(0, EnumChatFormatting.WHITE.toString() + breadName + " " + sandwichName);
+		currenttip.set(0, EnumChatFormatting.WHITE.toString()  + sandwichName);
 
 		return currenttip;
-	}
-	
-	public List<String> nestBoxBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
-	{
-		NBTTagCompound tag = accessor.getNBTData();
-		ItemStack storage[] = getStorage(tag, accessor.getTileEntity());
-		int eggCount = 0, fertEggCount = 0;
-
-		for (ItemStack is : storage)
-		{
-			if (is != null && is.getItem() == CWTFCItems.eggCWTFC)
-			{
-				if (is.hasTagCompound() && is.getTagCompound().hasKey("Fertilized"))
-					fertEggCount++;
-				else
-					eggCount++;
-			}
-		}
-
-		if (eggCount > 0)
-			currenttip.add(TFC_Core.translate("gui.eggs") + " : " + eggCount);
-		if (fertEggCount > 0)
-			currenttip.add(TFC_Core.translate("gui.fertEggs") + " : " + fertEggCount);
-
-		return currenttip;
-	}
-	
-	private ItemStack[] getStorage(NBTTagCompound tag, TileEntity te)
-	{
-		if (te instanceof IInventory)
-		{
-			IInventory inv = (IInventory) te;
-			NBTTagList tagList = tag.getTagList("Items", 10);
-			ItemStack storage[] = new ItemStack[inv.getSizeInventory()];
-			for (int i = 0; i < tagList.tagCount(); i++)
-			{
-				NBTTagCompound itemTag = tagList.getCompoundTagAt(i);
-				byte slot = itemTag.getByte("Slot");
-				if (slot >= 0 && slot < storage.length)
-					storage[slot] = ItemStack.loadItemStackFromNBT(itemTag);
-			}
-
-			return storage;
-		}
-
-		return null;
 	}
 	
 	public List<String> cookingPotBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
@@ -384,7 +344,7 @@ public class WAILAInfo implements IWailaDataProvider
 		int time = (int)((tag.getInteger("cookTimer")/(float)TFC_Time.HOUR_LENGTH) * 60);
 		
 		if(time > 0)
-			currenttip.add(TFC_Core.translate("gui.cookingTime") + ": " + time + " minutes");
+			currenttip.add(translate("gui.cookingTime") + ": " + time + " " + translate("gui.minutes"));
 
 		return currenttip;
 	}
@@ -412,9 +372,9 @@ public class WAILAInfo implements IWailaDataProvider
 		
 		switch(type)
 		{
-			case 1: gourdName = StatCollector.translateToLocal("item.Watermelon.name"); break;
-			case 2: gourdName = StatCollector.translateToLocal("item.JackOLantern.name"); break;
-			default: gourdName = StatCollector.translateToLocal("item.Pumpkin.name"); break;
+			case 1: gourdName = translate("item.Watermelon.name"); break;
+			case 2: gourdName = translate("item.JackOLantern.name"); break;
+			default: gourdName = translate("item.Pumpkin.name"); break;
 		}
 		
 		currenttip.set(0, EnumChatFormatting.WHITE.toString() + gourdName);
@@ -442,7 +402,7 @@ public class WAILAInfo implements IWailaDataProvider
 		CWTFCCropIndex crop = CropManager.getInstance().getCropFromId(cropID);
 		if(crop != null)
 		{
-			String cropName = StatCollector.translateToLocal("item." + crop.cropName + ".name");
+			String cropName = translate("item." + crop.cropName + ".name");
 		
 			currenttip.set(0, EnumChatFormatting.WHITE.toString() + cropName);
 		}
@@ -459,10 +419,89 @@ public class WAILAInfo implements IWailaDataProvider
 		int percentGrowth = (int) Math.min((growth / (crop.numGrowthStages - 1)) * 100, 100);
 		
 		if (percentGrowth < 100)
-			currenttip.add(TFC_Core.translate("gui.growth") + " : " + percentGrowth + "%");
+			currenttip.add(translate("gui.growth") + " : " + percentGrowth + "%");
 		else
-			currenttip.add(TFC_Core.translate("gui.growth") + " : " + TFC_Core.translate("gui.mature"));
+			currenttip.add(translate("gui.growth") + " : " + translate("gui.mature"));
 		
 		return currenttip;
+	}
+	
+	public List<String> nutLeavesHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		NBTTagCompound tag = accessor.getNBTData();
+		Block block = accessor.getBlock();
+		boolean hasFruit = tag.getBoolean("hasFruit");
+		
+		if(block instanceof BlockNutLeaves)
+		{
+			String type = ((BlockNutLeaves)block).getTreeType(block, accessor.getMetadata());
+			
+			if (!hasFruit)
+				currenttip.set(0, EnumChatFormatting.WHITE.toString() + translate("gui." + type));
+		}
+		
+		return currenttip;
+	}
+	
+	public ItemStack nutLeavesStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		Block block = accessor.getBlock();
+		
+		if(block instanceof BlockNutLeaves)
+		{
+			String type = ((BlockNutLeaves)block).getTreeType(block, accessor.getMetadata());
+			FloraIndex index = FloraManager.getInstance().findMatchingIndex(type);
+			
+			if (index != null)
+				return ItemFoodTFC.createTag(index.getOutput());
+		}
+		
+		return null;
+	}
+	
+	public List<String> nutLeavesBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		Block block = accessor.getBlock();
+		
+		if(block instanceof BlockNutLeaves)
+		{
+			String type = ((BlockNutLeaves)block).getTreeType(block, accessor.getMetadata());
+			FloraIndex index = FloraManager.getInstance().findMatchingIndex(type);
+			
+			if (index != null)
+				currenttip.add(0, TFC_Time.SEASONS[index.harvestStart] + " - " + TFC_Time.SEASONS[index.harvestFinish]);
+		}
+		
+		return currenttip;
+	}
+	
+	public List<String> fruitTreeHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		Block block = accessor.getBlock();
+		
+		if(block instanceof BlockNutTree)
+		{
+			String type = ((BlockNutTree)block).getTreeType(block, accessor.getMetadata());
+			
+			currenttip.set(0, EnumChatFormatting.WHITE.toString() + translate("gui." + type));
+		}
+		
+		return currenttip;
+	}
+	
+	public ItemStack nutTreeStack(IWailaDataAccessor accessor, IWailaConfigHandler config)
+	{
+		Block block = accessor.getBlock();
+		
+		if(block instanceof BlockNutTree)
+		{
+			String type = ((BlockNutTree)block).getTreeType(block, accessor.getMetadata());
+			FloraIndex index = FloraManager.getInstance().findMatchingIndex(type);
+			
+			if (index != null)
+				return ItemFoodTFC.createTag(index.getOutput());
+		}
+		
+		return null;
 	}
 }

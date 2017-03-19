@@ -28,7 +28,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -36,14 +35,10 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
-import straywolfe.cookingwithtfc.common.lib.ModInfo;
 import straywolfe.cookingwithtfc.common.tileentity.TileCookingPot;
 
 public class BlockCookingPot extends BlockTerraContainer
 {	
-	@SideOnly(Side.CLIENT)
-	public static IIcon PotatoSalad;
-	
 	public BlockCookingPot()
 	{
 		super(Material.clay);
@@ -355,7 +350,6 @@ public class BlockCookingPot extends BlockTerraContainer
 	public void registerBlockIcons(IIconRegister iconRegisterer)
 	{
 		blockIcon = iconRegisterer.registerIcon(Reference.MOD_ID + ":" + "clay/Ceramic");
-		PotatoSalad = iconRegisterer.registerIcon(ModInfo.ModID + ":" + "PotatoSalad");
 	}
 	
 	@Override
