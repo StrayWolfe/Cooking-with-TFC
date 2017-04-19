@@ -1,9 +1,172 @@
-ï»¿#zh_CN
-#æœ¬æ–‡ä»¶ä¸ºç®€ä½“ä¸­æ–‡è¯­è¨€é…�ç½®æ–‡ä»¶,ç¿»è¯‘è€…:crafteverywhere, moshee
-#Terrafirmcraft ç¾¤å³¦ä¼ è¯´
+#zh_CN
+#This is the Main language configuration file
 
+#==========
+#= Blocks =
+#==========
+tile.GrainsBlock.name=谷粒
+tile.MixingBowl.Clay.name=粘土搅拌杅
+tile.MixingBowl.Ceramic.name=陶瓷搅拌杅
+tile.CookingPot.name=烹饪锅
+tile.PrepTableBlock.name=食物准备桌
+tile.MeatsBlock.name=肉
+tile.ClayOven.name=粘土烤炉
+tile.TableStorage.name=食物桌物品
+tile.Sapling.Walnut.name=核桃树苗
+tile.Leaves.Walnut.name=核桃叶
+tile.Log.Walnut.name=核桃原木
+tile.WoodVert.Walnut.name=核桃原木
+tile.NutTreeLog.Almond.name=杏仁树苗
+tile.NutTreeLog.Cashew.name=腰果树苗
+tile.NutTreeLog.Coconut.name=椰子树苗
+tile.NutTreeLog.Hazelnut.name=榛子树苗
+tile.NutTreeLog.Macadamia.name=澳洲坚果树苗
+tile.NutTreeLog.Pistachio.name=开心果树苗
+tile.woodPlank.Walnut.name=核桃木板
+tile.LumberConstruct.name=木材建筑
+
+#=========
+#= Items =
+#=========
+item.SlicedWatermelon.name=切片西瓜
+item.Pumpkin.name=南瓜
+item.Watermelon.name=西瓜
+item.BrownMushroom.name=棕蘑菇
+item.RedMushroom.name=红蘑菇
+item.Lettuce.name=莴苣
+item.Celery.name=芹菜
+
+item.Broth.name=高汤
+item.BoiledChicken.name=水煮鸡肉
+item.BoiledBeef.name=水煮牛肉
+item.BoiledFish.name=水煮鱼
+item.BoiledPork.name=水煮猪肉
+item.BoiledVenison.name=水煮鹿肉
+item.Peanut.name=花生
+item.Chestnut.name=板栗
+item.Pecan.name=胡桃
+item.Acorn.name=橡子
+item.PineNut.name=松子
+item.Walnut.name=核桃
+item.Almond.name=杏仁
+item.Cashew.name=腰果
+item.Coconut.name=椰子
+item.Hazelnut.name=榛子
+item.Macadamia Nut.name=澳洲坚果
+item.Pistachio.name=开心果
+
+item.VeggySalad.name=蔬菜沙拉
+item.PotatoSalad.name=土豆沙拉
+item.FruitSalad.name=水果沙拉
+
+item.VegetableSoup.name=蔬菜汤
+item.TomatoSoup.name=土豆汤
+item.ChickenSoup.name=鸡汤
+item.BeefStew.name=炖牛肉
+item.VenisonStew.name=炖鹿肉
+item.FishChowder.name=鱼杂烩
+
+item.HamSandwich.name=火腿三明治
+item.ChickenSandwich.name=鸡肉三明治
+item.RoastBeefSandwich.name=烤牛肉三明治
+item.SalmonSandwich.name=海鲜三明治
+item.FriedEggSandwich.name=煎蛋三明治
+item.MuttonSandwich.name=羊肉三明治
+item.VenisonSteakSandwich.name=牛排三明治
+item.VegetarianSandwich.name=素三明治
+item.ToastSandwich.name=面包三明治
+
+item.PumpkinSeeds.name=南瓜种子
+item.MelonSeeds.name=西瓜种子
+item.BrownMushroomSpores.name=棕色蘑菇孢子
+item.RedMushroomSpores.name=红色蘑菇孢子
+item.LettuceSeeds.name=莴苣种子
+item.CelerySeeds.name=芹菜种子
+item.PeanutSeeds.name=花生种子
+
+item.Salt.Rock.name=岩盐
+item.Salt.Sea.name=海盐
+
+item.clayCookingPot.Clay.name=粘土烹饪锅
+item.clayCookingPot.Ceramic.name=陶瓷烹饪锅
+
+item.clayOvenWall.name=烤炉墙壁
+item.JackOLantern.name=南瓜灯
+item.Log.Walnut.name=核桃原木
+item.SinglePlank.Walnut.name=核桃木板
+
+#=======
+#= GUI =
+#=======
+gui.progress=进度
+gui.showIngreds=Â§8食物: (按住 Â§fShiftÂ§8)
+gui.PrepTable.Recipes=Recipe
+gui.PotContents=Â§8内容: (按住 Â§fCtrlÂ§8)
+gui.ShowContents=Â§8内容:
+gui.cookingTime=剩余时间
+gui.Almond=扁桃
+gui.Cashew=腰果树
+gui.Coconut=椰子树
+gui.Hazelnut=榛子树
+gui.Macadamia=澳洲坚果树
+gui.Pistachio=开心过树
 
 #==============
 #= Entities = 
 #==============
-entity.sheepTFC.name=ç¾Š
+
+#===========
+#= Strings =
+#===========
+word.Barley=大麦
+word.Corn=玉米
+word.Oat=燕麦
+word.Rice=稻米
+word.Rye=黑麦
+word.Wheat=小麦
+word.Sandwich=三明治
+
+wood.Oak=橡树
+wood.Aspen=白杨
+wood.Birch=桦树
+wood.Chestnut=栗树
+wood.Douglas Fir=花旗松
+wood.Hickory=山核桃树
+wood.Maple=枫树
+wood.Ash=白蜡树
+wood.Pine=松树
+wood.Sequoia=红杉
+wood.Spruce=云杉
+wood.Sycamore=美国梧桐
+wood.White Cedar=白柏
+wood.White Elm=美国榆
+wood.Willow=柳树
+wood.Kapok=木棉
+wood.Acacia=洋槐
+
+#==========
+#= Fluids =
+#==========
+fluid.broth=高汤
+fluid.vegetableSoup=蔬菜汤
+fluid.tomatoSoup=番茄汤
+fluid.chickenSoup=鸡汤
+fluid.beefStew=炖牛肉
+fluid.venisonStew=炖鹿肉
+fluid.fishChowder=鱼杂脍
+
+#========
+#= Misc =
+#========
+
+#== Creative Tabs ==
+itemGroup.CWTFCMain=Cooking with TFC
+
+#=========
+#= WAILA =
+#=========
+
+#== Tooltips ==
+
+
+#== Options ==
