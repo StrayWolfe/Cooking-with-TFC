@@ -2,7 +2,6 @@ package straywolfe.cookingwithtfc.common.item;
 
 import java.util.List;
 
-import com.bioxx.tfc.TerraFirmaCraft;
 import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Core.Player.FoodStatsTFC;
 import com.bioxx.tfc.Food.ItemFoodTFC;
@@ -12,7 +11,6 @@ import com.bioxx.tfc.api.Food;
 import com.bioxx.tfc.api.TFCOptions;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Enums.EnumFoodGroup;
-import com.bioxx.tfc.api.Interfaces.IFood;
 import com.bioxx.tfc.api.Util.Helper;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -20,7 +18,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -101,45 +98,10 @@ public class ItemTFCFoodTransform extends ItemFoodTFC
 	@Override
 	public ItemStack onEaten(ItemStack is, World world, EntityPlayer player)
 	{
-		if(Settings.diminishingReturns)
+		if(isEdible(is))
 			return CWTFC_Core.processEating(is, world, player, consumeSize, false);
 		else
-		{
-			FoodStatsTFC foodstats = TFC_Core.getPlayerFoodStats(player);
-			if(!world.isRemote && isEdible(is))
-			{
-				if(is.hasTagCompound())
-				{
-					float weight = Food.getWeight(is);
-					float decay = Math.max(Food.getDecay(is), 0);
-
-					float eatAmount = Math.min(weight - decay, 5f);
-					float stomachDiff = foodstats.stomachLevel+eatAmount-foodstats.getMaxStomach(foodstats.player);
-					if(stomachDiff > 0)
-						eatAmount-=stomachDiff;
-
-					float tasteFactor = foodstats.getTasteFactor(is);
-					foodstats.addNutrition(((IFood)(is.getItem())).getFoodGroup(), eatAmount*tasteFactor);
-					foodstats.stomachLevel += eatAmount*tasteFactor;
-					if(FoodStatsTFC.reduceFood(is, eatAmount))
-						is.stackSize = 0;
-				}
-				else
-				{
-					foodstats.addNutrition(((IFood)(is.getItem())).getFoodGroup(), 1f);
-
-					String error = TFC_Core.translate("error.error") + " " + is.getUnlocalizedName() + " " +
-									TFC_Core.translate("error.NBT") + " " + TFC_Core.translate("error.Contact");
-					TerraFirmaCraft.LOG.error(error);
-					TFC_Core.sendInfoMessage(player, new ChatComponentText(error));
-				}
-			}
-
-			world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-			TFC_Core.setPlayerFoodStats(player, foodstats);
-			
 			return is;
-		}
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -193,13 +155,6 @@ public class ItemTFCFoodTransform extends ItemFoodTFC
 	}
 	
 	@Override
-	public ItemTFCFoodTransform setDecayRate(float f)
-	{
-		decayRate = f;
-		return this;
-	}
-	
-	@Override
 	public float getFoodMaxWeight(ItemStack is) 
 	{
 		return getMaxFoodWt();
@@ -208,29 +163,5 @@ public class ItemTFCFoodTransform extends ItemFoodTFC
 	public float getMaxFoodWt()
 	{
 		return Global.FOOD_MAX_WEIGHT;
-	}
-	
-	@Override
-	public String getItemStackDisplayName(ItemStack is)
-	{
-		String s = "";
-		if(Food.isPickled(is))
-			s += TFC_Core.translate("word.pickled") + " ";
-		else if(Food.isBrined(is) && !Food.isDried(is))
-			s += TFC_Core.translate("word.brined") + " ";
-
-		if(Food.isSalted(is))
-			s += TFC_Core.translate("word.salted") + " ";
-		if(Food.isCooked(is))
-			s += TFC_Core.translate("word.cooked") + " ";
-		else if(Food.isSmoked(is))
-			s += TFC_Core.translate("word.smoked") + " ";
-
-		if(Food.isDried(is) && !Food.isCooked(is))
-			s += TFC_Core.translate("word.dried") + " ";
-		
-		s += TFC_Core.translate(getUnlocalizedNameInefficiently(is) + ".name");
-		s += getCookedLevelString(is);
-		return s.trim();
 	}
 }

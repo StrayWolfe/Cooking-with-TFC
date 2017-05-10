@@ -12,7 +12,25 @@ tile.GrainsBlock.name=Grain
 tile.MixingBowl.Clay.name=Clay Mixing Bowl
 tile.MixingBowl.Ceramic.name=Ceramic Mixing Bowl
 tile.CookingPot.name=Cooking Pot
-tile.PrepTableBlock.name=Food Table
+
+tile.PrepTableBlock.Oak.name=Oak Food Table
+tile.PrepTableBlock.Aspen.name=Aspen Food Table
+tile.PrepTableBlock.Birch.name=Birch Food Table
+tile.PrepTableBlock.Chestnut.name=Chestnut Food Table
+tile.PrepTableBlock.Douglas Fir.name=Douglas Fir Food Table
+tile.PrepTableBlock.Hickory.name=Hickory Food Table
+tile.PrepTableBlock.Maple.name=Maple Food Table
+tile.PrepTableBlock.Ash.name=Ash Food Table
+tile.PrepTableBlock.Pine.name=Pine Food Table
+tile.PrepTableBlock.Sequoia.name=Sequoia Food Table
+tile.PrepTableBlock.Spruce.name=Spruce Food Table
+tile.PrepTableBlock.Sycamore.name=Sycamore Food Table
+tile.PrepTableBlock.White Cedar.name=White Cedar Food Table
+tile.PrepTableBlock.White Elm.name=White Elm Food Table
+tile.PrepTableBlock.Willow.name=Willow Food Table
+tile.PrepTableBlock.Kapok.name=Kapok Food Table
+tile.PrepTableBlock.Acacia.name=Acacia Food Table
+
 tile.MeatsBlock.name=Meat
 tile.ClayOven.name=Clay Oven
 tile.TableStorage.name=Food Table Items
@@ -20,12 +38,14 @@ tile.Sapling.Walnut.name=Walnut Sapling
 tile.Leaves.Walnut.name=Walnut Leaves
 tile.Log.Walnut.name=Walnut Log
 tile.WoodVert.Walnut.name=Walnut Log
+
 tile.NutTreeLog.Almond.name=Almond Sapling
 tile.NutTreeLog.Cashew.name=Cashew Sapling
 tile.NutTreeLog.Coconut.name=Coconut Sapling
 tile.NutTreeLog.Hazelnut.name=Hazelnut Sapling
 tile.NutTreeLog.Macadamia.name=Macadamia Nut Sapling
 tile.NutTreeLog.Pistachio.name=Pistachio Sapling
+
 tile.woodPlank.Walnut.name=Walnut Planks
 tile.LumberConstruct.name=Lumber
 
@@ -110,12 +130,14 @@ gui.PrepTable.Recipes=Recipe
 gui.PotContents=§8Contents: (Hold §fCtrl§8)
 gui.ShowContents=§8Contents:
 gui.cookingTime=Time Remaining
+gui.minutes=Minutes
 gui.Almond=Almond Tree
 gui.Cashew=Cashew Tree
 gui.Coconut=Coconut Palm
 gui.Hazelnut=Hazelnut Tree
 gui.Macadamia=Macadamia Tree
 gui.Pistachio=Pistachio Tree
+gui.Sandwich=Sandwich
 
 #==============
 #= Entities = 
@@ -124,31 +146,6 @@ gui.Pistachio=Pistachio Tree
 #===========
 #= Strings =
 #===========
-word.Barley=Barley
-word.Corn=Corn
-word.Oat=Oat
-word.Rice=Rice
-word.Rye=Rye
-word.Wheat=Wheat
-word.Sandwich=Sandwich
-
-wood.Oak=Oak
-wood.Aspen=Aspen
-wood.Birch=Birch
-wood.Chestnut=Chestnut
-wood.Douglas Fir=Douglas Fir
-wood.Hickory=Hickory
-wood.Maple=Maple
-wood.Ash=Ash
-wood.Pine=Pine
-wood.Sequoia=Sequoia
-wood.Spruce=Spruce
-wood.Sycamore=Sycamore
-wood.White Cedar=White Cedar
-wood.White Elm=White Elm
-wood.Willow=Willow
-wood.Kapok=Kapok
-wood.Acacia=Acacia
 
 #==========
 #= Fluids =

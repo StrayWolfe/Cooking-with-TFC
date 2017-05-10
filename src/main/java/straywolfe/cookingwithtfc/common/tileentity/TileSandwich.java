@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.common.core.helper.Helper;
+import straywolfe.cookingwithtfc.common.core.helper.LogHelper;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 
 public class TileSandwich extends NetworkTileEntity
@@ -142,8 +143,8 @@ public class TileSandwich extends NetworkTileEntity
 						breadType = is.getItem().getUnlocalizedName();						
 				}
 				
-				if(((ItemFoodTFC)is.getItem()).getFoodGroup() == EnumFoodGroup.Protein && meatType.length() == 0)
-					meatType = is.getItem().getUnlocalizedName();
+				if(((ItemFoodTFC)is.getItem()).getFoodGroup() == EnumFoodGroup.Protein)
+					resetMeatType();
 					
 				return;
 			}
@@ -158,19 +159,30 @@ public class TileSandwich extends NetworkTileEntity
 			{				
 				ItemStack item = sandwichContents[i].copy();
 				
+				sandwichContents[i] = null;
+				item.stackSize = 1;
+				
 				if(i != 0 && Helper.isOre("itemBread", item))
 					topToast = 5;
 				
 				if(item.getItem().getUnlocalizedName().equals(meatType))
-					meatType = "";
-				
-				sandwichContents[i] = null;
-				item.stackSize = 1;
+					resetMeatType();
 				
 				return item;
 			}
 		}
 		return null;
+	}
+	
+	public void resetMeatType()
+	{
+		meatType = "";
+		
+		for(ItemStack is : sandwichContents)
+		{
+			if(is != null && ((ItemFoodTFC)is.getItem()).getFoodGroup() == EnumFoodGroup.Protein)
+				meatType = is.getItem().getUnlocalizedName();
+		}
 	}
 	
 	public ItemStack[] getSandwichContents()

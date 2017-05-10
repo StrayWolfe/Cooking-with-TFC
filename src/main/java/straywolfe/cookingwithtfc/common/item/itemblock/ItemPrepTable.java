@@ -3,7 +3,6 @@ package straywolfe.cookingwithtfc.common.item.itemblock;
 import java.util.List;
 
 import com.bioxx.tfc.Core.TFCTabs;
-import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.Items.ItemBlocks.ItemTerraBlock;
 import com.bioxx.tfc.api.Constant.Global;
 import com.bioxx.tfc.api.Enums.EnumSize;
@@ -28,40 +27,6 @@ public class ItemPrepTable extends ItemTerraBlock
 		this.setCreativeTab(TFCTabs.TFC_DEVICES);
 		metaNames = new String[16];
 		System.arraycopy(Global.WOOD_ALL, 0, metaNames, 0, 16);
-	}
-	
-	@Override
-	public String getUnlocalizedName(ItemStack is)
-	{
-		return getUnlocalizedName();
-	}
-	
-	@Override
-	public String getItemStackDisplayName(ItemStack is)
-	{
-		String s = "";
-		switch(is.getItemDamage())
-		{
-			case 0: s += TFC_Core.translate("wood.Oak") + " "; break;
-			case 1: s += TFC_Core.translate("wood.Aspen") + " "; break;
-			case 2: s += TFC_Core.translate("wood.Birch") + " "; break;
-			case 3: s += TFC_Core.translate("wood.Chestnut") + " "; break;
-			case 4: s += TFC_Core.translate("wood.Douglas Fir") + " "; break;
-			case 5: s += TFC_Core.translate("wood.Hickory") + " "; break;
-			case 6: s += TFC_Core.translate("wood.Maple") + " "; break;
-			case 7: s += TFC_Core.translate("wood.Ash") + " "; break;
-			case 8: s += TFC_Core.translate("wood.Pine") + " "; break;
-			case 9: s += TFC_Core.translate("wood.Sequoia") + " "; break;
-			case 10: s += TFC_Core.translate("wood.Spruce") + " "; break;
-			case 11: s += TFC_Core.translate("wood.Sycamore") + " "; break;
-			case 12: s += TFC_Core.translate("wood.White Cedar") + " "; break;
-			case 13: s += TFC_Core.translate("wood.White Elm") + " "; break;
-			case 14: s += TFC_Core.translate("wood.Willow") + " "; break;
-			case 15: s += TFC_Core.translate("wood.Kapok") + " "; break;
-			default: break;
-		}		
-		s += TFC_Core.translate(this.getUnlocalizedNameInefficiently(is) + ".name");
-		return s.trim();
 	}
 	
 	@Override

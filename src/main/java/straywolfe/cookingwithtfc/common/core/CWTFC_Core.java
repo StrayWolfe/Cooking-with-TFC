@@ -18,6 +18,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import straywolfe.cookingwithtfc.api.managers.ChunkDataManager;
+import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.handlers.MessageFoodRecord;
 import straywolfe.cookingwithtfc.common.item.ItemTFCMealTransform;
 import straywolfe.cookingwithtfc.common.lib.Settings;
@@ -109,102 +110,136 @@ public class CWTFC_Core
 	public static ItemStack processEating(ItemStack is, World world, EntityPlayer player, float consumeSize, boolean isMeal)
 	{
 		FoodStatsTFC foodstats = TFC_Core.getPlayerFoodStats(player);
-		FoodRecord foodrecord = CWTFC_Core.getPlayerFoodRecord(player);
 		
 		if(!world.isRemote)
 		{
 			if(is.hasTagCompound())
-			{
-				float deminEat = consumeSize * getFoodsCount(foodrecord, is);
-				
+			{			
 				float weight = Food.getWeight(is);
 				float decay = Math.max(Food.getDecay(is), 0);
 				float eatAmount;
-	
-				if(foodstats.stomachLevel <= 0 && deminEat <= 0)
-				{					
-					foodstats.nutrFruit = foodstats.nutrFruit * 0.9F;
-					foodstats.nutrVeg = foodstats.nutrVeg * 0.9F;
-					foodstats.nutrGrain = foodstats.nutrGrain * 0.9F;
-					foodstats.nutrProtein =foodstats.nutrProtein * 0.9F;
-					foodstats.nutrDairy = foodstats.nutrDairy * 0.9F;
-					
-					eatAmount = Math.min(weight - decay, consumeSize);
-				}
-				else
-					eatAmount = Math.min(weight - decay, deminEat);
-				
-				float stomachDiff = foodstats.stomachLevel+eatAmount-foodstats.getMaxStomach(foodstats.player);
-				if(stomachDiff > 0)
-					eatAmount-=stomachDiff;
-	
 				float tasteFactor = foodstats.getTasteFactor(is);
-				
-				if(isMeal)
+	
+				if(Settings.diminishingReturns)
 				{
-					int[] fg = Food.getFoodGroups(is);
-					float[] foodAmounts = ((ItemTFCMealTransform)is.getItem()).getFoodPct(is);
-					float[]foodWts = new float[foodAmounts.length];
-					float totalWeight = 0;
+					FoodRecord foodrecord = CWTFC_Core.getPlayerFoodRecord(player);
+					float deminEat = consumeSize * getFoodsCount(foodrecord, is);
 					
-					for(int i = 0; i < foodAmounts.length; i++)
-					{
-						foodWts[i] = foodAmounts[i] * Food.getWeight(is);
+					if(foodstats.stomachLevel <= 0 && deminEat <= 0)
+					{					
+						foodstats.nutrFruit = foodstats.nutrFruit * 0.9F;
+						foodstats.nutrVeg = foodstats.nutrVeg * 0.9F;
+						foodstats.nutrGrain = foodstats.nutrGrain * 0.9F;
+						foodstats.nutrProtein =foodstats.nutrProtein * 0.9F;
+						foodstats.nutrDairy = foodstats.nutrDairy * 0.9F;
+						
+						eatAmount = Math.min(weight - decay, consumeSize);
 					}
+					else
+						eatAmount = Math.min(weight - decay, deminEat);
 					
-					for(int i = 0; i < fg.length; i++)
+					float stomachDiff = foodstats.stomachLevel+eatAmount-foodstats.getMaxStomach(foodstats.player);
+					if(stomachDiff > 0)
+						eatAmount-=stomachDiff;
+					
+					if(isMeal)
 					{
-						if(fg[i] != -1)
+						int[] fg = Food.getFoodGroups(is);
+						float[] foodAmounts = ((ItemTFCMealTransform)is.getItem()).getFoodPct(is);
+						float[]foodWts = new float[foodAmounts.length];
+						float totalWeight = 0;
+						
+						for(int i = 0; i < foodAmounts.length; i++)
+							foodWts[i] = foodAmounts[i] * Food.getWeight(is);
+						
+						for(int i = 0; i < fg.length; i++)
 						{
-							totalWeight += foodWts[i];
+							if(fg[i] != -1)
+								totalWeight += foodWts[i];
 						}
-					}
-					
-					for (int i = 0; i < fg.length; i++ )
-					{
-						if (fg[i] != -1)
+						
+						for (int i = 0; i < fg.length; i++ )
 						{
-							foodstats.addNutrition(FoodRegistry.getInstance().getFoodGroup(fg[i]), 
-									eatAmount * foodWts[i]/totalWeight * 2.5f);
+							if (fg[i] != -1)
+							{
+								foodstats.addNutrition(FoodRegistry.getInstance().getFoodGroup(fg[i]), 
+										eatAmount * foodWts[i]/totalWeight * 2.5f);
+							}
 						}
+						
+						foodstats.setSatisfaction(foodstats.getSatisfaction() + ((eatAmount / 3f) * tasteFactor), fg);
 					}
+					else
+						foodstats.addNutrition(((IFood)(is.getItem())).getFoodGroup(), eatAmount*tasteFactor);	
 					
 					foodstats.stomachLevel += eatAmount * tasteFactor;
-					foodstats.setSatisfaction(foodstats.getSatisfaction() + ((eatAmount / 3f) * tasteFactor), fg);
+					
+					if(FoodStatsTFC.reduceFood(is, eatAmount))
+						is.stackSize = 0;
+				
+					foodrecord.FoodsEaten[foodrecord.FoodListRef] = is.getUnlocalizedName();
+					
+					if(foodrecord.FoodListRef == foodrecord.RecordSize - 1)
+						foodrecord.FoodListRef = 0;
+					else
+						foodrecord.FoodListRef++;
+					
+					CWTFC_Core.setPlayerFoodRecord(player,foodrecord);
+					
+					if(player instanceof EntityPlayerMP)			
+						TerraFirmaCraft.PACKET_PIPELINE.sendTo(new MessageFoodRecord(player, foodrecord), (EntityPlayerMP) player);
 				}
 				else
-				{
-					foodstats.addNutrition(((IFood)(is.getItem())).getFoodGroup(), eatAmount*tasteFactor);					
+				{					
+					eatAmount = Math.min(weight - decay, consumeSize);
+					
+					float stomachDiff = foodstats.stomachLevel+eatAmount-foodstats.getMaxStomach(foodstats.player);
+					if(stomachDiff > 0)
+						eatAmount-=stomachDiff;
+					
+					if(isMeal)
+					{
+						int[] fg = Food.getFoodGroups(is);
+						float[] foodAmounts = ((ItemTFCMealTransform)is.getItem()).getFoodPct(is);
+						float[]foodWts = new float[foodAmounts.length];
+						float totalWeight = 0;
+						
+						for(int i = 0; i < foodAmounts.length; i++)
+							foodWts[i] = foodAmounts[i] * Food.getWeight(is);
+						
+						for(int i = 0; i < fg.length; i++)
+						{
+							if(fg[i] != -1)
+								totalWeight += foodWts[i];
+						}
+						
+						for (int i = 0; i < fg.length; i++ )
+						{
+							if (fg[i] != -1)
+							{
+								foodstats.addNutrition(FoodRegistry.getInstance().getFoodGroup(fg[i]), 
+										eatAmount * foodWts[i]/totalWeight * 2.5f);
+							}
+						}
+						
+						foodstats.setSatisfaction(foodstats.getSatisfaction() + ((eatAmount / 3f) * tasteFactor), fg);
+					}
+					else
+						foodstats.addNutrition(((IFood)(is.getItem())).getFoodGroup(), eatAmount*tasteFactor);
+					
 					foodstats.stomachLevel += eatAmount * tasteFactor;
+					
+					if(FoodStatsTFC.reduceFood(is, eatAmount))
+						is.stackSize = 0;
 				}
-				
-				if(FoodStatsTFC.reduceFood(is, eatAmount))
-					is.stackSize = 0;
-				
-				foodrecord.FoodsEaten[foodrecord.FoodListRef] = is.getUnlocalizedName();
-				
-				if(foodrecord.FoodListRef == foodrecord.RecordSize - 1)
-					foodrecord.FoodListRef = 0;
-				else
-					foodrecord.FoodListRef++;
-				
-				CWTFC_Core.setPlayerFoodRecord(player,foodrecord);
-				
-				if(player instanceof EntityPlayerMP)			
-					TerraFirmaCraft.PACKET_PIPELINE.sendTo(new MessageFoodRecord(player, foodrecord), (EntityPlayerMP) player);
 			}
 			else
-			{
-				String error = TFC_Core.translate("error.error") + " " + is.getUnlocalizedName() + " " +
-								TFC_Core.translate("error.NBT") + " " + TFC_Core.translate("error.Contact");
-				TerraFirmaCraft.LOG.error(error);
-				TFC_Core.sendInfoMessage(player, new ChatComponentText(error));
-			}
+				Helper.postNBTError(player, is);
 		}
 
 		world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 		TFC_Core.setPlayerFoodStats(player, foodstats);
-		
+
 		return is;
 	}
 }

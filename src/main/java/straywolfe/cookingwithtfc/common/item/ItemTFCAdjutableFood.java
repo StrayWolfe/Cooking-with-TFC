@@ -19,8 +19,6 @@ import com.bioxx.tfc.api.Enums.EnumFoodGroup;
 import com.bioxx.tfc.api.Enums.EnumSize;
 import com.bioxx.tfc.api.Enums.EnumWeight;
 import com.bioxx.tfc.api.Interfaces.ICookableFood;
-import com.bioxx.tfc.api.Interfaces.IFood;
-import com.bioxx.tfc.api.Util.Helper;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -29,7 +27,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
@@ -121,54 +118,22 @@ public class ItemTFCAdjutableFood extends ItemMeal implements ICookableFood
 	@Override
 	public ItemStack onEaten(ItemStack is, World world, EntityPlayer player)
 	{
-		if(Settings.diminishingReturns)
+		if(isEdible(is))
+		{
 			is = CWTFC_Core.processEating(is, world, player, consumeSize, false);
-		else
-		{
-			FoodStatsTFC foodstats = TFC_Core.getPlayerFoodStats(player);
-			if(!world.isRemote && this.isEdible(is))
+
+			if (is.stackSize == 0)
 			{
-				if(is.hasTagCompound())
+				if (Settings.bowlBreakFreq != -1 && world.rand.nextInt(Settings.bowlBreakFreq) == 0)
 				{
-					float weight = Food.getWeight(is);
-					float decay = Math.max(Food.getDecay(is), 0);
-
-					float eatAmount = Math.min(weight - decay, 5f);
-					float stomachDiff = foodstats.stomachLevel+eatAmount-foodstats.getMaxStomach(foodstats.player);
-					if(stomachDiff > 0)
-						eatAmount-=stomachDiff;
-
-					float tasteFactor = foodstats.getTasteFactor(is);
-					foodstats.addNutrition(((IFood)(is.getItem())).getFoodGroup(), eatAmount*tasteFactor);
-					foodstats.stomachLevel += eatAmount*tasteFactor;
-					if(FoodStatsTFC.reduceFood(is, eatAmount))
-						is.stackSize = 0;
+					world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
 				}
-				else
-				{
-					foodstats.addNutrition(((IFood)(is.getItem())).getFoodGroup(), 1f);
-
-					String error = TFC_Core.translate("error.error") + " " + is.getUnlocalizedName() + " " +
-									TFC_Core.translate("error.NBT") + " " + TFC_Core.translate("error.Contact");
-					TerraFirmaCraft.LOG.error(error);
-					TFC_Core.sendInfoMessage(player, new ChatComponentText(error));
-				}
+				else if(isJug && !player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryJug, 1, 1)))
+					return new ItemStack(TFCItems.potteryJug, 1, 1);
+				else if (isBowl && !player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryBowl, 1, 1)))
+					return new ItemStack(TFCItems.potteryBowl, 1, 1);
 			}
-
-			world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-			TFC_Core.setPlayerFoodStats(player, foodstats);
-		}
-		
-		if (is.stackSize == 0)
-		{
-			if (Settings.bowlBreakFreq != -1 && world.rand.nextInt(Settings.bowlBreakFreq) == 0)
-			{
-				world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
-			}
-			else if(isJug && !player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryJug, 1, 1)))
-				return new ItemStack(TFCItems.potteryJug, 1, 1);
-			else if (isBowl && !player.inventory.addItemStackToInventory(new ItemStack(TFCItems.potteryBowl, 1, 1)))
-				return new ItemStack(TFCItems.potteryBowl, 1, 1);
+			
 		}
 		
 		return is;
@@ -224,23 +189,28 @@ public class ItemTFCAdjutableFood extends ItemMeal implements ICookableFood
 	@Override
 	public void addFoodInformation(ItemStack is, EntityPlayer player, List<String> arraylist)
 	{
-		float ounces = Helper.roundNumber(Food.getWeight(is), 100);
+		float ounces = roundNumber(Food.getWeight(is), 100);
 		if (ounces > 0 && ounces <= maxFoodWt)
 			arraylist.add(TFC_Core.translate("gui.food.amount") + " " + ounces + " oz / " + maxFoodWt + " oz");
 
 		float decay = Food.getDecay(is);
 		if (decay > 0)
-			arraylist.add(EnumChatFormatting.DARK_GRAY + TFC_Core.translate("gui.food.decay") + " " + Helper.roundNumber(decay / ounces * 100, 10) + "%");
+			arraylist.add(EnumChatFormatting.DARK_GRAY + TFC_Core.translate("gui.food.decay") + " " + roundNumber(decay / ounces * 100, 10) + "%");
 		if (TFCOptions.enableDebugMode)
 		{
 			arraylist.add(EnumChatFormatting.DARK_GRAY + TFC_Core.translate("gui.food.decay") + ": " + decay);
-			arraylist.add(EnumChatFormatting.DARK_GRAY + "Decay Rate: " + Helper.roundNumber(this.getDecayRate(is), 100));
+			arraylist.add(EnumChatFormatting.DARK_GRAY + "Decay Rate: " + roundNumber(this.getDecayRate(is), 100));
 		}
 
 		if (TFC_Core.showCtrlInformation())
 			ItemFoodTFC.addTasteInformation(is, player, arraylist);
 		else
 			arraylist.add(TFC_Core.translate("gui.showtaste"));
+	}
+	
+	private float roundNumber(float input, float rounding)
+	{
+		return com.bioxx.tfc.api.Util.Helper.roundNumber(input, rounding);
 	}
 	
 	@Override
@@ -296,62 +266,12 @@ public class ItemTFCAdjutableFood extends ItemMeal implements ICookableFood
 	}
 	
 	@Override
-	public boolean renderDecay() {
-		return true;
-	}
-
-	@Override
-	public boolean renderWeight() {
-		return true;
-	}
-	
-	@Override
 	public EnumAction getItemUseAction(ItemStack par1ItemStack)
 	{
 		if(isBowl || isJug)
 			return EnumAction.drink;
 		else
 			return EnumAction.eat;
-	}
-	
-	@Override
-	public int getTasteSweet(ItemStack is) {
-		int base = 0;
-		if (is != null && is.hasTagCompound() && is.getTagCompound().hasKey("tasteSweet"))
-			base = is.getTagCompound().getInteger("tasteSweet");
-		return base + Food.getSweetMod(is);
-	}
-
-	@Override
-	public int getTasteSour(ItemStack is) {
-		int base = 0;
-		if (is != null && is.hasTagCompound() && is.getTagCompound().hasKey("tasteSour"))
-			base = is.getTagCompound().getInteger("tasteSour");
-		return base + Food.getSourMod(is);
-	}
-
-	@Override
-	public int getTasteSalty(ItemStack is) {
-		int base = 0;
-		if (is != null && is.hasTagCompound() && is.getTagCompound().hasKey("tasteSalty"))
-			base = is.getTagCompound().getInteger("tasteSalty");
-		return base + Food.getSaltyMod(is);
-	}
-
-	@Override
-	public int getTasteBitter(ItemStack is) {
-		int base = 0;
-		if (is != null && is.hasTagCompound() && is.getTagCompound().hasKey("tasteBitter"))
-			base = is.getTagCompound().getInteger("tasteBitter");
-		return base + Food.getBitterMod(is);
-	}
-
-	@Override
-	public int getTasteSavory(ItemStack is) {
-		int base = 0;
-		if (is != null && is.hasTagCompound() && is.getTagCompound().hasKey("tasteUmami"))
-			base = is.getTagCompound().getInteger("tasteUmami");
-		return base + Food.getSavoryMod(is);
 	}
 	
 	@Override

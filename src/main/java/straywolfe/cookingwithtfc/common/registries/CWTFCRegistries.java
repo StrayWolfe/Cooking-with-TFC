@@ -17,7 +17,6 @@ import com.bioxx.tfc.api.Crafting.KilnRecipe;
 import com.bioxx.tfc.api.Crafting.QuernManager;
 import com.bioxx.tfc.api.Crafting.QuernRecipe;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -32,6 +31,7 @@ import straywolfe.cookingwithtfc.api.CWTFCBlocks;
 import straywolfe.cookingwithtfc.api.CWTFCItems;
 import straywolfe.cookingwithtfc.api.managers.PressManager;
 import straywolfe.cookingwithtfc.api.managers.PressRecipe;
+import straywolfe.cookingwithtfc.common.core.helper.Helper;
 import straywolfe.cookingwithtfc.common.lib.Constants;
 import straywolfe.cookingwithtfc.common.lib.Settings;
 import terramisc.core.TFCMBlocks;
@@ -115,7 +115,7 @@ public class CWTFCRegistries
 			}
 		}
 		
-		if(Loader.isModLoaded("tfcm"))
+		if(Helper.isReqModVersion("tfcm", "0.10.0"))
 			Recipes.removeRecipe(new ItemStack(TFCMBlocks.blockFruitPress,1));
 	}
 	
@@ -206,8 +206,8 @@ public class CWTFCRegistries
 		
 		pressmanager.addRecipe(new PressRecipe(TFCItems.olive, TFCFluids.OLIVEOIL, 1));
 		
-		if(Loader.isModLoaded("tfcm"))
-		{
+		if(Helper.isReqModVersion("tfcm", "0.10.0"))
+		{					
 			pressmanager.addRecipe(new PressRecipe(TFCItems.cherry, TFCMFluids.FRUITJUICE, 8));
 			pressmanager.addRecipe(new PressRecipe(TFCItems.plum, TFCMFluids.FRUITJUICE, 8));
 			pressmanager.addRecipe(new PressRecipe(TFCItems.wintergreenBerry, TFCMFluids.FRUITJUICE, 8));

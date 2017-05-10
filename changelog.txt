@@ -1,6 +1,21 @@
 Changelog
 =================================================
 -------------------------------------------------
+Cooking With TFC 0.0.7.1
+-------------------------------------------------
+Tweaks:
+Code clean-up
+Changed diminishing returns to false by default
+Changed localization handling to correctly display names for prep tables
+Updated Chinese(Simplified) localization
+
+Bug Fixes:
+Fixed crash resulting from getting meals from cooking pot
+Fixed crash from old versions of terramisc by adding a version checker
+Fixed crash from incorrect food group handling for meals
+Fixed sandwich creating wrong sandwich type
+
+-------------------------------------------------
 Cooking With TFC 0.0.7.0
 -------------------------------------------------
 New Features:

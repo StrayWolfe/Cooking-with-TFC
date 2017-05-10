@@ -1,6 +1,5 @@
 package straywolfe.cookingwithtfc.common.item.itemblock;
 
-import com.bioxx.tfc.Core.TFC_Core;
 import com.bioxx.tfc.api.Constant.Global;
 
 import net.minecraft.block.Block;
@@ -70,21 +69,4 @@ public class ItemPrepTable2 extends ItemPrepTable
 		
 		return false;
     }
-
-	@Override
-	public String getUnlocalizedName(ItemStack is)
-	{
-		return getUnlocalizedName();
-	}
-	
-	@Override
-	public String getItemStackDisplayName(ItemStack is)
-	{
-		String s = "";
-		if(is.getItemDamage() == 0)
-			s += TFC_Core.translate("wood.Acacia") + " ";
-		
-		s += TFC_Core.translate(this.getUnlocalizedNameInefficiently(is) + ".name");
-		return s.trim();
-	}
 }

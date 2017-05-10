@@ -145,90 +145,20 @@ public class ItemTFCMealTransform extends ItemTerra implements ICookableFood
 	@Override
 	public ItemStack onEaten(ItemStack is, World world, EntityPlayer player)
 	{
-		if(Settings.diminishingReturns)
+		if(isEdible(is))
+		{
 			is = CWTFC_Core.processEating(is, world, player, getConsumeSize(), true);
-		else
-		{
-			world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-
-			FoodStatsTFC foodstats = TFC_Core.getPlayerFoodStats(player);
-			if(!world.isRemote)
-			{
-				if (is.hasTagCompound())
-				{
-					float weight = Food.getWeight(is);
-					float decay = Math.max(Food.getDecay(is), 0);
-					float eatAmount = getEatAmount(foodstats, weight - decay);
-					float tasteFactor = foodstats.getTasteFactor(is);
-
-					int[] fg = Food.getFoodGroups(is);
-					float[] nWeights = getNutritionalWeights(fg);
-					for (int i = 0; i < fg.length; i++ )
-					{
-						if (fg[i] != -1)
-							foodstats.addNutrition(FoodRegistry.getInstance().getFoodGroup(fg[i]), eatAmount * nWeights[i] * 2.5f);
-					}
-
-					foodstats.stomachLevel += eatAmount * getFillingBoost();
-					foodstats.setSatisfaction(foodstats.getSatisfaction() + ((eatAmount / 3f) * tasteFactor), fg);
-
-					if (FoodStatsTFC.reduceFood(is, eatAmount))
-					{
-						is.stackSize = 0;
-					}
-				}
-			}
-			TFC_Core.setPlayerFoodStats(player, foodstats);
-		}
 		
-		if (hasBowl && is.stackSize == 0)
-		{
-			if (Settings.bowlBreakFreq != -1 && world.rand.nextInt(Settings.bowlBreakFreq) == 0)
-				world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
-			else
-				return new ItemStack(TFCItems.potteryBowl, 1, 1);
+			if (hasBowl && is.stackSize == 0)
+			{
+				if (Settings.bowlBreakFreq != -1 && world.rand.nextInt(Settings.bowlBreakFreq) == 0)
+					world.playSoundAtEntity(player, TFC_Sounds.CERAMICBREAK, 0.7f, player.worldObj.rand.nextFloat() * 0.2F + 0.8F);
+				else
+					return new ItemStack(TFCItems.potteryBowl, 1, 1);
+			}
 		}
 		
 		return is;
-	}
-	
-	protected float getEatAmount(FoodStatsTFC fs, float amount)
-	{
-		float eatAmount = Math.min(amount, 5);
-		float stomachDiff = fs.stomachLevel+eatAmount-fs.getMaxStomach(fs.player);
-		if(stomachDiff > 0)
-			eatAmount-=stomachDiff;
-		return eatAmount;
-	}
-	
-	protected float getFillingBoost()
-	{
-		return 1.0f;
-	}
-	
-	protected float[] getNutritionalWeights(int[] foodGroups)
-	{
-		float[] nw = new float[foodGroups.length];
-		float[] fw = getFoodWeights();
-		float totalWeight = 0;
-		for(int i  = 0; i < foodGroups.length; i++)
-		{
-			if(foodGroups[i] != -1)
-			{
-				totalWeight += fw[i];
-			}
-		}
-
-		for(int i  = 0; i < foodGroups.length; i++)
-		{
-			nw[i] = fw[i]/totalWeight;
-		}
-		return nw;
-	}
-
-	protected float[] getFoodWeights()
-	{
-		return new float[]{10f,4f,4f,2f};
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes"})
@@ -321,7 +251,7 @@ public class ItemTFCMealTransform extends ItemTerra implements ICookableFood
 	
 	public float getConsumeSize()
 	{
-		return this.consumeSize;
+		return consumeSize;
 	}
 	
 	public ItemTFCMealTransform setHasBowl(boolean bowl)

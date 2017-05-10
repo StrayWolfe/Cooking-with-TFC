@@ -512,19 +512,16 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 		return isDone;
 	}
 	
-	@Override
-	public void readFromNBT(NBTTagCompound nbttagcompound)
+	public void readNBT(NBTTagCompound nbt)
 	{
-		super.readFromNBT(nbttagcompound);
+		cookingPotFluid = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag("fluidNBT"));
+		recipeID = nbt.getInteger("recipeID");
+		cookTimer = nbt.getInteger("cookTimer");
+		cookTime = nbt.getInteger("cookTime");
+		hasLid = nbt.getBoolean("hasLid");
+		isDone = nbt.getBoolean("isDone");
 		
-		cookingPotFluid = FluidStack.loadFluidStackFromNBT(nbttagcompound.getCompoundTag("fluidNBT"));
-		recipeID = nbttagcompound.getInteger("recipeID");
-		cookTimer = nbttagcompound.getInteger("cookTimer");
-		cookTime = nbttagcompound.getInteger("cookTime");
-		hasLid = nbttagcompound.getBoolean("hasLid");
-		isDone = nbttagcompound.getBoolean("isDone");
-		
-		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
+		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
 		cookingPotInv = new ItemStack[cookingPotInv.length];
 		for(int i = 0; i < nbttaglist.tagCount(); i++)
 		{
@@ -534,22 +531,19 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 				cookingPotInv[itemslot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
 		}
 	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound nbttagcompound)
+	
+	public void writeNBT(NBTTagCompound nbt)
 	{
-		super.writeToNBT(nbttagcompound);
-		
 		NBTTagCompound fluidNBT = new NBTTagCompound();
 		if(cookingPotFluid != null)
 			cookingPotFluid.writeToNBT(fluidNBT);
-		nbttagcompound.setTag("fluidNBT", fluidNBT);
+		nbt.setTag("fluidNBT", fluidNBT);
 		
-		nbttagcompound.setInteger("recipeID", recipeID);
-		nbttagcompound.setInteger("cookTimer", cookTimer);
-		nbttagcompound.setInteger("cookTime", cookTime);
-		nbttagcompound.setBoolean("hasLid", hasLid);
-		nbttagcompound.setBoolean("isDone", isDone);
+		nbt.setInteger("recipeID", recipeID);
+		nbt.setInteger("cookTimer", cookTimer);
+		nbt.setInteger("cookTime", cookTime);
+		nbt.setBoolean("hasLid", hasLid);
+		nbt.setBoolean("isDone", isDone);
 		
 		NBTTagList nbttaglist = new NBTTagList();
 		for(int i = 0; i < cookingPotInv.length; i++)
@@ -562,109 +556,51 @@ public class TileCookingPot extends TEFireEntity implements IInventory
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}
-		nbttagcompound.setTag("Items", nbttaglist);
+		nbt.setTag("Items", nbttaglist);
+	}
+	
+	@Override
+	public void readFromNBT(NBTTagCompound nbt)
+	{
+		super.readFromNBT(nbt);
+		
+		readNBT(nbt);
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt)
+	{
+		super.writeToNBT(nbt);
+		
+		writeNBT(nbt);
 	}
 	
 	@Override
 	public void handleInitPacket(NBTTagCompound nbt)
 	{
-		cookingPotFluid = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag("fluidNBT"));
-		recipeID = nbt.getInteger("recipeID");
-		cookTimer = nbt.getInteger("cookTimer");
-		cookTime = nbt.getInteger("cookTime");
-		hasLid = nbt.getBoolean("hasLid");
-		isDone = nbt.getBoolean("isDone");
+		readNBT(nbt);
 		fireTemp = nbt.getFloat("temperature");
-		
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		cookingPotInv = new ItemStack[cookingPotInv.length];
-		for(int i = 0; i < nbttaglist.tagCount(); i++)
-		{
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte itemslot = nbttagcompound1.getByte("Slot");
-			if(itemslot >= 0 && itemslot < cookingPotInv.length)
-				cookingPotInv[itemslot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-		}
 	}
 
 	@Override
 	public void handleDataPacket(NBTTagCompound nbt)
 	{
-		cookingPotFluid = FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag("fluidNBT"));
-		recipeID = nbt.getInteger("recipeID");
-		cookTimer = nbt.getInteger("cookTimer");
-		cookTime = nbt.getInteger("cookTime");
-		hasLid = nbt.getBoolean("hasLid");
-		isDone = nbt.getBoolean("isDone");
+		readNBT(nbt);
 		fireTemp = nbt.getFloat("temperature");
-		
-		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
-		cookingPotInv = new ItemStack[cookingPotInv.length];
-		for(int i = 0; i < nbttaglist.tagCount(); i++)
-		{
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte itemslot = nbttagcompound1.getByte("Slot");
-			if(itemslot >= 0 && itemslot < cookingPotInv.length)
-				cookingPotInv[itemslot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-		}
 	}
 
 	@Override
 	public void createDataNBT(NBTTagCompound nbt)
 	{
-		NBTTagCompound fluidNBT = new NBTTagCompound();
-		if(cookingPotFluid != null)
-			cookingPotFluid.writeToNBT(fluidNBT);
-		nbt.setTag("fluidNBT", fluidNBT);
-		
-		nbt.setInteger("recipeID", recipeID);
-		nbt.setInteger("cookTimer", cookTimer);
-		nbt.setInteger("cookTime", cookTime);
-		nbt.setBoolean("hasLid", hasLid);
-		nbt.setBoolean("isDone", isDone);
+		writeNBT(nbt);
 		nbt.setFloat("temperature", fireTemp);
-		
-		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < cookingPotInv.length; i++)
-		{
-			if(cookingPotInv[i] != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte)i);
-				cookingPotInv[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
-		nbt.setTag("Items", nbttaglist);
 	}
 
 	@Override
 	public void createInitNBT(NBTTagCompound nbt)
 	{
-		NBTTagCompound fluidNBT = new NBTTagCompound();
-		if(cookingPotFluid != null)
-			cookingPotFluid.writeToNBT(fluidNBT);
-		nbt.setTag("fluidNBT", fluidNBT);
-		
-		nbt.setInteger("recipeID", recipeID);
-		nbt.setInteger("cookTimer", cookTimer);
-		nbt.setInteger("cookTime", cookTime);
-		nbt.setBoolean("hasLid", hasLid);
-		nbt.setBoolean("isDone", isDone);
+		writeNBT(nbt);
 		nbt.setFloat("temperature", fireTemp);
-		
-		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < cookingPotInv.length; i++)
-		{
-			if(cookingPotInv[i] != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte)i);
-				cookingPotInv[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
-		nbt.setTag("Items", nbttaglist);
 	}
 	
 	public void ejectContents()

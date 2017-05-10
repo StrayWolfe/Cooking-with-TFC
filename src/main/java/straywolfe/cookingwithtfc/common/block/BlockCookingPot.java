@@ -143,7 +143,8 @@ public class BlockCookingPot extends BlockTerraContainer
 						
 						if(is.getItem() instanceof ItemTFCMealTransform)
 						{
-							is = teCookingPot.getStackInSlot(TileCookingPot.FLUIDOUTPUT).copy();
+							if(teCookingPot.getStackInSlot(TileCookingPot.FLUIDOUTPUT) != null)
+								is = teCookingPot.getStackInSlot(TileCookingPot.FLUIDOUTPUT).copy();
 							
 							Food.setMealSkill(is, TFC_Core.getSkillStats(player).getSkillRank(Global.SKILL_COOKING).ordinal());
 						}

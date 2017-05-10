@@ -183,12 +183,12 @@ public class BlockLeaves extends BlockCustomLeaves
 	{
 		entityplayer.addStat(StatList.mineBlockStatArray[getIdFromBlock(this)], 1);
 		entityplayer.addExhaustion(isScythe ? 0.045F : 0.025F);
-		if (world.rand.nextInt(100) < (isScythe ? 11 : 28))
+		if (world.rand.nextInt(100) < (isScythe ? 28 : 11))
 			dropBlockAsItem(world, x, y, z, new ItemStack(TFCItems.stick, 1));
-		else if (world.rand.nextInt(100) < (isScythe ? 2 : 4) && TFCOptions.enableSaplingDrops)
+		else if (world.rand.nextInt(100) < (isScythe ? 4 : 2) && TFCOptions.enableSaplingDrops)
 			dropBlockAsItem(world, x, y, z, new ItemStack(getItemDropped(0, null, 0), 1, meta));
 		
-		if(world.rand.nextInt(100) < (isScythe ? 6 : 8))
+		if(world.rand.nextInt(100) < (isScythe ? 8 : 6))
 		{
 			Item nut = null;
 			
