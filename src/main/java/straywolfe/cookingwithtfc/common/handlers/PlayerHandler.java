@@ -207,7 +207,7 @@ public class PlayerHandler
 					if(world.setBlock(x, y + 1, z, CWTFCBlocks.GrainsBlock))
 					{
 						((TileGrains) world.getTileEntity(x, y + 1, z)).setplacedGrains(itemInHand.copy());
-						event.entityPlayer.setCurrentItemOrArmor(0, null);
+						itemInHand.stackSize-=1;
 						return;
 					}
 				}
