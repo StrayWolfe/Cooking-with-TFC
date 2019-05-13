@@ -1,35 +1,39 @@
-#zh_CN
+#zh_CN 翻译者 233Isaac
 #This is the Main language configuration file
+#
+#If you want to color code the text then I recommend you visit http://www.minecraftwiki.net/wiki/Formatting_codes#Color_codes
+#To create the ง symbol which is used for assigning a color to the following text press Alt + 21 on Windows. For other OSes, view the above link.
+#This file needs to be UTF-8 encoded to work with MC 1.7+
 
 #==========
 #= Blocks =
 #==========
 tile.GrainsBlock.name=谷粒
-tile.MixingBowl.Clay.name=粘土搅拌杅
-tile.MixingBowl.Ceramic.name=陶瓷搅拌杅
+tile.MixingBowl.Clay.name=粘土搅拌碗
+tile.MixingBowl.Ceramic.name=陶瓷搅拌碗
 tile.CookingPot.name=烹饪锅
 
-tile.PrepTableBlock.Oak.name=橡木食品準備表
-tile.PrepTableBlock.Aspen.name=阿斯彭食品準備表
-tile.PrepTableBlock.Birch.name=樺木食品準備表
-tile.PrepTableBlock.Chestnut.name=栗子食品準備表
-tile.PrepTableBlock.Douglas Fir.name=道格拉斯冷杉食品準備表
-tile.PrepTableBlock.Hickory.name=山核桃食品準備表
-tile.PrepTableBlock.Maple.name=楓葉食品準備表
-tile.PrepTableBlock.Ash.name=灰食品準備表
-tile.PrepTableBlock.Pine.name=松食品準備表
-tile.PrepTableBlock.Sequoia.name=紅杉食品準備表
-tile.PrepTableBlock.Spruce.name=雲杉食品準備表
-tile.PrepTableBlock.Sycamore.name=美國梧桐食物製備表
-tile.PrepTableBlock.White Cedar.name=白雪松食品準備表
-tile.PrepTableBlock.White Elm.name=白榆樹食物製備表
-tile.PrepTableBlock.Willow.name=柳食物製備表
-tile.PrepTableBlock.Kapok.name=木棉食物製備表
-tile.PrepTableBlock.Acacia.name=相思食物製備表
+tile.PrepTableBlock.Oak.name=橡木厨台
+tile.PrepTableBlock.Aspen.name=白杨木厨台
+tile.PrepTableBlock.Birch.name=桦木厨台
+tile.PrepTableBlock.Chestnut.name=栗木厨台
+tile.PrepTableBlock.Douglas Fir.name=花旗松木厨台
+tile.PrepTableBlock.Hickory.name=山核桃木厨台
+tile.PrepTableBlock.Maple.name=枫木厨台
+tile.PrepTableBlock.Ash.name=白蜡木厨台
+tile.PrepTableBlock.Pine.name=松木厨台
+tile.PrepTableBlock.Sequoia.name=红杉木厨台
+tile.PrepTableBlock.Spruce.name=云杉木厨台
+tile.PrepTableBlock.Sycamore.name=悬铃木厨台
+tile.PrepTableBlock.White Cedar.name=白雪松厨台
+tile.PrepTableBlock.White Elm.name=香柏木厨台
+tile.PrepTableBlock.Willow.name=柳木厨台
+tile.PrepTableBlock.Kapok.name=木棉木厨台
+tile.PrepTableBlock.Acacia.name=金合欢木厨台
 
 tile.MeatsBlock.name=肉
 tile.ClayOven.name=粘土烤炉
-tile.TableStorage.name=食物桌物品
+tile.TableStorage.name=餐桌
 tile.Sapling.Walnut.name=核桃树苗
 tile.Leaves.Walnut.name=核桃叶
 tile.Log.Walnut.name=核桃原木
@@ -43,7 +47,7 @@ tile.NutTreeLog.Macadamia.name=澳洲坚果树苗
 tile.NutTreeLog.Pistachio.name=开心果树苗
 
 tile.woodPlank.Walnut.name=核桃木板
-tile.LumberConstruct.name=木材建筑
+tile.LumberConstruct.name=核桃木材
 
 #=========
 #= Items =
@@ -119,17 +123,17 @@ item.SinglePlank.Walnut.name=核桃木板
 #= GUI =
 #=======
 gui.progress=进度
-gui.showIngreds=Â§8食物: (按住 Â§fShiftÂ§8)
+gui.showIngreds=§8食物: (按住§fShift§8)
 gui.PrepTable.Recipes=Recipe
-gui.PotContents=Â§8内容: (按住 Â§fCtrlÂ§8)
-gui.ShowContents=Â§8内容:
+gui.PotContents=§8内容: (按住§fCtrl§8)
+gui.ShowContents=§8包含食物:
 gui.cookingTime=剩余时间
-gui.Almond=扁桃
+gui.Almond=杏树
 gui.Cashew=腰果树
 gui.Coconut=椰子树
 gui.Hazelnut=榛子树
 gui.Macadamia=澳洲坚果树
-gui.Pistachio=开心过树
+gui.Pistachio=开心果树
 gui.Sandwich=三明治
 
 #==============
@@ -156,7 +160,7 @@ fluid.fishChowder=鱼杂脍
 #========
 
 #== Creative Tabs ==
-itemGroup.CWTFCMain=烹飪與 TFC
+itemGroup.CWTFCMain=TFC|烹饪
 
 #=========
 #= WAILA =
